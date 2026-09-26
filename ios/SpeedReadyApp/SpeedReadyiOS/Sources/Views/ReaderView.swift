@@ -7,7 +7,6 @@ struct ReaderView: View {
     @StateObject private var engine = RSVPEngine()
     @State private var activeDocument: ReadingDocument?
     @State private var lastRecordedSessionID: UUID?
-    @State private var showingSettings = false
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -43,29 +42,11 @@ struct ReaderView: View {
                 headerView
                 wordDisplayView
                 controlsView
-                sessionStatsView
                 progressView
                 actionsView
                 Spacer()
             }
             .padding()
-            .navigationTitle("SpeedReady")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingSettings = true
-                    } label: {
-                        Image(systemName: "slider.horizontal.3")
-                            .accessibilityLabel("Settings")
-                    }
-                }
-            }
-            .sheet(isPresented: $showingSettings) {
-                SettingsView(settings: $settings) { newSettings in
-                    applySettings(newSettings)
-                }
-                .preferredColorScheme(preferredColorScheme)
-            }
             .background(palette.background.ignoresSafeArea())
             .onAppear {
                 if let currentDocument = appState.currentDocument {
@@ -100,10 +81,6 @@ struct ReaderView: View {
                 .font(.title2.bold())
                 .foregroundStyle(palette.text)
                 .accessibilityLabel("Document title: \(currentDocument.title)")
-            Text("\(engine.state.totalWords) words")
-                .font(.subheadline)
-                .foregroundStyle(palette.mutedText)
-                .accessibilityLabel("Total word count: \(engine.state.totalWords)")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -234,15 +211,6 @@ struct ReaderView: View {
         .opacity(settings.focusMode ? 0.85 : 1)
     }
 
-    private var sessionStatsView: some View {
-        let summary = engine.sessionSummary()
-        return HStack(spacing: 18) {
-            statPill(title: "Words", value: "\(summary.wordsRead)")
-            statPill(title: "Time", value: String(format: "%.0fs", summary.duration))
-            statPill(title: "Status", value: summary.completed ? "Done" : "Reading")
-        }.opacity(settings.focusMode ? 0.75 : 1)
-    }
-
     private var progressView: some View {
         VStack(alignment: .leading, spacing: 8) {
             ProgressView(
@@ -253,10 +221,17 @@ struct ReaderView: View {
             .tint(palette.pivot)
             .accessibilityLabel("Reading progress")
 
-            Text("\(engine.state.wordIndex)/\(engine.state.totalWords) words")
-                .font(.caption)
-                .foregroundStyle(palette.mutedText)
-                .accessibilityLabel("Progress: \(engine.state.wordIndex) of \(engine.state.totalWords) words read")
+            HStack {
+                Text("\(engine.state.wordIndex)/\(engine.state.totalWords) words")
+                    .font(.caption)
+                    .foregroundStyle(palette.mutedText)
+                    .accessibilityLabel("Progress: \(engine.state.wordIndex) of \(engine.state.totalWords) words read")
+                Spacer()
+                Text(timeLeftText)
+                    .font(.caption)
+                    .foregroundStyle(palette.mutedText)
+                    .accessibilityLabel(timeLeftAccessibilityText)
+            }
         }
         .opacity(settings.focusMode ? 0.7 : 1)
     }
@@ -365,19 +340,25 @@ struct ReaderView: View {
         lastRecordedSessionID = engine.sessionID
     }
 
-    private func statPill(title: String, value: String) -> some View {
-        return VStack(spacing: 4) {
-            Text(title)
-                .font(.caption2)
-                .foregroundStyle(palette.mutedText)
-            Text(value)
-                .font(.headline)
-                .foregroundStyle(palette.text)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
-        .background(palette.secondarySurface)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+    private var timeLeftText: String {
+        let minutes = remainingTimeComponents.minutes
+        let seconds = remainingTimeComponents.seconds
+        return String(format: "%d:%02d left", minutes, seconds)
+    }
+
+    private var timeLeftAccessibilityText: String {
+        let minutes = remainingTimeComponents.minutes
+        let seconds = remainingTimeComponents.seconds
+        let minuteUnit = minutes == 1 ? "minute" : "minutes"
+        let secondUnit = seconds == 1 ? "second" : "seconds"
+        return "Time left: \(minutes) \(minuteUnit) \(seconds) \(secondUnit)"
+    }
+
+    private var remainingTimeComponents: (minutes: Int, seconds: Int) {
+        let remainingWords = max(engine.state.totalWords - engine.state.wordIndex, 0)
+        let wpm = max(Double(engine.state.currentWpm), 1)
+        let totalSeconds = Int((Double(remainingWords) / wpm * 60).rounded())
+        return (totalSeconds / 60, totalSeconds % 60)
     }
 
     private func kerningValue(for fontSize: CGFloat) -> CGFloat {
