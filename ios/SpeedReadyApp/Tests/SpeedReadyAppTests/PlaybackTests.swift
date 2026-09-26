@@ -1,5 +1,9 @@
 import XCTest
+#if canImport(SpeedReadyApp)
 @testable import SpeedReadyApp
+#elseif canImport(SpeedReadyiOS)
+@testable import SpeedReadyiOS
+#endif
 
 final class PlaybackTests: XCTestCase {
     func testPlayPauseToggle() {

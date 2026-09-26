@@ -1,6 +1,10 @@
 import XCTest
 import ZIPFoundation
+#if canImport(SpeedReadyApp)
 @testable import SpeedReadyApp
+#elseif canImport(SpeedReadyiOS)
+@testable import SpeedReadyiOS
+#endif
 
 final class EPUBTextExtractorTests: XCTestCase {
     func testParseContainerXMLReadsRootFilePath() throws {

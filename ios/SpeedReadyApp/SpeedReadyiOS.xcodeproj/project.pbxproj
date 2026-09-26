@@ -7,153 +7,239 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24837E66822C5A9C8A9F610A /* SessionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC6D998EA1F23019D63D6F8 /* SessionHistoryView.swift */; };
-		26D1C97CF370D8BE4931DB6A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5501072CA3276B05C8BC388 /* ContentView.swift */; };
-		28A5BA00CED30A8D0ACE0450 /* PDFTextExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D3AA38CEADF5F39F254A68 /* PDFTextExtractor.swift */; };
-		2B44F5312C1E6D7CBCE146D6 /* EPUBTextExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 931B05B6A88136C549EE8FD4 /* EPUBTextExtractor.swift */; };
-		2F9611D35EBB7F39FA51F1C3 /* ObservableObjectCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8F86A0E3125C3AE5303999 /* ObservableObjectCompat.swift */; };
-		35E3DF6ED5617E204F0DC9D5 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82EA2BF595F1A62D834A8C8C /* LibraryView.swift */; };
-		3A9B6232E418BA858F4C28DA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23562DECB3CCDF194E55DB3F /* SettingsView.swift */; };
-		3FEE534E9847EBD5DF6B2FEA /* DocumentImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD8E4F144271FC3913ACF09 /* DocumentImportService.swift */; };
-		4B5C1B8135A226EDFEC4CD26 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02720286BDEB9334A5779BEB /* ReaderView.swift */; };
-		6EE1F6C5FAD9A76D2E31EB04 /* SpeedReadyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 282CE2C96F71DBA47D71FF96 /* SpeedReadyApp.swift */; };
-		8E80E412C6A5354C8B0CA9BF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A708F9441F8FEA454E93DDC7 /* Foundation.framework */; };
-		B3D0AD199C96BD945C7939BF /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552D08D28736187E7ED18383 /* StatsView.swift */; };
-		E0C131E48147AB28B15E4F6E /* RSVPEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538340A93EAE019685350AE9 /* RSVPEngine.swift */; };
-		F546CC9ECA4677930A4C5908 /* ReaderModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A20D3DDBA451E16D172525 /* ReaderModels.swift */; };
-		FCE2F9642427A520487D9486 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A40F9D00F88ED3294DD618CB /* Assets.xcassets */; };
+		0429A3CBC638BA955B0C1D07 /* DocumentImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1CB9F89C6A605EF46549F4F /* DocumentImportService.swift */; };
+		05309D695C0EFA2A9D2E6CD5 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = A3F06DE3F8F01FD8A6FAD103 /* ZIPFoundation */; };
+		0683AB0197425A782F2D91FB /* EdgeCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAB7FCC5A4DC9A6659E1EA36 /* EdgeCaseTests.swift */; };
+		0A79D59919FFAA2146826564 /* EPUBTextExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6830075C1219FD605459B3A3 /* EPUBTextExtractorTests.swift */; };
+		1B031F2B2D3C86CE37287EB7 /* EPUBTextExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A335CC9438FC3BB4328235BA /* EPUBTextExtractor.swift */; };
+		1BA6614B84D0C6878B6F58CE /* ReaderSettingsPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A38E5B13C963ECD5890B09 /* ReaderSettingsPersistenceTests.swift */; };
+		1E8285E049417FDB9ED43091 /* PDFTextExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BD3FD8C922A69C46383219F /* PDFTextExtractor.swift */; };
+		24FBEC4529730EB332F7F177 /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FF055F4F0C0FF2345C1966 /* LibraryView.swift */; };
+		26F72781D146C6CF4628785E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637BE78463AABEF54141A59D /* Foundation.framework */; };
+		3BCDC48D64C96A9017E02A0C /* PDFTextExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E13416BE7C17268F9F64A7 /* PDFTextExtractorTests.swift */; };
+		3E00F7C3229FE3FABEC5A021 /* RSVPEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5814CEABFA6A1C2A6D2E040D /* RSVPEngine.swift */; };
+		3E83D4398CD43C95E94D7CFC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273F8933D7A394ED8AEB6E67 /* ContentView.swift */; };
+		4BB0356BB65BF3608FE3FEEC /* TokenizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9D91A2FF603AEB6A685D5E /* TokenizationTests.swift */; };
+		4E4F63EB7CABAB6502173C61 /* ReaderModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FEE0A31FC4C976A8399155 /* ReaderModels.swift */; };
+		5A1644B68CC304AF34F87126 /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D9D3EA5A094AFBEC4FF4F6B /* ReaderView.swift */; };
+		60CB7CF458BB0E26D0DB3380 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 9CB5F16559B76A0BC94DAF8B /* ZIPFoundation */; };
+		6180718482018D8E41E054C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 637BE78463AABEF54141A59D /* Foundation.framework */; };
+		82F813C156E869AB4D9783B9 /* RSVPEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D20518BDADD4F605BF9C88E /* RSVPEngineTests.swift */; };
+		893339A0FAA2B2C3187798C1 /* SpeedReadyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B53785EEFC289BF9352AD85 /* SpeedReadyApp.swift */; };
+		8AEB1DE550D3C0A1B2035460 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8174BFDD471D2C8EC11CC464 /* SettingsView.swift */; };
+		AC34B67F4A79CD6E452DC379 /* ObservableObjectCompat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613D7324604BD60EBFE78482 /* ObservableObjectCompat.swift */; };
+		AD6A1CE9EDCEA41AED644A14 /* PlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A77A7F6937A1989BEF0194 /* PlaybackTests.swift */; };
+		BB1C832342C9D97F14275EE2 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C787A237DC6B65D5E2A24EF /* StatsView.swift */; };
+		C47C4D06370E99F53B729595 /* SessionHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3216A5B9E852E299C11692E /* SessionHistoryView.swift */; };
+		C80140FB645C76F976EED678 /* ORPCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7607FC58B61A7A378311161 /* ORPCalculationTests.swift */; };
+		D94805EA8A03D30FEE808656 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81969007EA71A318F6AF6BCA /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		D7A1BFCD4BEDC672701576DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1B4D0A00E8020835A314D388 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 78BC0556026509C913253433;
+			remoteInfo = SpeedReadyiOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		02720286BDEB9334A5779BEB /* ReaderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReaderView.swift; path = Sources/SpeedReadyApp/Views/ReaderView.swift; sourceTree = "<group>"; };
-		0E8F86A0E3125C3AE5303999 /* ObservableObjectCompat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObservableObjectCompat.swift; path = Sources/SpeedReadyApp/Support/ObservableObjectCompat.swift; sourceTree = "<group>"; };
-		12051B30D77F07B584E188B0 /* SpeedReady.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeedReady.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		23562DECB3CCDF194E55DB3F /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Sources/SpeedReadyApp/Views/SettingsView.swift; sourceTree = "<group>"; };
-		282CE2C96F71DBA47D71FF96 /* SpeedReadyApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpeedReadyApp.swift; path = Sources/SpeedReadyApp/App/SpeedReadyApp.swift; sourceTree = "<group>"; };
-		4AD8E4F144271FC3913ACF09 /* DocumentImportService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DocumentImportService.swift; path = Sources/SpeedReadyApp/Services/DocumentImportService.swift; sourceTree = "<group>"; };
-		538340A93EAE019685350AE9 /* RSVPEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RSVPEngine.swift; path = Sources/SpeedReadyApp/Services/RSVPEngine.swift; sourceTree = "<group>"; };
-		552D08D28736187E7ED18383 /* StatsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StatsView.swift; path = Sources/SpeedReadyApp/Views/StatsView.swift; sourceTree = "<group>"; };
-		73D3AA38CEADF5F39F254A68 /* PDFTextExtractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PDFTextExtractor.swift; path = Sources/SpeedReadyApp/Services/PDFTextExtractor.swift; sourceTree = "<group>"; };
-		7BC6D998EA1F23019D63D6F8 /* SessionHistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionHistoryView.swift; path = Sources/SpeedReadyApp/Views/SessionHistoryView.swift; sourceTree = "<group>"; };
-		82EA2BF595F1A62D834A8C8C /* LibraryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LibraryView.swift; path = Sources/SpeedReadyApp/Views/LibraryView.swift; sourceTree = "<group>"; };
-		84A20D3DDBA451E16D172525 /* ReaderModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReaderModels.swift; path = Sources/SpeedReadyApp/Models/ReaderModels.swift; sourceTree = "<group>"; };
-		931B05B6A88136C549EE8FD4 /* EPUBTextExtractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EPUBTextExtractor.swift; path = Sources/SpeedReadyApp/Services/EPUBTextExtractor.swift; sourceTree = "<group>"; };
-		A40F9D00F88ED3294DD618CB /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = SpeedReadyiOS/Assets.xcassets; sourceTree = "<group>"; };
-		A708F9441F8FEA454E93DDC7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		C5501072CA3276B05C8BC388 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = Sources/SpeedReadyApp/Views/ContentView.swift; sourceTree = "<group>"; };
+		0C787A237DC6B65D5E2A24EF /* StatsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StatsView.swift; path = Sources/SpeedReadyApp/Views/StatsView.swift; sourceTree = "<group>"; };
+		0F9D91A2FF603AEB6A685D5E /* TokenizationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TokenizationTests.swift; path = Tests/SpeedReadyAppTests/TokenizationTests.swift; sourceTree = "<group>"; };
+		273F8933D7A394ED8AEB6E67 /* ContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = Sources/SpeedReadyApp/Views/ContentView.swift; sourceTree = "<group>"; };
+		445A632C540C7FE392A537D9 /* SpeedReadyiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeedReadyiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4BD3FD8C922A69C46383219F /* PDFTextExtractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PDFTextExtractor.swift; path = Sources/SpeedReadyApp/Services/PDFTextExtractor.swift; sourceTree = "<group>"; };
+		51E13416BE7C17268F9F64A7 /* PDFTextExtractorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PDFTextExtractorTests.swift; path = Tests/SpeedReadyAppTests/PDFTextExtractorTests.swift; sourceTree = "<group>"; };
+		5814CEABFA6A1C2A6D2E040D /* RSVPEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RSVPEngine.swift; path = Sources/SpeedReadyApp/Services/RSVPEngine.swift; sourceTree = "<group>"; };
+		613D7324604BD60EBFE78482 /* ObservableObjectCompat.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ObservableObjectCompat.swift; path = Sources/SpeedReadyApp/Support/ObservableObjectCompat.swift; sourceTree = "<group>"; };
+		637BE78463AABEF54141A59D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		6830075C1219FD605459B3A3 /* EPUBTextExtractorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EPUBTextExtractorTests.swift; path = Tests/SpeedReadyAppTests/EPUBTextExtractorTests.swift; sourceTree = "<group>"; };
+		7D20518BDADD4F605BF9C88E /* RSVPEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RSVPEngineTests.swift; path = Tests/SpeedReadyAppTests/RSVPEngineTests.swift; sourceTree = "<group>"; };
+		7D9D3EA5A094AFBEC4FF4F6B /* ReaderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReaderView.swift; path = Sources/SpeedReadyApp/Views/ReaderView.swift; sourceTree = "<group>"; };
+		8174BFDD471D2C8EC11CC464 /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Sources/SpeedReadyApp/Views/SettingsView.swift; sourceTree = "<group>"; };
+		81969007EA71A318F6AF6BCA /* Assets.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = SpeedReadyiOS/Assets.xcassets; sourceTree = "<group>"; };
+		81A77A7F6937A1989BEF0194 /* PlaybackTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlaybackTests.swift; path = Tests/SpeedReadyAppTests/PlaybackTests.swift; sourceTree = "<group>"; };
+		9B53785EEFC289BF9352AD85 /* SpeedReadyApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpeedReadyApp.swift; path = Sources/SpeedReadyApp/App/SpeedReadyApp.swift; sourceTree = "<group>"; };
+		9C1B4CF24A9780C63CC3E8BB /* SpeedReady.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeedReady.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1CB9F89C6A605EF46549F4F /* DocumentImportService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DocumentImportService.swift; path = Sources/SpeedReadyApp/Services/DocumentImportService.swift; sourceTree = "<group>"; };
+		A3216A5B9E852E299C11692E /* SessionHistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionHistoryView.swift; path = Sources/SpeedReadyApp/Views/SessionHistoryView.swift; sourceTree = "<group>"; };
+		A335CC9438FC3BB4328235BA /* EPUBTextExtractor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EPUBTextExtractor.swift; path = Sources/SpeedReadyApp/Services/EPUBTextExtractor.swift; sourceTree = "<group>"; };
+		B9FF055F4F0C0FF2345C1966 /* LibraryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LibraryView.swift; path = Sources/SpeedReadyApp/Views/LibraryView.swift; sourceTree = "<group>"; };
+		BAB7FCC5A4DC9A6659E1EA36 /* EdgeCaseTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EdgeCaseTests.swift; path = Tests/SpeedReadyAppTests/EdgeCaseTests.swift; sourceTree = "<group>"; };
+		E6FEE0A31FC4C976A8399155 /* ReaderModels.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReaderModels.swift; path = Sources/SpeedReadyApp/Models/ReaderModels.swift; sourceTree = "<group>"; };
+		F2A38E5B13C963ECD5890B09 /* ReaderSettingsPersistenceTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReaderSettingsPersistenceTests.swift; path = Tests/SpeedReadyAppTests/ReaderSettingsPersistenceTests.swift; sourceTree = "<group>"; };
+		F7607FC58B61A7A378311161 /* ORPCalculationTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ORPCalculationTests.swift; path = Tests/SpeedReadyAppTests/ORPCalculationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B086D655692AAC8E1CE08C05 /* Frameworks */ = {
+		03FABD3657DC87137116C91B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E80E412C6A5354C8B0CA9BF /* Foundation.framework in Frameworks */,
+				6180718482018D8E41E054C5 /* Foundation.framework in Frameworks */,
+				05309D695C0EFA2A9D2E6CD5 /* ZIPFoundation in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4034B5529B3F3C98887F5992 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26F72781D146C6CF4628785E /* Foundation.framework in Frameworks */,
+				60CB7CF458BB0E26D0DB3380 /* ZIPFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A68338D5914CCF9331411C47 /* Frameworks */ = {
+		1E649CD0B23042E177E54023 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				E5B344CF965CF7CB54260C16 /* iOS */,
+				6830075C1219FD605459B3A3 /* EPUBTextExtractorTests.swift */,
+				BAB7FCC5A4DC9A6659E1EA36 /* EdgeCaseTests.swift */,
+				F7607FC58B61A7A378311161 /* ORPCalculationTests.swift */,
+				51E13416BE7C17268F9F64A7 /* PDFTextExtractorTests.swift */,
+				81A77A7F6937A1989BEF0194 /* PlaybackTests.swift */,
+				7D20518BDADD4F605BF9C88E /* RSVPEngineTests.swift */,
+				F2A38E5B13C963ECD5890B09 /* ReaderSettingsPersistenceTests.swift */,
+				0F9D91A2FF603AEB6A685D5E /* TokenizationTests.swift */,
 			);
-			name = Frameworks;
+			name = Tests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
-		AEED3C43C30EA54EEE7810BF /* SpeedReadyiOS */ = {
+		38FB3EFBB9057CBA4C472A58 = {
 			isa = PBXGroup;
 			children = (
-				A40F9D00F88ED3294DD618CB /* Assets.xcassets */,
+				D2698A5FCE7C7647E6D8B018 /* Products */,
+				E95DDB7FEBEDD9BE7EB8722B /* Frameworks */,
+				D758B08F6D52879F2AF31B7D /* Sources */,
+				1E649CD0B23042E177E54023 /* Tests */,
+				F75DB327D373A7DB28D5A482 /* SpeedReadyiOS */,
 			);
-			name = SpeedReadyiOS;
-			path = SpeedReadyiOS;
+			sourceTree = SOURCE_ROOT;
+		};
+		B86AA77E14AE680AC164547B /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				637BE78463AABEF54141A59D /* Foundation.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
-		C61316D22371FE701A770A80 /* Sources */ = {
+		D2698A5FCE7C7647E6D8B018 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				282CE2C96F71DBA47D71FF96 /* SpeedReadyApp.swift */,
-				84A20D3DDBA451E16D172525 /* ReaderModels.swift */,
-				4AD8E4F144271FC3913ACF09 /* DocumentImportService.swift */,
-				931B05B6A88136C549EE8FD4 /* EPUBTextExtractor.swift */,
-				73D3AA38CEADF5F39F254A68 /* PDFTextExtractor.swift */,
-				538340A93EAE019685350AE9 /* RSVPEngine.swift */,
-				0E8F86A0E3125C3AE5303999 /* ObservableObjectCompat.swift */,
-				C5501072CA3276B05C8BC388 /* ContentView.swift */,
-				82EA2BF595F1A62D834A8C8C /* LibraryView.swift */,
-				02720286BDEB9334A5779BEB /* ReaderView.swift */,
-				7BC6D998EA1F23019D63D6F8 /* SessionHistoryView.swift */,
-				23562DECB3CCDF194E55DB3F /* SettingsView.swift */,
-				552D08D28736187E7ED18383 /* StatsView.swift */,
+				9C1B4CF24A9780C63CC3E8BB /* SpeedReady.app */,
+				445A632C540C7FE392A537D9 /* SpeedReadyiOSTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D758B08F6D52879F2AF31B7D /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				9B53785EEFC289BF9352AD85 /* SpeedReadyApp.swift */,
+				E6FEE0A31FC4C976A8399155 /* ReaderModels.swift */,
+				A1CB9F89C6A605EF46549F4F /* DocumentImportService.swift */,
+				A335CC9438FC3BB4328235BA /* EPUBTextExtractor.swift */,
+				4BD3FD8C922A69C46383219F /* PDFTextExtractor.swift */,
+				5814CEABFA6A1C2A6D2E040D /* RSVPEngine.swift */,
+				613D7324604BD60EBFE78482 /* ObservableObjectCompat.swift */,
+				273F8933D7A394ED8AEB6E67 /* ContentView.swift */,
+				B9FF055F4F0C0FF2345C1966 /* LibraryView.swift */,
+				7D9D3EA5A094AFBEC4FF4F6B /* ReaderView.swift */,
+				A3216A5B9E852E299C11692E /* SessionHistoryView.swift */,
+				8174BFDD471D2C8EC11CC464 /* SettingsView.swift */,
+				0C787A237DC6B65D5E2A24EF /* StatsView.swift */,
 			);
 			name = Sources;
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		CDF3EAC0307F1CD513AF456C = {
+		E95DDB7FEBEDD9BE7EB8722B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E57A7159E050CE6389024F4F /* Products */,
-				A68338D5914CCF9331411C47 /* Frameworks */,
-				C61316D22371FE701A770A80 /* Sources */,
-				AEED3C43C30EA54EEE7810BF /* SpeedReadyiOS */,
+				B86AA77E14AE680AC164547B /* iOS */,
 			);
-			sourceTree = SOURCE_ROOT;
-		};
-		E57A7159E050CE6389024F4F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				12051B30D77F07B584E188B0 /* SpeedReady.app */,
-			);
-			name = Products;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E5B344CF965CF7CB54260C16 /* iOS */ = {
+		F75DB327D373A7DB28D5A482 /* SpeedReadyiOS */ = {
 			isa = PBXGroup;
 			children = (
-				A708F9441F8FEA454E93DDC7 /* Foundation.framework */,
+				81969007EA71A318F6AF6BCA /* Assets.xcassets */,
 			);
-			name = iOS;
+			name = SpeedReadyiOS;
+			path = SpeedReadyiOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		49CB1C2C5ED681CA8F6D3A3D /* SpeedReadyiOS */ = {
+		1169CF19FF6FB906F75CAF9A /* SpeedReadyiOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC8011C85456FA438B54D87F /* Build configuration list for PBXNativeTarget "SpeedReadyiOS" */;
+			buildConfigurationList = 26E04F96B1F2D83D4F628E33 /* Build configuration list for PBXNativeTarget "SpeedReadyiOSTests" */;
 			buildPhases = (
-				3CEE7324D41BE527A5579F80 /* Sources */,
-				B086D655692AAC8E1CE08C05 /* Frameworks */,
-				AF259F2C535B7A2D45A448A8 /* Resources */,
+				C9F54809B243B4DAA82C72EB /* Sources */,
+				4034B5529B3F3C98887F5992 /* Frameworks */,
+				6C10F6A05C6367034C026B18 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				982D5C43854E4E1945A41CE4 /* PBXTargetDependency */,
+			);
+			name = SpeedReadyiOSTests;
+			packageProductDependencies = (
+				9CB5F16559B76A0BC94DAF8B /* ZIPFoundation */,
+			);
+			productName = SpeedReadyiOSTests;
+			productReference = 445A632C540C7FE392A537D9 /* SpeedReadyiOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		78BC0556026509C913253433 /* SpeedReadyiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABE7CE1DE9361AAD386FC830 /* Build configuration list for PBXNativeTarget "SpeedReadyiOS" */;
+			buildPhases = (
+				498B08D4FB0110A1D151389B /* Sources */,
+				03FABD3657DC87137116C91B /* Frameworks */,
+				CCA57C7AE4DD596896C02254 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = SpeedReadyiOS;
+			packageProductDependencies = (
+				A3F06DE3F8F01FD8A6FAD103 /* ZIPFoundation */,
+			);
 			productName = SpeedReady;
-			productReference = 12051B30D77F07B584E188B0 /* SpeedReady.app */;
+			productReference = 9C1B4CF24A9780C63CC3E8BB /* SpeedReady.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		212E8C20175D8525E98C3C62 /* Project object */ = {
+		1B4D0A00E8020835A314D388 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					49CB1C2C5ED681CA8F6D3A3D = {
+					1169CF19FF6FB906F75CAF9A = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 78BC0556026509C913253433;
+					};
+					78BC0556026509C913253433 = {
 						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
-			buildConfigurationList = F34F7522929D1F5320A4FB29 /* Build configuration list for PBXProject "SpeedReadyiOS" */;
+			buildConfigurationList = FD8F5A940D4B118E99FCC256 /* Build configuration list for PBXProject "SpeedReadyiOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -161,54 +247,241 @@
 				en,
 				Base,
 			);
-			mainGroup = CDF3EAC0307F1CD513AF456C;
+			mainGroup = 38FB3EFBB9057CBA4C472A58;
 			minimizedProjectReferenceProxies = 0;
+			packageReferences = (
+				E7FA64914684DDF6FA09F3E0 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+			);
 			preferredProjectObjectVersion = 100;
-			productRefGroup = E57A7159E050CE6389024F4F /* Products */;
+			productRefGroup = D2698A5FCE7C7647E6D8B018 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				49CB1C2C5ED681CA8F6D3A3D /* SpeedReadyiOS */,
+				78BC0556026509C913253433 /* SpeedReadyiOS */,
+				1169CF19FF6FB906F75CAF9A /* SpeedReadyiOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		AF259F2C535B7A2D45A448A8 /* Resources */ = {
+		6C10F6A05C6367034C026B18 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FCE2F9642427A520487D9486 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CCA57C7AE4DD596896C02254 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D94805EA8A03D30FEE808656 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3CEE7324D41BE527A5579F80 /* Sources */ = {
+		498B08D4FB0110A1D151389B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EE1F6C5FAD9A76D2E31EB04 /* SpeedReadyApp.swift in Sources */,
-				F546CC9ECA4677930A4C5908 /* ReaderModels.swift in Sources */,
-				3FEE534E9847EBD5DF6B2FEA /* DocumentImportService.swift in Sources */,
-				2B44F5312C1E6D7CBCE146D6 /* EPUBTextExtractor.swift in Sources */,
-				28A5BA00CED30A8D0ACE0450 /* PDFTextExtractor.swift in Sources */,
-				E0C131E48147AB28B15E4F6E /* RSVPEngine.swift in Sources */,
-				2F9611D35EBB7F39FA51F1C3 /* ObservableObjectCompat.swift in Sources */,
-				26D1C97CF370D8BE4931DB6A /* ContentView.swift in Sources */,
-				35E3DF6ED5617E204F0DC9D5 /* LibraryView.swift in Sources */,
-				4B5C1B8135A226EDFEC4CD26 /* ReaderView.swift in Sources */,
-				24837E66822C5A9C8A9F610A /* SessionHistoryView.swift in Sources */,
-				3A9B6232E418BA858F4C28DA /* SettingsView.swift in Sources */,
-				B3D0AD199C96BD945C7939BF /* StatsView.swift in Sources */,
+				893339A0FAA2B2C3187798C1 /* SpeedReadyApp.swift in Sources */,
+				4E4F63EB7CABAB6502173C61 /* ReaderModels.swift in Sources */,
+				0429A3CBC638BA955B0C1D07 /* DocumentImportService.swift in Sources */,
+				1B031F2B2D3C86CE37287EB7 /* EPUBTextExtractor.swift in Sources */,
+				1E8285E049417FDB9ED43091 /* PDFTextExtractor.swift in Sources */,
+				3E00F7C3229FE3FABEC5A021 /* RSVPEngine.swift in Sources */,
+				AC34B67F4A79CD6E452DC379 /* ObservableObjectCompat.swift in Sources */,
+				3E83D4398CD43C95E94D7CFC /* ContentView.swift in Sources */,
+				24FBEC4529730EB332F7F177 /* LibraryView.swift in Sources */,
+				5A1644B68CC304AF34F87126 /* ReaderView.swift in Sources */,
+				C47C4D06370E99F53B729595 /* SessionHistoryView.swift in Sources */,
+				8AEB1DE550D3C0A1B2035460 /* SettingsView.swift in Sources */,
+				BB1C832342C9D97F14275EE2 /* StatsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9F54809B243B4DAA82C72EB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A79D59919FFAA2146826564 /* EPUBTextExtractorTests.swift in Sources */,
+				0683AB0197425A782F2D91FB /* EdgeCaseTests.swift in Sources */,
+				C80140FB645C76F976EED678 /* ORPCalculationTests.swift in Sources */,
+				3BCDC48D64C96A9017E02A0C /* PDFTextExtractorTests.swift in Sources */,
+				AD6A1CE9EDCEA41AED644A14 /* PlaybackTests.swift in Sources */,
+				82F813C156E869AB4D9783B9 /* RSVPEngineTests.swift in Sources */,
+				1BA6614B84D0C6878B6F58CE /* ReaderSettingsPersistenceTests.swift in Sources */,
+				4BB0356BB65BF3608FE3FEEC /* TokenizationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		982D5C43854E4E1945A41CE4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SpeedReadyiOS;
+			target = 78BC0556026509C913253433 /* SpeedReadyiOS */;
+			targetProxy = D7A1BFCD4BEDC672701576DF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
-		3B8ABBCF345A7DAC161B3D00 /* Debug */ = {
+		39B0D155E0A39DB4CA1A46B2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SpeedReady;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jalawson12.speedready;
+				PRODUCT_NAME = SpeedReady;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		497023B2E4C3CBE31E2AE8AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		66E4D478DE925785ABB8A1D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jalawson12.speedready.tests;
+				PRODUCT_NAME = SpeedReadyiOSTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "";
+				TEST_TARGET_NAME = SpeedReadyiOS;
+			};
+			name = Debug;
+		};
+		6A90A8D1B490AA99A748B106 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = SpeedReady;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jalawson12.speedready;
+				PRODUCT_NAME = SpeedReady;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C67726E318E83AB8CC486973 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "";
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jalawson12.speedready.tests;
+				PRODUCT_NAME = SpeedReadyiOSTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "";
+				TEST_TARGET_NAME = SpeedReadyiOS;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F37D2078A56DA7739E43C62E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -269,137 +542,61 @@
 			};
 			name = Debug;
 		};
-		67DDF16526AE57DA6429028B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = SpeedReady;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jalawson12.speedready;
-				PRODUCT_NAME = SpeedReady;
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		B9C9161C47553DD7DB97DDC5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = SpeedReady;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jalawson12.speedready;
-				PRODUCT_NAME = SpeedReady;
-				SDKROOT = iphoneos;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.9;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		E1969080A98A941A0F45A0BB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BC8011C85456FA438B54D87F /* Build configuration list for PBXNativeTarget "SpeedReadyiOS" */ = {
+		26E04F96B1F2D83D4F628E33 /* Build configuration list for PBXNativeTarget "SpeedReadyiOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B9C9161C47553DD7DB97DDC5 /* Release */,
-				67DDF16526AE57DA6429028B /* Debug */,
+				C67726E318E83AB8CC486973 /* Release */,
+				66E4D478DE925785ABB8A1D8 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F34F7522929D1F5320A4FB29 /* Build configuration list for PBXProject "SpeedReadyiOS" */ = {
+		ABE7CE1DE9361AAD386FC830 /* Build configuration list for PBXNativeTarget "SpeedReadyiOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3B8ABBCF345A7DAC161B3D00 /* Debug */,
-				E1969080A98A941A0F45A0BB /* Release */,
+				6A90A8D1B490AA99A748B106 /* Release */,
+				39B0D155E0A39DB4CA1A46B2 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FD8F5A940D4B118E99FCC256 /* Build configuration list for PBXProject "SpeedReadyiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F37D2078A56DA7739E43C62E /* Debug */,
+				497023B2E4C3CBE31E2AE8AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E7FA64914684DDF6FA09F3E0 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.20;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9CB5F16559B76A0BC94DAF8B /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7FA64914684DDF6FA09F3E0 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+		A3F06DE3F8F01FD8A6FAD103 /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E7FA64914684DDF6FA09F3E0 /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = 212E8C20175D8525E98C3C62 /* Project object */;
+	rootObject = 1B4D0A00E8020835A314D388 /* Project object */;
 }
