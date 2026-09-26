@@ -408,7 +408,7 @@ struct ReaderView: View {
     }
 
     private func displayBeforeText() -> String {
-        maybeHideTrailingPunctuation(engine.state.before)
+        engine.state.before
     }
 
     private func displayAfterText() -> String {

@@ -258,10 +258,14 @@ final class RSVPEngine: ObservableObject {
         let baseMs = 60000.0 / baseWpm
         let smartMultiplier = settings.smartSpeed ? self.smartMultiplier(for: token.text) : 1.0
         let adjusted = max(150.0, baseMs * smartMultiplier)
-        let punctuationExtra = max(0, token.pauseMultiplier - 1.0)
-        let punctuationBoost = settings.punctuationPause && punctuationExtra > 0
-            ? adjusted * (punctuationExtra * max(1.0, settings.sentencePauseMultiplier))
-            : 0
+        let punctuationBoost: TimeInterval
+        if settings.punctuationPause && token.pauseMultiplier > 1.0 {
+            let sentenceMultiplier = max(1.0, settings.sentencePauseMultiplier)
+            let punctuationMultiplier = max(token.pauseMultiplier, sentenceMultiplier)
+            punctuationBoost = adjusted * (punctuationMultiplier - 1.0)
+        } else {
+            punctuationBoost = 0
+        }
         let paragraphBoost = token.paragraphStart ? adjusted * (settings.paragraphPauseMultiplier - 1.0) : 0
         let asideBoost = token.closesAside && settings.contextPauseOnClose ? adjusted * 0.2 : 0
         return adjusted + punctuationBoost + paragraphBoost + asideBoost
@@ -508,6 +512,8 @@ final class RSVPEngine: ObservableObject {
     private func retokenizePreservingPosition() {
         let previousIndex = min(state.wordIndex, max(0, tokens.count - 1))
         let currentTokenText = tokens.isEmpty ? "" : tokens[previousIndex].text
+        let previousTokenText = previousIndex > 0 ? tokens[previousIndex - 1].text : nil
+        let nextTokenText = previousIndex + 1 < tokens.count ? tokens[previousIndex + 1].text : nil
         tokens = tokenize(preparedText(from: rawText))
         state.totalWords = tokens.count
 
@@ -521,11 +527,23 @@ final class RSVPEngine: ObservableObject {
             .filter { $0.element.text == currentTokenText }
             .map(\.offset)
 
-        if let bestMatch = matchingIndices.min(by: { abs($0 - previousIndex) < abs($1 - previousIndex) }) {
+        if let bestMatch = matchingIndices.max(by: { candidateScore(index: $0, previousText: previousTokenText, nextText: nextTokenText, previousIndex: previousIndex) < candidateScore(index: $1, previousText: previousTokenText, nextText: nextTokenText, previousIndex: previousIndex) }) {
             state.wordIndex = bestMatch
         } else {
             state.wordIndex = min(previousIndex, max(0, tokens.count - 1))
         }
         updateCurrentDisplay(index: state.wordIndex)
+    }
+
+    private func candidateScore(index: Int, previousText: String?, nextText: String?, previousIndex: Int) -> Int {
+        var score = 0
+        if let previousText, index > 0, tokens[index - 1].text == previousText {
+            score += 20
+        }
+        if let nextText, index + 1 < tokens.count, tokens[index + 1].text == nextText {
+            score += 20
+        }
+        score -= abs(index - previousIndex)
+        return score
     }
 }

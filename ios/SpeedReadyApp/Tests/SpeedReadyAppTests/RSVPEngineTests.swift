@@ -77,7 +77,9 @@ final class RSVPEngineTests: XCTestCase {
         engine.load(text: words, settings: settings)
 
         XCTAssertEqual(engine.state.currentWpm, 300)
-        engine.skipForward(by: 30)
+        engine.skipForward(by: 15)
+        XCTAssertEqual(engine.state.currentWpm, 450)
+        engine.skipForward(by: 15)
         XCTAssertEqual(engine.state.currentWpm, 600)
     }
 
