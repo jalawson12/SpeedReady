@@ -58,7 +58,7 @@ struct ReaderView: View {
                 }
             }
             .onChange(of: appState.currentDocument) { previousDocument, nextDocument in
-                saveCurrentLocation(for: previousDocument ?? activeDocument)
+                saveCurrentLocation(for: previousDocument ?? activeDocument, persist: true)
                 recordSessionIfNeeded(for: previousDocument ?? activeDocument)
                 guard let nextDocument else {
                     loadFallbackSample()
@@ -67,16 +67,22 @@ struct ReaderView: View {
                 loadDocument(nextDocument)
             }
             .onChange(of: engine.state.wordIndex) { _, _ in
-                saveCurrentLocation(for: activeDocument)
                 let summary = engine.sessionSummary()
+                let shouldPersistLocation = !engine.state.isPlaying || (summary.completed && engine.state.wordIndex >= engine.state.totalWords)
+                saveCurrentLocation(for: activeDocument, persist: shouldPersistLocation)
                 guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return }
                 recordSessionIfNeeded(for: activeDocument, completedOverride: true)
+            }
+            .onChange(of: engine.state.isPlaying) { _, isPlaying in
+                if !isPlaying {
+                    saveCurrentLocation(for: activeDocument, persist: true)
+                }
             }
             .onChange(of: settings) { _, newSettings in
                 engine.setSettings(newSettings)
             }
             .onDisappear {
-                saveCurrentLocation(for: activeDocument)
+                saveCurrentLocation(for: activeDocument, persist: true)
             }
         }
         .preferredColorScheme(preferredColorScheme)
@@ -249,6 +255,7 @@ struct ReaderView: View {
                 Button {
                     recordSessionIfNeeded(for: activeDocument)
                     engine.restart()
+                    saveCurrentLocation(for: activeDocument, persist: true)
                 } label: {
                     Image(systemName: "arrow.counterclockwise")
                         .font(.system(size: 20, weight: .semibold))
@@ -320,13 +327,14 @@ struct ReaderView: View {
         engine.load(text: activeDocument?.text ?? "", settings: settings)
     }
 
-    private func saveCurrentLocation(for document: ReadingDocument?) {
+    private func saveCurrentLocation(for document: ReadingDocument?, persist: Bool) {
         guard let document else { return }
         let summary = engine.sessionSummary()
         appState.updateReadingLocation(
             for: document.id,
             wordIndex: engine.state.wordIndex,
-            isCompleted: summary.completed && engine.state.wordIndex >= engine.state.totalWords
+            isCompleted: summary.completed && engine.state.wordIndex >= engine.state.totalWords,
+            persist: persist
         )
     }
 
