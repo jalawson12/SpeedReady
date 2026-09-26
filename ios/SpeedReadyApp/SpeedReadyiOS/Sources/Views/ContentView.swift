@@ -33,7 +33,7 @@ struct ContentView: View {
     }
 
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             ReaderView(appState: appState, settings: $settings)
                 .tag(AppTab.reader)
                 .tabItem {
@@ -63,7 +63,6 @@ struct ContentView: View {
                     Label("Settings", systemImage: "slider.horizontal.3")
                 }
         }
-        .selection($selectedTab)
         .tint(appTint)
         .toolbarBackground(tabBarBackground, for: .tabBar)
         .toolbarBackground(.visible, for: .tabBar)
