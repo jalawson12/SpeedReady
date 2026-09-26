@@ -19,6 +19,11 @@ struct ContentView: View {
                 .tabItem {
                     Label("Stats", systemImage: "chart.line.uptrend.xyaxis")
                 }
+
+            SessionHistoryView(appState: appState)
+                .tabItem {
+                    Label("History", systemImage: "clock.fill")
+                }
         }
     }
 }
