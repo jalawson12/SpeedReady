@@ -49,12 +49,12 @@ struct ReaderView: View {
             .padding()
             .background(palette.background.ignoresSafeArea())
             .onAppear {
-                engine.setSettings(settings)
                 if let currentDocument = appState.currentDocument {
                     loadDocument(currentDocument)
                 } else {
                     loadFallbackSample()
                 }
+                engine.setSettings(settings)
             }
             .onChange(of: appState.currentDocument) { previousDocument, nextDocument in
                 recordSessionIfNeeded(for: previousDocument ?? activeDocument)

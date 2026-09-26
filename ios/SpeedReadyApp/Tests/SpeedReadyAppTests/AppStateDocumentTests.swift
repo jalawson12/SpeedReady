@@ -50,6 +50,15 @@ final class AppStateDocumentTests: XCTestCase {
         XCTAssertEqual(reloaded.currentDocument?.title, "Selected Renamed")
     }
 
+    func testAddDocumentUsesProvidedTitle() {
+        let appState = SpeedReadyAppState()
+
+        appState.addDocument(title: "Manual Title", text: "hello world")
+
+        XCTAssertEqual(appState.currentDocument?.title, "Manual Title")
+        XCTAssertTrue(appState.documents.contains(where: { $0.title == "Manual Title" }))
+    }
+
     private func clearPersistedState() {
         UserDefaults.standard.removeObject(forKey: "speedready.documents.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.sessions.v1")
