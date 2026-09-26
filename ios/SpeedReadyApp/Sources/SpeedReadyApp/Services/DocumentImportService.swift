@@ -1,12 +1,15 @@
 import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
+#if canImport(UIKit)
 import UIKit
+#endif
 
 enum DocumentImportError: LocalizedError, Equatable {
     case unsupportedType
     case unreadableText
     case emptyDocument
+    case unavailableOnCurrentPlatform
     case pdf(PDFTextExtractor.ExtractionError)
     case epub(EPUBTextExtractor.ExtractionError)
 
@@ -18,6 +21,8 @@ enum DocumentImportError: LocalizedError, Equatable {
             return "The selected text file could not be decoded."
         case .emptyDocument:
             return "The selected document does not contain readable text."
+        case .unavailableOnCurrentPlatform:
+            return "Document import is unavailable on this platform."
         case .pdf(let error):
             return error.localizedDescription
         case .epub(let error):
@@ -86,6 +91,7 @@ struct DocumentImportPipeline {
 
 final class DocumentImportService: NSObject, ObservableObject {}
 
+#if canImport(UIKit)
 struct DocumentPickerView: UIViewControllerRepresentable {
     let onPick: (Result<ReadingDocument, DocumentImportError>) -> Void
 
@@ -125,3 +131,17 @@ struct DocumentPickerView: UIViewControllerRepresentable {
         }
     }
 }
+#else
+struct DocumentPickerView: View {
+    let onPick: (Result<ReadingDocument, DocumentImportError>) -> Void
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        Color.clear
+            .onAppear {
+                onPick(.failure(.unavailableOnCurrentPlatform))
+                dismiss()
+            }
+    }
+}
+#endif
