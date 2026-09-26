@@ -1,9 +1,15 @@
 import SwiftUI
 
 struct LibraryView: View {
+    private enum ActiveSheet: String, Identifiable {
+        case documentPicker
+        case textInput
+
+        var id: String { rawValue }
+    }
+
     @ObservedObject var appState: SpeedReadyAppState
-    @State private var showingDocumentPicker = false
-    @State private var showingTextInput = false
+    @State private var activeSheet: ActiveSheet?
     @State private var customText = ""
     @State private var importErrorMessage: String?
 
@@ -30,11 +36,11 @@ struct LibraryView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {
                         Button("Load Document", systemImage: "doc.badge.plus") {
-                            showingDocumentPicker = true
+                            activeSheet = .documentPicker
                         }
 
                         Button("Paste Text", systemImage: "doc.on.clipboard") {
-                            showingTextInput = true
+                            activeSheet = .textInput
                         }
                     } label: {
                         Image(systemName: "plus.circle.fill")
@@ -43,42 +49,48 @@ struct LibraryView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingDocumentPicker) {
-                DocumentPickerView { result in
-                    switch result {
-                    case .success(let document):
-                        appState.addDocument(document)
-                    case .failure(let error):
-                        importErrorMessage = error.localizedDescription
+            .sheet(item: $activeSheet) { sheet in
+                switch sheet {
+                case .documentPicker:
+                    DocumentPickerView { result in
+                        switch result {
+                        case .success(let document):
+                            appState.addDocument(document)
+                        case .failure(let error):
+                            importErrorMessage = error.localizedDescription
+                        }
+                        activeSheet = nil
                     }
-                    showingDocumentPicker = false
+                case .textInput:
+                    NavigationStack {
+                        Form {
+                            Section("Paste or type text") {
+                                TextEditor(text: $customText)
+                                    .frame(minHeight: 220)
+                            }
+                        }
+                        .navigationTitle("New reading text")
+                        .toolbar {
+                            ToolbarItem(placement: .topBarLeading) {
+                                Button("Cancel") {
+                                    dismissTextInput()
+                                }
+                            }
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button("Load") {
+                                    let trimmed = customText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                    guard !trimmed.isEmpty else { return }
+                                    appState.addDocument(title: "Custom text", text: trimmed)
+                                    dismissTextInput()
+                                }
+                            }
+                        }
+                    }
                 }
             }
-            .sheet(isPresented: $showingTextInput) {
-                NavigationStack {
-                    Form {
-                        Section("Paste or type text") {
-                            TextEditor(text: $customText)
-                                .frame(minHeight: 220)
-                        }
-                    }
-                    .navigationTitle("New reading text")
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            Button("Cancel") {
-                                showingTextInput = false
-                            }
-                        }
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Load") {
-                                let trimmed = customText.trimmingCharacters(in: .whitespacesAndNewlines)
-                                guard !trimmed.isEmpty else { return }
-                                appState.addDocument(title: "Custom text", text: trimmed)
-                                customText = ""
-                                showingTextInput = false
-                            }
-                        }
-                    }
+            .onChange(of: activeSheet?.id) { _, nextValue in
+                if nextValue != ActiveSheet.textInput.id {
+                    customText = ""
                 }
             }
             .alert("Import failed", isPresented: Binding(get: {
@@ -91,6 +103,11 @@ struct LibraryView: View {
                 Text(importErrorMessage ?? "Unknown error.")
             }
         }
+    }
+
+    private func dismissTextInput() {
+        customText = ""
+        activeSheet = nil
     }
 }
 
