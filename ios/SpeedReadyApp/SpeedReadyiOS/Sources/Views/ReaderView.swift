@@ -49,6 +49,7 @@ struct ReaderView: View {
             .padding()
             .background(palette.background.ignoresSafeArea())
             .onAppear {
+                engine.setSettings(settings)
                 if let currentDocument = appState.currentDocument {
                     loadDocument(currentDocument)
                 } else {
