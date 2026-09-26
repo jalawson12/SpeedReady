@@ -59,9 +59,49 @@ final class AppStateDocumentTests: XCTestCase {
         XCTAssertTrue(appState.documents.contains(where: { $0.title == "Manual Title" }))
     }
 
+    func testSelectingExistingDocumentPersistsAcrossReload() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "First", text: "one two")
+        appState.addDocument(title: "Second", text: "three four")
+
+        guard let first = appState.documents.first(where: { $0.title == "First" }) else {
+            XCTFail("Expected first document")
+            return
+        }
+
+        appState.setCurrentDocument(first)
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.currentDocument?.id, first.id)
+        XCTAssertEqual(reloaded.currentDocument?.title, "First")
+    }
+
+    func testReadingLocationPersistsPerDocumentAcrossReload() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "First", text: "one two three four")
+        appState.addDocument(title: "Second", text: "alpha beta gamma delta")
+
+        guard let first = appState.documents.first(where: { $0.title == "First" }),
+              let second = appState.documents.first(where: { $0.title == "Second" }) else {
+            XCTFail("Expected test documents")
+            return
+        }
+
+        appState.updateReadingLocation(for: first.id, wordIndex: 3, isCompleted: false)
+        appState.updateReadingLocation(for: second.id, wordIndex: 4, isCompleted: true)
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.readingLocation(for: first)?.wordIndex, 3)
+        XCTAssertEqual(reloaded.readingLocation(for: first)?.isCompleted, false)
+        XCTAssertEqual(reloaded.readingLocation(for: second)?.wordIndex, 4)
+        XCTAssertEqual(reloaded.readingLocation(for: second)?.isCompleted, true)
+    }
+
     private func clearPersistedState() {
         UserDefaults.standard.removeObject(forKey: "speedready.documents.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.sessions.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.readerSettings.v1")
+        UserDefaults.standard.removeObject(forKey: "speedready.currentDocument.v1")
+        UserDefaults.standard.removeObject(forKey: "speedready.readingLocations.v1")
     }
 }

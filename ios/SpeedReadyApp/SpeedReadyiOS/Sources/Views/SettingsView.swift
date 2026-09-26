@@ -3,10 +3,15 @@ import UIKit
 
 struct SettingsView: View {
     @Binding var settings: ReaderSettings
+    @Environment(\.colorScheme) private var colorScheme
     @State private var pendingSaveTask: Task<Void, Never>?
     @State private var saveGeneration: UInt = 0
     @State private var hasPendingChanges = false
     let onSave: (ReaderSettings) -> Void
+
+    private var palette: AppPalette {
+        AppPalette(settings: settings, colorScheme: colorScheme)
+    }
 
     var body: some View {
         NavigationStack {
@@ -19,6 +24,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.segmented)
                 }
+                .listRowBackground(palette.surface)
 
                 Section("Reading pace") {
                     HStack {
@@ -39,6 +45,7 @@ struct SettingsView: View {
                         Slider(value: $settings.speedRampTarget, in: 100...1600, step: 25)
                     }
                 }
+                .listRowBackground(palette.surface)
 
                 Section("Typography") {
                     HStack {
@@ -66,6 +73,7 @@ struct SettingsView: View {
 
                     Toggle("Dyslexia mode", isOn: $settings.dyslexiaMode)
                 }
+                .listRowBackground(palette.surface)
 
                 Section("ORP & anchor") {
                     HStack {
@@ -85,6 +93,7 @@ struct SettingsView: View {
                     Toggle("ORP guide marks", isOn: $settings.showOrpGuides)
                     Toggle("Hide trailing punctuation", isOn: $settings.hidePunctuationInDisplay)
                 }
+                .listRowBackground(palette.surface)
 
                 Section("Timing") {
                     HStack {
@@ -105,6 +114,7 @@ struct SettingsView: View {
                     Toggle("Comma as sentence pause", isOn: $settings.commaAsPause)
                     Toggle("Context pause on close", isOn: $settings.contextPauseOnClose)
                 }
+                .listRowBackground(palette.surface)
 
                 Section("Visual highlights") {
                     ColorPicker("Pivot highlight", selection: highlightColorBinding)
@@ -117,6 +127,7 @@ struct SettingsView: View {
                         ColorPicker("Paren color", selection: parenColorBinding)
                     }
                 }
+                .listRowBackground(palette.surface)
 
                 Section("Pause view mode") {
                     Picker("Pause view", selection: $settings.pauseView) {
@@ -126,6 +137,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.segmented)
                 }
+                .listRowBackground(palette.surface)
 
                 Section("Reading features") {
                     Toggle("Focus mode", isOn: $settings.focusMode)
@@ -135,8 +147,12 @@ struct SettingsView: View {
                         Stepper("Peripheral density: \(settings.peripheralContextCount)", value: $settings.peripheralContextCount, in: 1...3)
                     }
                 }
+                .listRowBackground(palette.surface)
             }
             .navigationTitle("Settings")
+            .scrollContentBackground(.hidden)
+            .background(palette.background)
+            .tint(palette.accent)
             .onChange(of: settings) { _, newSettings in
                 hasPendingChanges = true
                 saveGeneration &+= 1

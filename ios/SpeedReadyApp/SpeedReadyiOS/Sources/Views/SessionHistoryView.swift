@@ -2,40 +2,54 @@ import SwiftUI
 
 struct SessionHistoryView: View {
     @ObservedObject var appState: SpeedReadyAppState
+    let settings: ReaderSettings
+    @Environment(\.colorScheme) private var colorScheme
+
+    private var palette: AppPalette {
+        AppPalette(settings: settings, colorScheme: colorScheme)
+    }
 
     var body: some View {
         NavigationStack {
-            List {
-                if appState.sessions.isEmpty {
-                    Text("Your reading sessions will appear here.")
-                        .foregroundStyle(.secondary)
-                } else {
-                    ForEach(appState.sessions) { session in
-                        VStack(alignment: .leading, spacing: 8) {
-                            HStack {
-                                Text(session.documentTitle)
-                                    .font(.headline)
-                                Spacer()
-                                Text(session.completed ? "Complete" : "Active")
-                                    .font(.caption)
-                                    .foregroundStyle(session.completed ? .green : .orange)
-                            }
+            ZStack {
+                palette.background.ignoresSafeArea()
 
-                            HStack {
-                                Label("\(session.wordsRead) words", systemImage: "text.justify")
-                                Spacer()
-                                Label(String(format: "%.1f min", session.durationSeconds / 60.0), systemImage: "timer")
-                            }
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                List {
+                    if appState.sessions.isEmpty {
+                        Text("Your reading sessions will appear here.")
+                            .foregroundStyle(palette.mutedText)
+                            .listRowBackground(palette.surface)
+                    } else {
+                        ForEach(appState.sessions) { session in
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    Text(session.documentTitle)
+                                        .font(.headline)
+                                        .foregroundStyle(palette.text)
+                                    Spacer()
+                                    Text(session.completed ? "Complete" : "Active")
+                                        .font(.caption)
+                                        .foregroundStyle(session.completed ? palette.success : palette.warning)
+                                }
 
-                            Text(session.startedAt.formatted(date: .abbreviated, time: .shortened))
-                                .font(.caption2)
-                                .foregroundStyle(.tertiary)
+                                HStack {
+                                    Label("\(session.wordsRead) words", systemImage: "text.justify")
+                                    Spacer()
+                                    Label(String(format: "%.1f min", session.durationSeconds / 60.0), systemImage: "timer")
+                                }
+                                .font(.subheadline)
+                                .foregroundStyle(palette.mutedText)
+
+                                Text(session.startedAt.formatted(date: .abbreviated, time: .shortened))
+                                    .font(.caption2)
+                                    .foregroundStyle(palette.mutedText.opacity(0.8))
+                            }
+                            .padding(.vertical, 4)
+                            .listRowBackground(palette.surface)
                         }
-                        .padding(.vertical, 4)
                     }
                 }
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Reading history")
         }
@@ -43,5 +57,5 @@ struct SessionHistoryView: View {
 }
 
 #Preview {
-    SessionHistoryView(appState: SpeedReadyAppState())
+    SessionHistoryView(appState: SpeedReadyAppState(), settings: ReaderSettings())
 }
