@@ -329,7 +329,8 @@ struct ReaderView: View {
     }
 
     private func saveCurrentLocation(for document: ReadingDocument?, persist: Bool) {
-        guard let document else { return }
+        guard let document,
+              appState.documents.contains(where: { $0.id == document.id }) else { return }
         let summary = engine.sessionSummary()
         appState.updateReadingLocation(
             for: document.id,

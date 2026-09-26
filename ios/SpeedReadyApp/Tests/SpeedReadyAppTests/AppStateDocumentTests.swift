@@ -199,6 +199,32 @@ final class AppStateDocumentTests: XCTestCase {
         XCTAssertEqual(reloaded.readingLocation(for: document)?.wordIndex, 1)
     }
 
+    func testReloadPrunesOrphanedSelectionAndProgress() throws {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "First", text: "one two three")
+        appState.addDocument(title: "Second", text: "alpha beta gamma")
+
+        guard let first = appState.documents.first(where: { $0.title == "First" }),
+              let second = appState.documents.first(where: { $0.title == "Second" }) else {
+            XCTFail("Expected test documents")
+            return
+        }
+
+        appState.setCurrentDocument(first)
+        appState.updateReadingLocation(for: first.id, wordIndex: 2, totalWords: 3, isCompleted: false)
+        appState.updateReadingLocation(for: second.id, wordIndex: 1, totalWords: 3, isCompleted: false)
+
+        let replacement = ReadingDocument(title: "Replacement", text: "delta epsilon", wordCount: 2)
+        let replacementData = try XCTUnwrap(try? JSONEncoder().encode([replacement]))
+        UserDefaults.standard.set(replacementData, forKey: "speedready.documents.v1")
+        UserDefaults.standard.set(first.id.uuidString, forKey: "speedready.currentDocument.v1")
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.currentDocument?.id, replacement.id)
+        XCTAssertNil(reloaded.readingLocation(for: first))
+        XCTAssertNil(reloaded.readingLocation(for: second))
+    }
+
     private func clearPersistedState() {
         UserDefaults.standard.removeObject(forKey: "speedready.documents.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.sessions.v1")

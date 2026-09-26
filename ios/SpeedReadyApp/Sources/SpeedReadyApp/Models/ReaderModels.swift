@@ -278,6 +278,13 @@ final class SpeedReadyAppState: ObservableObject {
     }
 
     private func saveReadingState() {
+        let validDocumentIDs = Set(documents.map(\.id.uuidString))
+        readingLocations = readingLocations.filter { validDocumentIDs.contains($0.key) }
+        transientReadingLocations = transientReadingLocations.filter { validDocumentIDs.contains($0.key) }
+        if let currentDocument, !validDocumentIDs.contains(currentDocument.id.uuidString) {
+            self.currentDocument = documents.first
+        }
+
         UserDefaults.standard.set(currentDocument?.id.uuidString, forKey: currentDocumentKey)
         if let data = try? JSONEncoder().encode(readingLocations) {
             UserDefaults.standard.set(data, forKey: readingLocationsKey)
