@@ -134,12 +134,8 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
-                        onSave(settings)
-                    }
-                }
+            .onChange(of: settings) { _, newSettings in
+                onSave(newSettings)
             }
         }
     }
