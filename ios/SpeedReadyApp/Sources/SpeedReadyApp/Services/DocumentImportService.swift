@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 import UIKit
+import PDFKit
 
 final class DocumentImportService: NSObject, ObservableObject {
     private var onPick: ((ReadingDocument) -> Void)?
@@ -10,7 +11,7 @@ final class DocumentImportService: NSObject, ObservableObject {
     func present(from viewController: UIViewController, onPick: @escaping (ReadingDocument) -> Void) {
         self.onPick = onPick
         let picker = UIDocumentPickerViewController(
-            forOpeningContentTypes: [UTType.plainText, UTType.text, UTType.pdf, UTType.epub],
+            forOpeningContentTypes: [UTType.plainText, UTType.text, UTType.pdf],
             asCopy: true
         )
         picker.delegate = self
@@ -19,33 +20,56 @@ final class DocumentImportService: NSObject, ObservableObject {
         viewController.present(picker, animated: true)
     }
 
-    private func loadText(from url: URL) -> String {
-        do {
-            let data = try Data(contentsOf: url)
-            if let text = String(data: data, encoding: .utf8) {
-                return text
+    private func makeDocument(from url: URL) -> ReadingDocument {
+        let title = url.deletingPathExtension().lastPathComponent
+        let text = extractTextFromURL(url)
+        let cleanedText = text.isEmpty ? "Imported document loaded successfully. Add content from a text or PDF file to begin reading." : text
+        return ReadingDocument(
+            title: title,
+            text: cleanedText,
+            wordCount: cleanedText.split(whereSeparator: { $0.isWhitespace }).count,
+            createdAt: Date()
+        )
+    }
+
+    private func extractTextFromURL(_ url: URL) -> String {
+        let ext = url.pathExtension.lowercased()
+
+        // Handle PDF files
+        if ext == "pdf", let pdf = PDFDocument(url: url) {
+            var parts: [String] = []
+            for pageIndex in 0..<pdf.pageCount {
+                if let page = pdf.page(at: pageIndex), let pageText = page.string {
+                    let cleaned = pageText
+                        .replacingOccurrences(of: "\u{0000}", with: "")
+                        .replacingOccurrences(of: "\n{3,}", with: "\n\n", options: .regularExpression)
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                    if !cleaned.isEmpty {
+                        parts.append(cleaned)
+                    }
+                }
             }
-            if let text = String(data: data, encoding: .isoLatin1) {
-                return text
+            let combined = parts.joined(separator: "\n\n")
+            if !combined.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return combined
             }
-            return ""
-        } catch {
-            return ""
         }
+
+        // Handle text files
+        if let content = try? String(contentsOf: url, encoding: .utf8) {
+            return content
+        }
+        if let content = try? String(contentsOf: url, encoding: .isoLatin1) {
+            return content
+        }
+        return ""
     }
 }
 
 extension DocumentImportService: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first else { return }
-        let title = url.deletingPathExtension().lastPathComponent
-        let text = loadText(from: url)
-        let doc = ReadingDocument(
-            title: title,
-            text: text.isEmpty ? "Imported document loaded successfully. Add content from a plain text, markdown, or other supported file to begin reading." : text,
-            wordCount: text.isEmpty ? 0 : text.split(whereSeparator: { $0.isWhitespace }).count,
-            createdAt: Date()
-        )
+        let doc = makeDocument(from: url)
         onPick?(doc)
     }
 
@@ -63,7 +87,7 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(
-            forOpeningContentTypes: [UTType.plainText, UTType.text, UTType.pdf, UTType.epub],
+            forOpeningContentTypes: [UTType.plainText, UTType.text, UTType.pdf],
             asCopy: true
         )
         picker.delegate = context.coordinator
@@ -82,15 +106,48 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             guard let url = urls.first else { return }
-            let text = try? String(contentsOf: url, encoding: .utf8)
-            let finalText = text ?? "" 
+            let extracted = extractText(from: url)
+            let finalText = extracted.isEmpty ? "Imported document loaded successfully." : extracted
             let doc = ReadingDocument(
                 title: url.deletingPathExtension().lastPathComponent,
-                text: finalText.isEmpty ? "Imported document loaded successfully." : finalText,
-                wordCount: finalText.isEmpty ? 0 : finalText.split(whereSeparator: { $0.isWhitespace }).count,
+                text: finalText,
+                wordCount: finalText.split(whereSeparator: { $0.isWhitespace }).count,
                 createdAt: Date()
             )
             parent.onPick(doc)
+        }
+
+        private func extractText(from url: URL) -> String {
+            let ext = url.pathExtension.lowercased()
+            
+            // Handle PDF
+            if ext == "pdf", let pdf = PDFDocument(url: url) {
+                var parts: [String] = []
+                for pageIndex in 0..<pdf.pageCount {
+                    if let page = pdf.page(at: pageIndex), let pageText = page.string {
+                        let cleaned = pageText
+                            .replacingOccurrences(of: "\u{0000}", with: "")
+                            .replacingOccurrences(of: "\n{3,}", with: "\n\n", options: .regularExpression)
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                        if !cleaned.isEmpty {
+                            parts.append(cleaned)
+                        }
+                    }
+                }
+                let combined = parts.joined(separator: "\n\n")
+                if !combined.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    return combined
+                }
+            }
+
+            // Handle text files
+            if let content = try? String(contentsOf: url, encoding: .utf8) {
+                return content
+            }
+            if let content = try? String(contentsOf: url, encoding: .isoLatin1) {
+                return content
+            }
+            return ""
         }
     }
 }
