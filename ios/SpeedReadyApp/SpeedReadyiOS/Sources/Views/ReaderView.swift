@@ -230,7 +230,7 @@ struct ReaderView: View {
                 Text(timeLeftText)
                     .font(.caption)
                     .foregroundStyle(palette.mutedText)
-                    .accessibilityLabel("Time left: \(timeLeftText)")
+                    .accessibilityLabel(timeLeftAccessibilityText)
             }
         }
         .opacity(settings.focusMode ? 0.7 : 1)
@@ -341,12 +341,24 @@ struct ReaderView: View {
     }
 
     private var timeLeftText: String {
+        let minutes = remainingTimeComponents.minutes
+        let seconds = remainingTimeComponents.seconds
+        return String(format: "%d:%02d left", minutes, seconds)
+    }
+
+    private var timeLeftAccessibilityText: String {
+        let minutes = remainingTimeComponents.minutes
+        let seconds = remainingTimeComponents.seconds
+        let minuteUnit = minutes == 1 ? "minute" : "minutes"
+        let secondUnit = seconds == 1 ? "second" : "seconds"
+        return "Time left: \(minutes) \(minuteUnit) \(seconds) \(secondUnit)"
+    }
+
+    private var remainingTimeComponents: (minutes: Int, seconds: Int) {
         let remainingWords = max(engine.state.totalWords - engine.state.wordIndex, 0)
         let wpm = max(Double(engine.state.currentWpm), 1)
         let totalSeconds = Int((Double(remainingWords) / wpm * 60).rounded())
-        let minutes = totalSeconds / 60
-        let seconds = totalSeconds % 60
-        return String(format: "%d:%02d left", minutes, seconds)
+        return (totalSeconds / 60, totalSeconds % 60)
     }
 
     private func kerningValue(for fontSize: CGFloat) -> CGFloat {
