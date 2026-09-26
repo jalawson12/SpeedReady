@@ -24,7 +24,7 @@ final class TokenizationTests: XCTestCase {
     func testParagraphBoundariesDetected() {
         let text = "First paragraph.\n\nSecond paragraph."
         engine.load(text: text)
-        XCTAssertGreater(engine.state.totalWords, 0)
+        XCTAssertGreaterThan(engine.state.totalWords, 0)
     }
 
     func testPunctuationPreserved() {

@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 
 protocol RSVPScheduler {
     func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask
@@ -38,6 +37,7 @@ final class RSVPEngine: ObservableObject {
     private var totalPausedDuration: TimeInterval = 0
     private var pausedAt: Date?
     private var didCompleteSession = false
+    private(set) var sessionID = UUID()
 
     private let now: () -> Date
     private let scheduler: RSVPScheduler
@@ -51,6 +51,7 @@ final class RSVPEngine: ObservableObject {
         pause()
         self.settings = settings
         self.tokens = tokenize(text)
+        self.sessionID = UUID()
         self.state = ReaderState(
             isPlaying: false,
             wordIndex: 0,
@@ -73,6 +74,11 @@ final class RSVPEngine: ObservableObject {
         if state.wordIndex >= tokens.count {
             state.wordIndex = 0
             didCompleteSession = false
+            updateCurrentDisplay(index: 0)
+            sessionStartedAt = now()
+            totalPausedDuration = 0
+            pausedAt = nil
+            sessionID = UUID()
         }
         if let pausedAt {
             totalPausedDuration += now().timeIntervalSince(pausedAt)
@@ -102,6 +108,7 @@ final class RSVPEngine: ObservableObject {
     func restart() {
         guard !tokens.isEmpty else { return }
         pause()
+        sessionID = UUID()
         state.wordIndex = 0
         didCompleteSession = false
         updateCurrentDisplay(index: 0)

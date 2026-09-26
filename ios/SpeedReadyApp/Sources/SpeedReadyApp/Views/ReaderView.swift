@@ -4,6 +4,8 @@ struct ReaderView: View {
     @ObservedObject var appState: SpeedReadyAppState
     @StateObject private var engine = RSVPEngine()
     @State private var settings = ReaderSettings.loadPersisted()
+    @State private var activeDocument: ReadingDocument?
+    @State private var recordedSessionIDs: Set<UUID> = []
     @State private var showingSettings = false
     @State private var showingDocumentPicker = false
     @State private var showingTextInput = false
@@ -55,9 +57,7 @@ struct ReaderView: View {
             }
             .sheet(isPresented: $showingSettings) {
                 SettingsView(settings: $settings, isPresented: $showingSettings) { newSettings in
-                    settings = newSettings
-                    settings.persist()
-                    engine.setSettings(newSettings)
+                    applySettings(newSettings)
                 }
             }
             .sheet(isPresented: $showingDocumentPicker) {
@@ -65,7 +65,6 @@ struct ReaderView: View {
                     switch result {
                     case .success(let document):
                         appState.setCurrentDocument(document)
-                        engine.load(text: document.text, settings: settings)
                     case .failure(let error):
                         importErrorMessage = error.localizedDescription
                     }
@@ -98,7 +97,6 @@ struct ReaderView: View {
                                     createdAt: Date()
                                 )
                                 appState.setCurrentDocument(doc)
-                                engine.load(text: doc.text, settings: settings)
                                 customText = ""
                                 showingTextInput = false
                             }
@@ -107,10 +105,16 @@ struct ReaderView: View {
                 }
             }
             .onAppear {
-                engine.load(text: currentDocument.text, settings: settings)
+                loadDocument(currentDocument)
             }
             .onChange(of: currentDocument.id) { _, _ in
-                engine.load(text: currentDocument.text, settings: settings)
+                recordSessionIfNeeded(for: activeDocument)
+                loadDocument(currentDocument)
+            }
+            .onChange(of: engine.state.wordIndex) { _, _ in
+                let summary = engine.sessionSummary()
+                guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return }
+                recordSessionIfNeeded(for: activeDocument, completedOverride: true)
             }
             .alert("Import failed", isPresented: Binding(get: {
                 importErrorMessage != nil
@@ -166,7 +170,7 @@ struct ReaderView: View {
     private var controlsView: some View {
         HStack {
             Button {
-                engine.decreaseWpm()
+                adjustWpm(by: -25)
             } label: {
                 Image(systemName: "minus.circle")
                     .accessibilityLabel("Decrease words per minute")
@@ -182,7 +186,7 @@ struct ReaderView: View {
             Spacer()
 
             Button {
-                engine.increaseWpm()
+                adjustWpm(by: 25)
             } label: {
                 Image(systemName: "plus.circle")
                     .accessibilityLabel("Increase words per minute")
@@ -245,6 +249,7 @@ struct ReaderView: View {
             .accessibilityLabel("Paste text from clipboard")
 
             Button("Restart") {
+                recordSessionIfNeeded(for: activeDocument)
                 engine.restart()
             }
             .buttonStyle(.bordered)
@@ -252,6 +257,41 @@ struct ReaderView: View {
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.top, 4)
+    }
+
+    private func loadDocument(_ document: ReadingDocument) {
+        activeDocument = document
+        engine.load(text: document.text, settings: settings)
+    }
+
+    private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
+        settings = newSettings
+        if persist {
+            settings.persist()
+        }
+        engine.setSettings(newSettings)
+    }
+
+    private func adjustWpm(by delta: Double) {
+        var newSettings = settings
+        newSettings.wpm = min(1600, max(100, newSettings.wpm + delta))
+        applySettings(newSettings)
+    }
+
+    private func recordSessionIfNeeded(for document: ReadingDocument?, completedOverride: Bool? = nil) {
+        guard let document else { return }
+        guard !recordedSessionIDs.contains(engine.sessionID) else { return }
+
+        let summary = engine.sessionSummary()
+        guard summary.wordsRead > 0 || completedOverride == true else { return }
+
+        appState.recordSession(
+            documentTitle: document.title,
+            wordsRead: summary.wordsRead,
+            durationSeconds: summary.duration,
+            completed: completedOverride ?? summary.completed
+        )
+        recordedSessionIDs.insert(engine.sessionID)
     }
 
     private func statPill(title: String, value: String) -> some View {

@@ -5,12 +5,12 @@
       "name" : "SpeedReadyApp",
       "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp",
       "projects" : [
-        "1d46303a8198f23049d927b7cf0f12de7c706d17312e6d6eaec30c2fe67279b4",
+        "b3ef439d5d05a325a972ec7e2d150612eebd81e27b82a1f6e4eee485c93cf1dd",
         "934f34e4af18782808f410ba113261e4fca90aecf88ef101feac0083aa1c69e3",
-        "ea03dd17c4a61e6f618cd59244a9ccb94f9e418815ec6b95669632f6cedf6f98"
+        "5bafaea31e7217e11b7569898ab20e6cd7841491fbb46833e2cf17562b078fe3"
       ]
     },
-    "signature" : "575bb9386113be238cd0cff6f8d1cf042dfba493dd6c726a707e3873d04f2cb3",
+    "signature" : "6a9bc633dad83197d08c09613387778553607da8bd1bd34e3f8f987d1515508e",
     "type" : "workspace"
   },
   {
@@ -275,14 +275,6 @@
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_0",
-                "name" : "App/SpeedReadyApp.swift",
-                "path" : "App/SpeedReadyApp.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_1",
                 "name" : "Models/ReaderModels.swift",
                 "path" : "Models/ReaderModels.swift",
                 "sourceTree" : "<group>",
@@ -290,15 +282,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_2",
-                "name" : "Services/DocumentImportService.swift",
-                "path" : "Services/DocumentImportService.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_3",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_1",
                 "name" : "Services/EPUBTextExtractor.swift",
                 "path" : "Services/EPUBTextExtractor.swift",
                 "sourceTree" : "<group>",
@@ -306,7 +290,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_4",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_2",
                 "name" : "Services/PDFTextExtractor.swift",
                 "path" : "Services/PDFTextExtractor.swift",
                 "sourceTree" : "<group>",
@@ -314,7 +298,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_5",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_3",
                 "name" : "Services/RSVPEngine.swift",
                 "path" : "Services/RSVPEngine.swift",
                 "sourceTree" : "<group>",
@@ -322,49 +306,9 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_6",
-                "name" : "Views/ContentView.swift",
-                "path" : "Views/ContentView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_7",
-                "name" : "Views/LibraryView.swift",
-                "path" : "Views/LibraryView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_8",
-                "name" : "Views/ReaderView.swift",
-                "path" : "Views/ReaderView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_9",
-                "name" : "Views/SessionHistoryView.swift",
-                "path" : "Views/SessionHistoryView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_10",
-                "name" : "Views/SettingsView.swift",
-                "path" : "Views/SettingsView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_11",
-                "name" : "Views/StatsView.swift",
-                "path" : "Views/StatsView.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_4",
+                "name" : "Support/ObservableObjectCompat.swift",
+                "path" : "Support/ObservableObjectCompat.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               }
@@ -380,14 +324,6 @@
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_0",
-                "name" : "App/SpeedReadyApp.swift",
-                "path" : "App/SpeedReadyApp.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_1",
                 "name" : "Models/ReaderModels.swift",
                 "path" : "Models/ReaderModels.swift",
                 "sourceTree" : "<group>",
@@ -395,15 +331,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_2",
-                "name" : "Services/DocumentImportService.swift",
-                "path" : "Services/DocumentImportService.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_3",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_1",
                 "name" : "Services/EPUBTextExtractor.swift",
                 "path" : "Services/EPUBTextExtractor.swift",
                 "sourceTree" : "<group>",
@@ -411,7 +339,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_4",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_2",
                 "name" : "Services/PDFTextExtractor.swift",
                 "path" : "Services/PDFTextExtractor.swift",
                 "sourceTree" : "<group>",
@@ -419,7 +347,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_5",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_3",
                 "name" : "Services/RSVPEngine.swift",
                 "path" : "Services/RSVPEngine.swift",
                 "sourceTree" : "<group>",
@@ -427,49 +355,9 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_6",
-                "name" : "Views/ContentView.swift",
-                "path" : "Views/ContentView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_7",
-                "name" : "Views/LibraryView.swift",
-                "path" : "Views/LibraryView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_8",
-                "name" : "Views/ReaderView.swift",
-                "path" : "Views/ReaderView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_9",
-                "name" : "Views/SessionHistoryView.swift",
-                "path" : "Views/SessionHistoryView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_10",
-                "name" : "Views/SettingsView.swift",
-                "path" : "Views/SettingsView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_11",
-                "name" : "Views/StatsView.swift",
-                "path" : "Views/StatsView.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_4",
+                "name" : "Support/ObservableObjectCompat.swift",
+                "path" : "Support/ObservableObjectCompat.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               }
@@ -493,14 +381,15 @@
       "projectIsPackage" : "true",
       "projectName" : "SpeedReadyApp",
       "targets" : [
-        "2ef51f131e08896fd555da32efa88caebc4de48522aab77cacb58242f3032962",
+        "e23b43c19d7ca77fcda907ad5e5d9a581a594ee27656af50ed006be549ba5d6a",
         "cb3a0c3a68310842c47f413c1b847c4037a6b711698df48e60be475a0317a60a",
-        "89912058bcbb335d2aab18dfa52ef4d11af2b70dd916392fb5dcd01da357aca6",
-        "d648bf3fbcd67c4e330c12121e381808a40e21eacb542ab9c131b3dc872826e9",
+        "1c1e10f79836046c500ef53db62d1f5ef18ce6395ff028cd2dc300d6e2648fb0",
+        "8fe5f5a172c3539532f0c7a8a10cac7c56bdfc417dfb37b5714e8c12cbc75d32",
+        "011e150d8e1e8301344fb7ecf0f10b80196a6d7279e8ab1ff47e6d0c5056ae2f",
         "8e7166a9ba22a5f81ed8e2370aa34c5c07e6918f469823537c9ad11f27d26f69"
       ]
     },
-    "signature" : "1d46303a8198f23049d927b7cf0f12de7c706d17312e6d6eaec30c2fe67279b4",
+    "signature" : "b3ef439d5d05a325a972ec7e2d150612eebd81e27b82a1f6e4eee485c93cf1dd",
     "type" : "project"
   },
   {
@@ -765,7 +654,7 @@
               "platformFilters" : [
 
               ],
-              "targetReference" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable"
+              "targetReference" : "PACKAGE-TARGET:SpeedReadyApp"
             }
           ],
           "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_1",
@@ -786,13 +675,7 @@
           ]
         },
         {
-          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp",
-          "platformFilters" : [
-
-          ]
-        },
-        {
-          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable",
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp",
           "platformFilters" : [
 
           ]
@@ -808,7 +691,7 @@
       "productTypeIdentifier" : "com.apple.product-type.bundle.unit-test",
       "type" : "standard"
     },
-    "signature" : "2ef51f131e08896fd555da32efa88caebc4de48522aab77cacb58242f3032962",
+    "signature" : "e23b43c19d7ca77fcda907ad5e5d9a581a594ee27656af50ed006be549ba5d6a",
     "type" : "target"
   },
   {
@@ -935,42 +818,14 @@
       "buildConfigurations" : [
         {
           "buildSettings" : {
-            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
-            "DRIVERKIT_DEPLOYMENT_TARGET" : "21.0",
-            "GENERATE_EMBED_IN_CODE_ACCESSORS" : "NO",
-            "GENERATE_RESOURCE_ACCESSORS" : "YES",
-            "IPHONEOS_DEPLOYMENT_TARGET" : "17.0",
-            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "17.0",
-            "MACOSX_DEPLOYMENT_TARGET" : "12.0",
-            "OTHER_SWIFT_FLAGS" : [
-              "$(inherited)",
-              "$(OTHER_SWIFT_FLAGS_ENABLE_LIBFUZZER_$(ENABLE_LIBFUZZER))"
-            ],
-            "OTHER_SWIFT_FLAGS_ENABLE_LIBFUZZER_YES" : [
-              "-Xfrontend",
-              "-entry-point-function-name",
-              "-Xfrontend",
-              "SpeedReadyApp_main"
-            ],
-            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
-            "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyApp",
-            "PRODUCT_MODULE_NAME" : "SpeedReadyApp",
-            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "EXECUTABLE_PREFIX" : "lib",
+            "EXECUTABLE_PREFIX[__platform_filter=windows-msvc]" : "",
+            "PRODUCT_NAME" : "SpeedReadyApp",
             "SDKROOT" : "auto",
             "SDK_VARIANT" : "auto",
-            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
-            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
-            "SWIFT_INSTALL_MODULE" : "NO",
-            "SWIFT_LIBRARIES_ONLY" : "YES",
-            "SWIFT_PACKAGE_NAME" : "speedreadyapp",
-            "SWIFT_VERSION" : "5",
-            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
-            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
-            "TARGET_NAME" : "SpeedReadyApp",
+            "TARGET_NAME" : "SpeedReadyApp-product",
             "TARGET_TEMP_DIR_SUFFIX" : "-p",
-            "TVOS_DEPLOYMENT_TARGET" : "15.0",
-            "WATCHOS_DEPLOYMENT_TARGET" : "9.0",
-            "XROS_DEPLOYMENT_TARGET" : "1.0"
+            "USES_SWIFTPM_UNSAFE_FLAGS" : "NO"
           },
           "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDCONFIG_0",
           "impartedBuildProperties" : {
@@ -982,42 +837,14 @@
         },
         {
           "buildSettings" : {
-            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
-            "DRIVERKIT_DEPLOYMENT_TARGET" : "21.0",
-            "GENERATE_EMBED_IN_CODE_ACCESSORS" : "NO",
-            "GENERATE_RESOURCE_ACCESSORS" : "YES",
-            "IPHONEOS_DEPLOYMENT_TARGET" : "17.0",
-            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "17.0",
-            "MACOSX_DEPLOYMENT_TARGET" : "12.0",
-            "OTHER_SWIFT_FLAGS" : [
-              "$(inherited)",
-              "$(OTHER_SWIFT_FLAGS_ENABLE_LIBFUZZER_$(ENABLE_LIBFUZZER))"
-            ],
-            "OTHER_SWIFT_FLAGS_ENABLE_LIBFUZZER_YES" : [
-              "-Xfrontend",
-              "-entry-point-function-name",
-              "-Xfrontend",
-              "SpeedReadyApp_main"
-            ],
-            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
-            "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyApp",
-            "PRODUCT_MODULE_NAME" : "SpeedReadyApp",
-            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "EXECUTABLE_PREFIX" : "lib",
+            "EXECUTABLE_PREFIX[__platform_filter=windows-msvc]" : "",
+            "PRODUCT_NAME" : "SpeedReadyApp",
             "SDKROOT" : "auto",
             "SDK_VARIANT" : "auto",
-            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
-            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
-            "SWIFT_INSTALL_MODULE" : "NO",
-            "SWIFT_LIBRARIES_ONLY" : "YES",
-            "SWIFT_PACKAGE_NAME" : "speedreadyapp",
-            "SWIFT_VERSION" : "5",
-            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
-            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
-            "TARGET_NAME" : "SpeedReadyApp",
+            "TARGET_NAME" : "SpeedReadyApp-product",
             "TARGET_TEMP_DIR_SUFFIX" : "-p",
-            "TVOS_DEPLOYMENT_TARGET" : "15.0",
-            "WATCHOS_DEPLOYMENT_TARGET" : "9.0",
-            "XROS_DEPLOYMENT_TARGET" : "1.0"
+            "USES_SWIFTPM_UNSAFE_FLAGS" : "NO"
           },
           "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDCONFIG_1",
           "impartedBuildProperties" : {
@@ -1032,129 +859,29 @@
         {
           "buildFiles" : [
             {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_0",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::0",
               "platformFilters" : [
 
               ],
-              "removeHeadersOnCopy" : "false"
+              "targetReference" : "PACKAGE-TARGET:SpeedReadyApp"
             },
             {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_1",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::1",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_2",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::2",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_3",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::3",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_4",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::4",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_5",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::5",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_6",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::6",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_7",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::7",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_8",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::8",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_9",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::9",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_10",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::10",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_11",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::11",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            }
-          ],
-          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0",
-          "type" : "com.apple.buildphase.sources"
-        },
-        {
-          "buildFiles" : [
-            {
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_1::0",
               "platformFilters" : [
 
               ],
               "targetReference" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation"
             }
           ],
-          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_1",
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0",
           "type" : "com.apple.buildphase.frameworks"
+        },
+        {
+          "buildFiles" : [
+
+          ],
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_1",
+          "type" : "com.apple.buildphase.sources"
         }
       ],
       "buildRules" : [
@@ -1164,6 +891,12 @@
 
       ],
       "dependencies" : [
+        {
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp",
+          "platformFilters" : [
+
+          ]
+        },
         {
           "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation",
           "platformFilters" : [
@@ -1178,10 +911,10 @@
         "name" : "$(EXECUTABLE_NAME)",
         "type" : "file"
       },
-      "productTypeIdentifier" : "com.apple.product-type.tool",
+      "productTypeIdentifier" : "com.apple.product-type.library.static",
       "type" : "standard"
     },
-    "signature" : "89912058bcbb335d2aab18dfa52ef4d11af2b70dd916392fb5dcd01da357aca6",
+    "signature" : "1c1e10f79836046c500ef53db62d1f5ef18ce6395ff028cd2dc300d6e2648fb0",
     "type" : "target"
   },
   {
@@ -1192,18 +925,9 @@
           "buildSettings" : {
             "DEFINES_MODULE" : "YES",
             "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
-            "GENERATE_EMBED_IN_CODE_ACCESSORS" : "YES",
             "GENERATE_PRELINK_OBJECT_FILE" : "NO",
-            "GENERATE_RESOURCE_ACCESSORS" : "YES",
             "MODULEMAP_FILE_CONTENTS" : "module SpeedReadyApp {\nheader \"SpeedReadyApp-Swift.h\"\nexport *\n}",
             "MODULEMAP_PATH" : "$(GENERATED_MODULEMAP_DIR)/SpeedReadyApp.modulemap",
-            "OTHER_SWIFT_FLAGS" : [
-              "$(inherited)",
-              "-Xfrontend",
-              "-entry-point-function-name",
-              "-Xfrontend",
-              "SpeedReadyApp_main"
-            ],
             "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
             "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyApp",
             "PRODUCT_MODULE_NAME" : "SpeedReadyApp",
@@ -1212,6 +936,10 @@
             "SDK_VARIANT" : "auto",
             "STRIP_INSTALLED_PRODUCT" : "NO",
             "SUPPORTS_TEXT_BASED_API" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+            ],
             "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
             "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
             "SWIFT_LIBRARIES_ONLY" : "YES",
@@ -1222,11 +950,10 @@
             "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
             "TAPI_DYLIB_INSTALL_NAME" : "SpeedReadyApp",
             "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
-            "TARGET_BUILD_DIR" : "$(TARGET_BUILD_DIR)/ExecutableModules",
-            "TARGET_NAME" : "SpeedReadyApp--39C272A4EE3B10EC-testable",
+            "TARGET_NAME" : "SpeedReadyApp",
             "TARGET_TEMP_DIR_SUFFIX" : "-t"
           },
-          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDCONFIG_0",
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp::BUILDCONFIG_0",
           "impartedBuildProperties" : {
             "buildSettings" : {
               "FRAMEWORK_SEARCH_PATHS" : [
@@ -1239,10 +966,6 @@
                 "$(inherited)"
               ],
               "LD_WARN_DUPLICATE_LIBRARIES" : "NO",
-              "LIBRARY_SEARCH_PATHS[__platform_filter=windows-msvc]" : [
-                "$(inherited)",
-                "$(TARGET_BUILD_DIR)/ExecutableModules"
-              ],
               "OTHER_CFLAGS" : [
                 "-fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/SpeedReadyApp.modulemap",
                 "$(inherited)"
@@ -1255,18 +978,9 @@
           "buildSettings" : {
             "DEFINES_MODULE" : "YES",
             "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
-            "GENERATE_EMBED_IN_CODE_ACCESSORS" : "YES",
             "GENERATE_PRELINK_OBJECT_FILE" : "NO",
-            "GENERATE_RESOURCE_ACCESSORS" : "YES",
             "MODULEMAP_FILE_CONTENTS" : "module SpeedReadyApp {\nheader \"SpeedReadyApp-Swift.h\"\nexport *\n}",
             "MODULEMAP_PATH" : "$(GENERATED_MODULEMAP_DIR)/SpeedReadyApp.modulemap",
-            "OTHER_SWIFT_FLAGS" : [
-              "$(inherited)",
-              "-Xfrontend",
-              "-entry-point-function-name",
-              "-Xfrontend",
-              "SpeedReadyApp_main"
-            ],
             "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
             "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyApp",
             "PRODUCT_MODULE_NAME" : "SpeedReadyApp",
@@ -1275,6 +989,10 @@
             "SDK_VARIANT" : "auto",
             "STRIP_INSTALLED_PRODUCT" : "NO",
             "SUPPORTS_TEXT_BASED_API" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+            ],
             "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
             "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
             "SWIFT_LIBRARIES_ONLY" : "YES",
@@ -1285,11 +1003,10 @@
             "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
             "TAPI_DYLIB_INSTALL_NAME" : "SpeedReadyApp",
             "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
-            "TARGET_BUILD_DIR" : "$(TARGET_BUILD_DIR)/ExecutableModules",
-            "TARGET_NAME" : "SpeedReadyApp--39C272A4EE3B10EC-testable",
+            "TARGET_NAME" : "SpeedReadyApp",
             "TARGET_TEMP_DIR_SUFFIX" : "-t"
           },
-          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDCONFIG_1",
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp::BUILDCONFIG_1",
           "impartedBuildProperties" : {
             "buildSettings" : {
               "FRAMEWORK_SEARCH_PATHS" : [
@@ -1301,10 +1018,6 @@
                 "$(inherited)"
               ],
               "LD_WARN_DUPLICATE_LIBRARIES" : "NO",
-              "LIBRARY_SEARCH_PATHS[__platform_filter=windows-msvc]" : [
-                "$(inherited)",
-                "$(TARGET_BUILD_DIR)/ExecutableModules"
-              ],
               "OTHER_CFLAGS" : [
                 "-fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/SpeedReadyApp.modulemap",
                 "$(inherited)"
@@ -1319,8 +1032,8 @@
           "buildFiles" : [
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_0",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::0",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_0",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp::BUILDPHASE_0::0",
               "platformFilters" : [
 
               ],
@@ -1328,8 +1041,8 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_1",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::1",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_1",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp::BUILDPHASE_0::1",
               "platformFilters" : [
 
               ],
@@ -1337,8 +1050,8 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_2",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::2",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_2",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp::BUILDPHASE_0::2",
               "platformFilters" : [
 
               ],
@@ -1346,8 +1059,8 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_3",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::3",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_3",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp::BUILDPHASE_0::3",
               "platformFilters" : [
 
               ],
@@ -1355,78 +1068,15 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_4",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::4",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_5",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::5",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_6",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::6",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_7",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::7",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_8",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::8",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_9",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::9",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_10",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::10",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_11",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::11",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_4",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp::BUILDPHASE_0::4",
               "platformFilters" : [
 
               ],
               "removeHeadersOnCopy" : "false"
             }
           ],
-          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0",
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp::BUILDPHASE_0",
           "type" : "com.apple.buildphase.sources"
         }
       ],
@@ -1444,17 +1094,18 @@
           ]
         }
       ],
-      "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable",
+      "dynamicTargetVariantGuid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic",
+      "guid" : "PACKAGE-TARGET:SpeedReadyApp",
       "name" : "SpeedReadyApp",
       "productReference" : {
-        "guid" : "PRODUCTREF-PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable",
+        "guid" : "PRODUCTREF-PACKAGE-TARGET:SpeedReadyApp",
         "name" : "$(EXECUTABLE_NAME)",
         "type" : "file"
       },
-      "productTypeIdentifier" : "org.swift.product-type.common.object",
+      "productTypeIdentifier" : "org.swift.product-type.library.static",
       "type" : "standard"
     },
-    "signature" : "d648bf3fbcd67c4e330c12121e381808a40e21eacb542ab9c131b3dc872826e9",
+    "signature" : "8fe5f5a172c3539532f0c7a8a10cac7c56bdfc417dfb37b5714e8c12cbc75d32",
     "type" : "target"
   },
   {
@@ -1513,6 +1164,207 @@
       "type" : "aggregate"
     },
     "signature" : "8e7166a9ba22a5f81ed8e2370aa34c5c07e6918f469823537c9ad11f27d26f69",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "approvedByUser" : "true",
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "DEFINES_MODULE" : "YES",
+            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
+            "EXECUTABLE_PREFIX" : "lib",
+            "EXECUTABLE_PREFIX[__platform_filter=windows-msvc]" : "",
+            "MODULEMAP_FILE_CONTENTS" : "module SpeedReadyApp {\nheader \"SpeedReadyApp-Swift.h\"\nexport *\n}",
+            "MODULEMAP_PATH" : "$(GENERATED_MODULEMAP_DIR)/SpeedReadyApp.modulemap",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyApp",
+            "PRODUCT_MODULE_NAME" : "SpeedReadyApp",
+            "PRODUCT_NAME" : "SpeedReadyApp",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "SUPPORTS_TEXT_BASED_API" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+            ],
+            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
+            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
+            "SWIFT_LIBRARIES_ONLY" : "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_DIR" : "$(GENERATED_MODULEMAP_DIR)",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "SpeedReadyApp-Swift.h",
+            "SWIFT_PACKAGE_NAME" : "speedreadyapp",
+            "SWIFT_VERSION" : "5",
+            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
+            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
+            "TARGET_NAME" : "SpeedReadyApp",
+            "TARGET_TEMP_DIR_SUFFIX" : "-t"
+          },
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "FRAMEWORK_SEARCH_PATHS" : [
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_RUNPATH_SEARCH_PATHS" : [
+                "$(RPATH_ORIGIN)",
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_WARN_DUPLICATE_LIBRARIES" : "NO",
+              "OTHER_CFLAGS" : [
+                "-fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/SpeedReadyApp.modulemap",
+                "$(inherited)"
+              ]
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "DEFINES_MODULE" : "YES",
+            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
+            "EXECUTABLE_PREFIX" : "lib",
+            "EXECUTABLE_PREFIX[__platform_filter=windows-msvc]" : "",
+            "MODULEMAP_FILE_CONTENTS" : "module SpeedReadyApp {\nheader \"SpeedReadyApp-Swift.h\"\nexport *\n}",
+            "MODULEMAP_PATH" : "$(GENERATED_MODULEMAP_DIR)/SpeedReadyApp.modulemap",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyApp",
+            "PRODUCT_MODULE_NAME" : "SpeedReadyApp",
+            "PRODUCT_NAME" : "SpeedReadyApp",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "SUPPORTS_TEXT_BASED_API" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+            ],
+            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
+            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
+            "SWIFT_LIBRARIES_ONLY" : "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_DIR" : "$(GENERATED_MODULEMAP_DIR)",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "SpeedReadyApp-Swift.h",
+            "SWIFT_PACKAGE_NAME" : "speedreadyapp",
+            "SWIFT_VERSION" : "5",
+            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
+            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyApp.symbolgraphs",
+            "TARGET_NAME" : "SpeedReadyApp",
+            "TARGET_TEMP_DIR_SUFFIX" : "-t"
+          },
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "FRAMEWORK_SEARCH_PATHS" : [
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_RUNPATH_SEARCH_PATHS" : [
+                "$(RPATH_ORIGIN)",
+                "$(inherited)"
+              ],
+              "LD_WARN_DUPLICATE_LIBRARIES" : "NO",
+              "OTHER_CFLAGS" : [
+                "-fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/SpeedReadyApp.modulemap",
+                "$(inherited)"
+              ]
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+        {
+          "buildFiles" : [
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_0",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDPHASE_0::0",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_1",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDPHASE_0::1",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_2",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDPHASE_0::2",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_3",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDPHASE_0::3",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_4",
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDPHASE_0::4",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            }
+          ],
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDPHASE_0",
+          "type" : "com.apple.buildphase.sources"
+        },
+        {
+          "buildFiles" : [
+            {
+              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDPHASE_1::0",
+              "platformFilters" : [
+
+              ],
+              "targetReference" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation"
+            }
+          ],
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic::BUILDPHASE_1",
+          "type" : "com.apple.buildphase.frameworks"
+        }
+      ],
+      "buildRules" : [
+
+      ],
+      "customTasks" : [
+
+      ],
+      "dependencies" : [
+        {
+          "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation",
+          "platformFilters" : [
+
+          ]
+        }
+      ],
+      "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic",
+      "name" : "SpeedReadyApp",
+      "productReference" : {
+        "guid" : "PRODUCTREF-PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-dynamic",
+        "name" : "$(EXECUTABLE_NAME)",
+        "type" : "file"
+      },
+      "productTypeIdentifier" : "com.apple.product-type.library.dynamic",
+      "type" : "standard"
+    },
+    "signature" : "011e150d8e1e8301344fb7ecf0f10b80196a6d7279e8ab1ff47e6d0c5056ae2f",
     "type" : "target"
   },
   {
@@ -3054,11 +2906,11 @@
       "projectIsPackage" : "true",
       "projectName" : "Aggregate",
       "targets" : [
-        "bc24ba59da671678d412998b96a40ed43b1c1a0cb6b4a9afc8777c9b5d8733cc",
-        "b761fe3150f26a89acda5e8698578ca6b22ec49d527a1ce8617af1bd77087bd1"
+        "f4dcf4454e1b8d213e72c8372f3c8f1790bd6f2ac73e26413bfdf8f31c35e046",
+        "f09f6bfa2d2595c87ba6b73a0d612266e0e217631a31bc517eff4a2bdfe57058"
       ]
     },
-    "signature" : "ea03dd17c4a61e6f618cd59244a9ccb94f9e418815ec6b95669632f6cedf6f98",
+    "signature" : "5bafaea31e7217e11b7569898ab20e6cd7841491fbb46833e2cf17562b078fe3",
     "type" : "project"
   },
   {
@@ -3116,13 +2968,19 @@
           "platformFilters" : [
 
           ]
+        },
+        {
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp",
+          "platformFilters" : [
+
+          ]
         }
       ],
       "guid" : "ALL-INCLUDING-TESTS",
       "name" : "AllIncludingTests",
       "type" : "aggregate"
     },
-    "signature" : "bc24ba59da671678d412998b96a40ed43b1c1a0cb6b4a9afc8777c9b5d8733cc",
+    "signature" : "f4dcf4454e1b8d213e72c8372f3c8f1790bd6f2ac73e26413bfdf8f31c35e046",
     "type" : "target"
   },
   {
@@ -3168,13 +3026,19 @@
           "platformFilters" : [
 
           ]
+        },
+        {
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp",
+          "platformFilters" : [
+
+          ]
         }
       ],
       "guid" : "ALL-EXCLUDING-TESTS",
       "name" : "AllExcludingTests",
       "type" : "aggregate"
     },
-    "signature" : "b761fe3150f26a89acda5e8698578ca6b22ec49d527a1ce8617af1bd77087bd1",
+    "signature" : "f09f6bfa2d2595c87ba6b73a0d612266e0e217631a31bc517eff4a2bdfe57058",
     "type" : "target"
   }
 ]

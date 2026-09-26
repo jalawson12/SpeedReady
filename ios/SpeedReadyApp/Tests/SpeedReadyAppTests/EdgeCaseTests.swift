@@ -12,12 +12,12 @@ final class EdgeCaseTests: XCTestCase {
     func testVeryLongDocument() {
         let longText = (0..<10000).map { "word\($0)" }.joined(separator: " ")
         engine.load(text: longText)
-        XCTAssertGreater(engine.state.totalWords, 9000)
+        XCTAssertGreaterThan(engine.state.totalWords, 9000)
     }
 
     func testSpecialCharactersHandled() {
         engine.load(text: "Hello—world… isn't it?")
-        XCTAssertGreater(engine.state.totalWords, 0)
+        XCTAssertGreaterThan(engine.state.totalWords, 0)
     }
 
     func testPlaybackEmptyDocument() {

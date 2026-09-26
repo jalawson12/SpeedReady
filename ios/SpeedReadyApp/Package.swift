@@ -7,7 +7,7 @@ let package = Package(
         .iOS(.v17)
     ],
     products: [
-        .executable(
+        .library(
             name: "SpeedReadyApp",
             targets: ["SpeedReadyApp"]
         )
@@ -16,12 +16,17 @@ let package = Package(
         .package(url: "https://github.com/weichsel/ZIPFoundation.git", from: "0.9.19")
     ],
     targets: [
-        .executableTarget(
+        .target(
             name: "SpeedReadyApp",
             dependencies: [
                 .product(name: "ZIPFoundation", package: "ZIPFoundation")
             ],
-            path: "Sources/SpeedReadyApp"
+            path: "Sources/SpeedReadyApp",
+            exclude: [
+                "App",
+                "Views",
+                "Services/DocumentImportService.swift"
+            ]
         ),
         .testTarget(
             name: "SpeedReadyAppTests",

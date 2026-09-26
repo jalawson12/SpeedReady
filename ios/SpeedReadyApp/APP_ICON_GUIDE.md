@@ -4,8 +4,8 @@
 
 Before building for App Store, configure your bundle ID:
 
-1. Open `Package.swift`
-2. Create an associated Xcode `.xcodeproj` with:
+1. Open `/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/SpeedReadyiOS.xcodeproj`
+2. Update the checked-in iOS target with:
    - **Bundle ID:** `com.yourcompany.speedready`
    - **Team ID:** Your Apple Developer Team
    - **Display Name:** "SpeedReady"

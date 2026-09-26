@@ -88,7 +88,10 @@ struct EPUBTextExtractor {
         let destination = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: true)
 
-        guard let archive = Archive(url: sourceURL, accessMode: .read) else {
+        let archive: Archive
+        do {
+            archive = try Archive(url: sourceURL, accessMode: .read)
+        } catch {
             throw ExtractionError.invalidFormat
         }
 

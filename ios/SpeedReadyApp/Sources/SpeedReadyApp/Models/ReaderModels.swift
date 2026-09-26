@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 
 struct ReaderSettings: Equatable, Codable {
     var wpm: Double = 300

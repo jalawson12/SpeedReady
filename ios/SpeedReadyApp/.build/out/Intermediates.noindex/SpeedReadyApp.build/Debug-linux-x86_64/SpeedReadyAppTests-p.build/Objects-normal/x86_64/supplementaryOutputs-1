@@ -1,0 +1,23 @@
+{
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/DerivedSources\/test_anchor.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/test_anchor.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/test_anchor.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/test_anchor.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/test_anchor.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/test_anchor.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/Tests\/SpeedReadyAppTests\/EPUBTextExtractorTests.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EPUBTextExtractorTests.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EPUBTextExtractorTests.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EPUBTextExtractorTests.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EPUBTextExtractorTests.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EPUBTextExtractorTests.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/Tests\/SpeedReadyAppTests\/EdgeCaseTests.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EdgeCaseTests.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EdgeCaseTests.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EdgeCaseTests.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EdgeCaseTests.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyAppTests-p.build\/Objects-normal\/x86_64\/EdgeCaseTests.swiftdeps"
+  }
+}
