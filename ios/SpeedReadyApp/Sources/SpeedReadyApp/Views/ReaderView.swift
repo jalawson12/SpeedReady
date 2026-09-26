@@ -5,7 +5,7 @@ struct ReaderView: View {
     @StateObject private var engine = RSVPEngine()
     @State private var settings = ReaderSettings.loadPersisted()
     @State private var activeDocument: ReadingDocument?
-    @State private var recordedSessionIDs: Set<UUID> = []
+    @State private var lastRecordedSessionID: UUID?
     @State private var showingSettings = false
     @State private var showingDocumentPicker = false
     @State private var showingTextInput = false
@@ -109,7 +109,8 @@ struct ReaderView: View {
             }
             .onChange(of: appState.currentDocument) { previousDocument, nextDocument in
                 recordSessionIfNeeded(for: previousDocument ?? activeDocument)
-                loadDocument(nextDocument ?? ReadingDocument.sample())
+                guard let nextDocument else { return }
+                loadDocument(nextDocument)
             }
             .onChange(of: engine.state.wordIndex) { _, _ in
                 let summary = engine.sessionSummary()
@@ -261,6 +262,7 @@ struct ReaderView: View {
 
     private func loadDocument(_ document: ReadingDocument) {
         activeDocument = document
+        lastRecordedSessionID = nil
         engine.load(text: document.text, settings: settings)
     }
 
@@ -280,7 +282,7 @@ struct ReaderView: View {
 
     private func recordSessionIfNeeded(for document: ReadingDocument?, completedOverride: Bool? = nil) {
         guard let document else { return }
-        guard !recordedSessionIDs.contains(engine.sessionID) else { return }
+        guard lastRecordedSessionID != engine.sessionID else { return }
 
         let summary = engine.sessionSummary()
         guard summary.wordsRead > 0 || completedOverride == true else { return }
@@ -291,7 +293,7 @@ struct ReaderView: View {
             durationSeconds: summary.duration,
             completed: completedOverride ?? summary.completed
         )
-        recordedSessionIDs.insert(engine.sessionID)
+        lastRecordedSessionID = engine.sessionID
     }
 
     private func statPill(title: String, value: String) -> some View {
