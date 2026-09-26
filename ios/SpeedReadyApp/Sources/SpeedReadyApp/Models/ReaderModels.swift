@@ -159,6 +159,7 @@ final class SpeedReadyAppState: ObservableObject {
     private let currentDocumentKey = "speedready.currentDocument.v1"
     private let readingLocationsKey = "speedready.readingLocations.v1"
     private var readingLocations: [String: ReadingLocation] = [:]
+    private var transientReadingLocations: [String: ReadingLocation] = [:]
 
     init() {
         self.documents = Self.loadDocuments()
@@ -234,17 +235,19 @@ final class SpeedReadyAppState: ObservableObject {
     }
 
     func readingLocation(for document: ReadingDocument) -> ReadingLocation? {
-        readingLocations[document.id.uuidString]
+        transientReadingLocations[document.id.uuidString] ?? readingLocations[document.id.uuidString]
     }
 
     func updateReadingLocation(for documentID: UUID, wordIndex: Int, totalWords: Int, isCompleted: Bool, persist: Bool = true) {
         let upperBound = isCompleted ? max(0, totalWords) : max(0, totalWords - 1)
         let clampedIndex = min(max(0, wordIndex), upperBound)
-        readingLocations[documentID.uuidString] = ReadingLocation(
+        let location = ReadingLocation(
             wordIndex: clampedIndex,
             isCompleted: isCompleted && clampedIndex >= max(0, totalWords)
         )
+        transientReadingLocations[documentID.uuidString] = location
         if persist {
+            readingLocations[documentID.uuidString] = location
             saveReadingState()
         }
     }

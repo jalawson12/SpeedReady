@@ -181,6 +181,24 @@ final class AppStateDocumentTests: XCTestCase {
         XCTAssertFalse(resumedEngine.sessionSummary().completed)
     }
 
+    func testTransientReadingLocationDoesNotPersistAcrossReload() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Transient", text: "one two three four")
+
+        guard let document = appState.documents.first(where: { $0.title == "Transient" }) else {
+            XCTFail("Expected transient document")
+            return
+        }
+
+        appState.updateReadingLocation(for: document.id, wordIndex: 1, totalWords: 4, isCompleted: false)
+        appState.updateReadingLocation(for: document.id, wordIndex: 2, totalWords: 4, isCompleted: false, persist: false)
+
+        XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 2)
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.readingLocation(for: document)?.wordIndex, 1)
+    }
+
     private func clearPersistedState() {
         UserDefaults.standard.removeObject(forKey: "speedready.documents.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.sessions.v1")
