@@ -334,16 +334,11 @@ struct ReaderView: View {
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
-        let requiresReload = settings.removeCitations != newSettings.removeCitations
         settings = newSettings
         if persist {
             settings.persist()
         }
-        if requiresReload, let document = activeDocument {
-            engine.load(text: document.text, settings: newSettings)
-        } else {
-            engine.setSettings(newSettings)
-        }
+        engine.setSettings(newSettings)
     }
 
     private func adjustWpm(by delta: Double) {
@@ -456,7 +451,7 @@ struct ReaderView: View {
                 token.foregroundColor = palette.pivot
                 token.font = .system(size: displayFontSize * 0.52, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default)
             } else {
-                token.foregroundColor = palette.mutedText
+                token.foregroundColor = pausedTokenColor(for: tokens[index])
             }
             attributed.append(token)
         }
@@ -467,6 +462,16 @@ struct ReaderView: View {
     private func pivotOffsetX(for width: CGFloat) -> CGFloat {
         let clamped = max(-30, min(30, settings.pivotOffset))
         return (width / 2) * CGFloat(clamped / 100.0)
+    }
+
+    private func pausedTokenColor(for token: WordToken) -> Color {
+        if settings.colorizeQuotes && token.inQuotes {
+            return colorFromHex(settings.quoteHighlightColor) ?? palette.mutedText
+        }
+        if settings.colorizeParens && (token.inParens || token.inBrackets) {
+            return colorFromHex(settings.parenHighlightColor) ?? palette.mutedText
+        }
+        return palette.mutedText
     }
 }
 

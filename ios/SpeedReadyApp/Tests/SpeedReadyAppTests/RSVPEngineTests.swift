@@ -63,4 +63,55 @@ final class RSVPEngineTests: XCTestCase {
         engine.skipForward(by: 30)
         XCTAssertEqual(engine.state.currentWpm, 600)
     }
+
+    func testSpeedRampAffectsScheduledPlaybackDelay() {
+        let scheduler = RecordingScheduler()
+        var settings = ReaderSettings()
+        settings.smartSpeed = false
+        settings.speedRampEnabled = true
+        settings.speedRampTarget = 600
+
+        let engine = RSVPEngine(scheduler: scheduler)
+        engine.load(text: "one two three", settings: settings)
+        engine.play()
+
+        let firstDelay = scheduler.recordedDelays.first
+        scheduler.fireNext()
+        let secondDelay = scheduler.recordedDelays.dropFirst().first
+
+        XCTAssertNotNil(firstDelay)
+        XCTAssertNotNil(secondDelay)
+        XCTAssertLessThan(secondDelay ?? 0, firstDelay ?? 0)
+    }
+}
+
+private final class RecordingScheduler: RSVPScheduler {
+    private var queue: [() -> Void] = []
+    private(set) var recordedDelays: [TimeInterval] = []
+
+    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask {
+        recordedDelays.append(delay)
+        queue.append(action)
+        return RecordingTask { [weak self] in
+            self?.queue.removeAll()
+        }
+    }
+
+    func fireNext() {
+        guard !queue.isEmpty else { return }
+        let action = queue.removeFirst()
+        action()
+    }
+}
+
+private final class RecordingTask: RSVPTask {
+    private let onCancel: () -> Void
+
+    init(onCancel: @escaping () -> Void) {
+        self.onCancel = onCancel
+    }
+
+    func cancel() {
+        onCancel()
+    }
 }

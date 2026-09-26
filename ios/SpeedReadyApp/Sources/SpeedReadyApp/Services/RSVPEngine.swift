@@ -392,7 +392,8 @@ final class RSVPEngine: ObservableObject {
         }
         guard let last = scalars.last else { return 1.0 }
         if ".!?".unicodeScalars.contains(last) { return 2.0 }
-        if ",;".unicodeScalars.contains(last) { return settings.commaAsPause ? 2.0 : 1.4 }
+        if ",".unicodeScalars.contains(last) { return settings.commaAsPause ? 2.0 : 1.4 }
+        if ";".unicodeScalars.contains(last) { return 1.4 }
         if ":".unicodeScalars.contains(last) { return 1.4 }
         return 1.0
     }
