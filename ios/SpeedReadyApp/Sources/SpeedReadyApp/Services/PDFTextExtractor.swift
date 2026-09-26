@@ -1,6 +1,6 @@
 import Foundation
+import CoreGraphics
 import PDFKit
-import UIKit
 import Vision
 
 struct PDFTextExtractor {
@@ -148,41 +148,50 @@ struct PDFTextExtractor {
         }
     }
 
-    private static func renderedImage(for page: PDFPage, scale: CGFloat) -> UIImage? {
+    private static func renderedImage(for page: PDFPage, scale: CGFloat) -> CGImage? {
         let pageBounds = page.bounds(for: .mediaBox)
         guard pageBounds.width > 0, pageBounds.height > 0 else {
             return nil
         }
 
         let renderScale = max(1.0, min(scale, 3.0))
-        let format = UIGraphicsImageRendererFormat.default()
-        format.scale = 1
-        let renderSize = CGSize(width: pageBounds.width * renderScale, height: pageBounds.height * renderScale)
-        let renderer = UIGraphicsImageRenderer(size: renderSize, format: format)
+        let width = max(Int((pageBounds.width * renderScale).rounded(.up)), 1)
+        let height = max(Int((pageBounds.height * renderScale).rounded(.up)), 1)
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
 
-        return renderer.image { context in
-            UIColor.white.setFill()
-            context.fill(CGRect(origin: .zero, size: renderSize))
-
-            context.cgContext.saveGState()
-            context.cgContext.translateBy(x: 0, y: renderSize.height)
-            context.cgContext.scaleBy(x: renderScale, y: -renderScale)
-            page.draw(with: .mediaBox, to: context.cgContext)
-            context.cgContext.restoreGState()
+        guard let context = CGContext(
+            data: nil,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: 0,
+            space: colorSpace,
+            bitmapInfo: bitmapInfo
+        ) else {
+            return nil
         }
+
+        let renderSize = CGSize(width: CGFloat(width), height: CGFloat(height))
+        context.setFillColor(gray: 1, alpha: 1)
+        context.fill(CGRect(origin: .zero, size: renderSize))
+
+        context.saveGState()
+        context.translateBy(x: 0, y: renderSize.height)
+        context.scaleBy(x: renderScale, y: -renderScale)
+        page.draw(with: .mediaBox, to: context)
+        context.restoreGState()
+
+        return context.makeImage()
     }
 
-    private static func performOCR(on image: UIImage, languages: [String]) throws -> OCRPageResult {
-        guard let cgImage = image.cgImage else {
-            throw ExtractionError.ocrFailed
-        }
-
+    private static func performOCR(on image: CGImage, languages: [String]) throws -> OCRPageResult {
         let request = VNRecognizeTextRequest()
         request.recognitionLevel = .accurate
         request.recognitionLanguages = languages.isEmpty ? ["en-US"] : languages
         request.usesLanguageCorrection = true
 
-        let handler = VNImageRequestHandler(cgImage: cgImage)
+        let handler = VNImageRequestHandler(cgImage: image)
         try handler.perform([request])
 
         var collectedText: [String] = []
