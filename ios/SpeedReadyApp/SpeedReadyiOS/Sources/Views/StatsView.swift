@@ -62,6 +62,15 @@ struct StatsView: View {
                 }
             }
             .navigationTitle("Stats")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        SessionHistoryView(appState: appState)
+                    } label: {
+                        Label("History", systemImage: "clock.fill")
+                    }
+                }
+            }
         }
     }
 
