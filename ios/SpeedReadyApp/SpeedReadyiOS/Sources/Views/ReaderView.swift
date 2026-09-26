@@ -200,6 +200,7 @@ struct ReaderView: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Skip backward 5 words")
+                .accessibilityHint("Moves the current reading position back by 5 words")
 
                 Button {
                     if engine.state.isPlaying {
@@ -228,6 +229,7 @@ struct ReaderView: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Skip forward 5 words")
+                .accessibilityHint("Moves the current reading position forward by 5 words")
             }
             .foregroundStyle(settings.focusMode ? .white : .primary)
         }
