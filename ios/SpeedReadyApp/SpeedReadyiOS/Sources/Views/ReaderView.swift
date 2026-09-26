@@ -417,7 +417,7 @@ struct ReaderView: View {
 
     private func maybeHideTrailingPunctuation(_ input: String) -> String {
         guard settings.hidePunctuationInDisplay else { return input }
-        return input.replacingOccurrences(of: #"[\.,;:!\?'"\)\]]+$"#, with: "", options: .regularExpression)
+        return input.replacingOccurrences(of: #"[\.,;:!\?"\)\]]+$"#, with: "", options: .regularExpression)
     }
 
     private func previousPeripheralWords() -> String? {

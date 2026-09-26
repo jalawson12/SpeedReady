@@ -495,7 +495,7 @@ final class RSVPEngine: ObservableObject {
 
     private func stripCitations(_ text: String) -> String {
         let numericPattern = #"\[\s*\d[\d,;\s\u{2013}-]*\]"#
-        let authorYearPattern = #"\(\s*[A-Z][A-Za-z'’.&\s]+(?:et\s+al\.?)?,?\s*\d{4}[a-z]?(?:\s*[;,]\s*[A-Z][A-Za-z'’.&\s]+(?:et\s+al\.?)?,?\s*\d{4}[a-z]?)*\s*\)"#
+        let authorYearPattern = #"\(\s*[\p{Lu}][\p{L}'’.&\s]+(?:et\s+al\.?)?,?\s*\d{4}[a-z]?(?:\s*[;,]\s*[\p{Lu}][\p{L}'’.&\s]+(?:et\s+al\.?)?,?\s*\d{4}[a-z]?)*\s*\)"#
 
         return text
             .replacingOccurrences(of: numericPattern, with: "", options: .regularExpression)
@@ -507,9 +507,25 @@ final class RSVPEngine: ObservableObject {
 
     private func retokenizePreservingPosition() {
         let previousIndex = min(state.wordIndex, max(0, tokens.count - 1))
+        let currentTokenText = tokens.isEmpty ? "" : tokens[previousIndex].text
         tokens = tokenize(preparedText(from: rawText))
         state.totalWords = tokens.count
-        state.wordIndex = min(previousIndex, max(0, tokens.count - 1))
+
+        if currentTokenText.isEmpty || tokens.isEmpty {
+            state.wordIndex = min(previousIndex, max(0, tokens.count - 1))
+            updateCurrentDisplay(index: state.wordIndex)
+            return
+        }
+
+        let matchingIndices = tokens.enumerated()
+            .filter { $0.element.text == currentTokenText }
+            .map(\.offset)
+
+        if let bestMatch = matchingIndices.min(by: { abs($0 - previousIndex) < abs($1 - previousIndex) }) {
+            state.wordIndex = bestMatch
+        } else {
+            state.wordIndex = min(previousIndex, max(0, tokens.count - 1))
+        }
         updateCurrentDisplay(index: state.wordIndex)
     }
 }

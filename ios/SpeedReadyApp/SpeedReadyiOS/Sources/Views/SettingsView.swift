@@ -209,7 +209,13 @@ private extension Color {
         var blue: CGFloat = 0
         var alpha: CGFloat = 0
         guard uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else { return nil }
-        return String(format: "#%02X%02X%02X", Int(red * 255), Int(green * 255), Int(blue * 255))
+        return String(
+            format: "#%02X%02X%02X%02X",
+            Int(red * 255),
+            Int(green * 255),
+            Int(blue * 255),
+            Int(alpha * 255)
+        )
     }
 }
 

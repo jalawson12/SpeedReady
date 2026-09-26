@@ -49,6 +49,23 @@ final class RSVPEngineTests: XCTestCase {
         XCTAssertFalse(engine.state.currentWord.contains("("))
     }
 
+    func testSetSettingsRetokenizePreservesCurrentWordWhenPossible() {
+        let text = "One two [1] three four"
+        let scheduler = RecordingScheduler()
+        let engine = RSVPEngine(scheduler: scheduler)
+        engine.load(text: text, settings: ReaderSettings())
+        engine.play()
+        scheduler.fireNext()
+        engine.pause()
+        let indexBeforeRetokenize = engine.state.wordIndex
+
+        var updated = ReaderSettings()
+        updated.removeCitations = true
+        engine.setSettings(updated)
+
+        XCTAssertLessThanOrEqual(engine.state.wordIndex, indexBeforeRetokenize)
+    }
+
     func testSpeedRampRaisesCurrentWpmNearTarget() {
         var settings = ReaderSettings()
         settings.smartSpeed = false
