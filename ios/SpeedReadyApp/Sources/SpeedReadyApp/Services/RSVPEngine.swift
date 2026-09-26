@@ -117,6 +117,14 @@ final class RSVPEngine: ObservableObject {
         pausedAt = nil
     }
 
+    func skipForward(by count: Int = 5) {
+        skip(by: max(1, count))
+    }
+
+    func skipBackward(by count: Int = 5) {
+        skip(by: -max(1, count))
+    }
+
     func increaseWpm() {
         settings.wpm = min(1600, settings.wpm + 25)
         state.currentWpm = Int(settings.wpm)
@@ -142,6 +150,25 @@ final class RSVPEngine: ObservableObject {
         guard let sessionStartedAt else { return 0 }
         let currentPause = pausedAt.map { now().timeIntervalSince($0) } ?? 0
         return now().timeIntervalSince(sessionStartedAt) - totalPausedDuration - currentPause
+    }
+
+    private func skip(by offset: Int) {
+        guard !tokens.isEmpty else { return }
+
+        scheduledTask?.cancel()
+        scheduledTask = nil
+
+        let maxIndex = max(0, tokens.count - 1)
+        let currentIndex = min(state.wordIndex, maxIndex)
+        let targetIndex = min(max(0, currentIndex + offset), maxIndex)
+
+        state.wordIndex = targetIndex
+        didCompleteSession = false
+        updateCurrentDisplay(index: targetIndex)
+
+        if state.isPlaying {
+            scheduleNext()
+        }
     }
 
     private func updateCurrentDisplay(index: Int) {

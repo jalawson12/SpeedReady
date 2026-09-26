@@ -130,7 +130,7 @@ func testStripHTMLDecodesEntities()    // Entity decoding
 To test with a real EPUB:
 
 1. Obtain a sample EPUB (e.g., from Project Gutenberg)
-2. Import via "Load Doc" in the app
+2. Import it from the reader's Import menu in the app
 3. Verify text extracts correctly
 4. Check progress in Library and Stats tabs
 

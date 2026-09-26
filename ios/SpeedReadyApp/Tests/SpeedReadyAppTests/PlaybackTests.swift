@@ -68,6 +68,40 @@ final class PlaybackTests: XCTestCase {
         XCTAssertEqual(engine.state.wordIndex, 0)
         XCTAssertFalse(engine.state.isPlaying)
     }
+
+    func testSkipForwardAndBackwardMoveFiveWords() {
+        let engine = RSVPEngine()
+
+        engine.load(text: "One two three four five six seven eight nine ten")
+        engine.skipForward()
+
+        XCTAssertEqual(engine.state.wordIndex, 5)
+        XCTAssertEqual(engine.state.currentWord, "six")
+
+        engine.skipBackward()
+
+        XCTAssertEqual(engine.state.wordIndex, 0)
+        XCTAssertEqual(engine.state.currentWord, "One")
+    }
+
+    func testSkipForwardWhilePlayingKeepsPlaybackActive() {
+        let scheduler = TestScheduler()
+        let clock = TestClock(start: Date())
+        let engine = RSVPEngine(now: { clock.now }, scheduler: scheduler)
+
+        engine.load(text: "One two three four five six seven")
+        engine.play()
+        engine.skipForward()
+
+        XCTAssertTrue(engine.state.isPlaying)
+        XCTAssertEqual(engine.state.wordIndex, 5)
+        XCTAssertEqual(engine.state.currentWord, "six")
+
+        scheduler.fireNext()
+
+        XCTAssertEqual(engine.state.wordIndex, 6)
+        XCTAssertEqual(engine.state.currentWord, "seven")
+    }
 }
 
 private final class TestClock {
