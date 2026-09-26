@@ -82,6 +82,7 @@ struct ReaderView: View {
                 engine.setSettings(newSettings)
             }
             .onDisappear {
+                recordSessionIfNeeded(for: activeDocument)
                 saveCurrentLocation(for: activeDocument, persist: true)
             }
         }

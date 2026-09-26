@@ -126,6 +126,21 @@ final class AppStateDocumentTests: XCTestCase {
         XCTAssertEqual(appState.readingLocation(for: document)?.isCompleted, false)
     }
 
+    func testCompletedReadingLocationRequiresStoredEndPosition() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Complete Boundary", text: "one two three")
+
+        guard let document = appState.documents.first(where: { $0.title == "Complete Boundary" }) else {
+            XCTFail("Expected complete boundary document")
+            return
+        }
+
+        appState.updateReadingLocation(for: document.id, wordIndex: -1, maxWordIndex: 3, isCompleted: true)
+
+        XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 0)
+        XCTAssertEqual(appState.readingLocation(for: document)?.isCompleted, false)
+    }
+
     func testPausedSessionLocationPersistsAndRestores() {
         let appState = SpeedReadyAppState()
         appState.addDocument(title: "Resume", text: "one two three four")

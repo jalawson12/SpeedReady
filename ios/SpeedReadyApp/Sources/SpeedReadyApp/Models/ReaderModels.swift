@@ -239,9 +239,10 @@ final class SpeedReadyAppState: ObservableObject {
 
     func updateReadingLocation(for documentID: UUID, wordIndex: Int, maxWordIndex: Int, isCompleted: Bool, persist: Bool = true) {
         let upperBound = isCompleted ? max(0, maxWordIndex) : max(0, maxWordIndex - 1)
+        let clampedIndex = min(max(0, wordIndex), upperBound)
         readingLocations[documentID.uuidString] = ReadingLocation(
-            wordIndex: min(max(0, wordIndex), upperBound),
-            isCompleted: isCompleted
+            wordIndex: clampedIndex,
+            isCompleted: isCompleted && clampedIndex >= max(0, maxWordIndex)
         )
         if persist {
             saveReadingState()
