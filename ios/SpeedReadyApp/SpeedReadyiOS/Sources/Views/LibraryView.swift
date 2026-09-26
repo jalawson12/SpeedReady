@@ -11,7 +11,10 @@ struct LibraryView: View {
     @ObservedObject var appState: SpeedReadyAppState
     @State private var activeSheet: ActiveSheet?
     @State private var customText = ""
+    @State private var customTitle = ""
     @State private var importErrorMessage: String?
+    @State private var editingDocument: ReadingDocument?
+    @State private var editedTitle = ""
 
     var body: some View {
         NavigationStack {
@@ -28,7 +31,14 @@ struct LibraryView: View {
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
-                    appState.currentDocument = document
+                    appState.setCurrentDocument(document)
+                }
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    Button("Rename") {
+                        editingDocument = document
+                        editedTitle = document.title
+                    }
+                    .tint(.blue)
                 }
             }
             .navigationTitle("Library")
@@ -61,14 +71,35 @@ struct LibraryView: View {
                         }
                     }
                 case .textInput:
-                    TextImportSheet(text: $customText) { trimmed in
-                        appState.addDocument(title: pastedDocumentTitle(), text: trimmed)
+                    TextImportSheet(title: $customTitle, text: $customText) { title, trimmed in
+                        appState.addDocument(title: title, text: trimmed)
                     }
                 }
             }
             .onChange(of: activeSheet?.id) { _, nextValue in
                 if nextValue != ActiveSheet.textInput.id {
                     customText = ""
+                    customTitle = ""
+                }
+            }
+            .alert("Edit title", isPresented: Binding(get: {
+                editingDocument != nil
+            }, set: { newValue in
+                if !newValue {
+                    editingDocument = nil
+                    editedTitle = ""
+                }
+            })) {
+                TextField("Title", text: $editedTitle)
+                Button("Cancel", role: .cancel) {
+                    editingDocument = nil
+                    editedTitle = ""
+                }
+                Button("Save") {
+                    guard let document = editingDocument else { return }
+                    appState.renameDocument(id: document.id, title: editedTitle)
+                    editingDocument = nil
+                    editedTitle = ""
                 }
             }
             .alert("Import failed", isPresented: Binding(get: {
@@ -83,10 +114,6 @@ struct LibraryView: View {
         }
     }
 
-    private func pastedDocumentTitle() -> String {
-        let timestamp = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium)
-        return "Pasted text \(timestamp)"
-    }
 }
 
 #Preview {
@@ -108,13 +135,18 @@ private struct DocumentImportSheet: View {
 
 private struct TextImportSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @Binding var title: String
     @Binding var text: String
 
-    let onLoad: (String) -> Void
+    let onLoad: (String, String) -> Void
 
     var body: some View {
         NavigationStack {
             Form {
+                Section("Title") {
+                    TextField("Enter title", text: $title)
+                }
+
                 Section("Paste or type text") {
                     TextEditor(text: $text)
                         .frame(minHeight: 220)
@@ -124,15 +156,18 @@ private struct TextImportSheet: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {
+                        title = ""
                         text = ""
                         dismiss()
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Load") {
+                        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
                         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                        guard !trimmed.isEmpty else { return }
-                        onLoad(trimmed)
+                        guard !trimmedTitle.isEmpty, !trimmed.isEmpty else { return }
+                        onLoad(trimmedTitle, trimmed)
+                        title = ""
                         text = ""
                         dismiss()
                     }

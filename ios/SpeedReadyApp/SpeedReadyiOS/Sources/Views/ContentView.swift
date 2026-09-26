@@ -2,10 +2,11 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var appState: SpeedReadyAppState
+    @State private var settings = ReaderSettings.loadPersisted()
 
     var body: some View {
         TabView {
-            ReaderView(appState: appState)
+            ReaderView(appState: appState, settings: $settings)
                 .tabItem {
                     Label("Reader", systemImage: "book.fill")
                 }
@@ -20,9 +21,11 @@ struct ContentView: View {
                     Label("Stats", systemImage: "chart.line.uptrend.xyaxis")
                 }
 
-            SessionHistoryView(appState: appState)
+            SettingsView(settings: $settings) { newSettings in
+                newSettings.persist()
+            }
                 .tabItem {
-                    Label("History", systemImage: "clock.fill")
+                    Label("Settings", systemImage: "slider.horizontal.3")
                 }
         }
     }

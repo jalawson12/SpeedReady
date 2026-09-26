@@ -190,6 +190,28 @@ final class SpeedReadyAppState: ObservableObject {
         setCurrentDocument(doc)
     }
 
+    func renameDocument(id: UUID, title: String) {
+        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmedTitle.isEmpty else { return }
+        guard let index = documents.firstIndex(where: { $0.id == id }) else { return }
+
+        let existing = documents[index]
+        let updated = ReadingDocument(
+            id: existing.id,
+            title: trimmedTitle,
+            text: existing.text,
+            wordCount: existing.wordCount,
+            createdAt: existing.createdAt
+        )
+        documents[index] = updated
+
+        if currentDocument?.id == id {
+            currentDocument = updated
+        }
+
+        saveDocuments()
+    }
+
     func recordSession(documentTitle: String, wordsRead: Int, durationSeconds: Double, completed: Bool) {
         let session = ReadingSession(
             documentTitle: documentTitle,

@@ -3,7 +3,6 @@ import UIKit
 
 struct SettingsView: View {
     @Binding var settings: ReaderSettings
-    @Binding var isPresented: Bool
     let onSave: (ReaderSettings) -> Void
 
     var body: some View {
@@ -135,18 +134,8 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") {
-                        isPresented = false
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Save") {
-                        onSave(settings)
-                        isPresented = false
-                    }
-                }
+            .onChange(of: settings) { _, newSettings in
+                onSave(newSettings)
             }
         }
     }
@@ -222,7 +211,6 @@ private extension Color {
 #Preview {
     SettingsView(
         settings: .constant(ReaderSettings()),
-        isPresented: .constant(true),
         onSave: { _ in }
     )
 }
