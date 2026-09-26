@@ -245,10 +245,12 @@ final class SpeedReadyAppState: ObservableObject {
             wordIndex: clampedIndex,
             isCompleted: isCompleted && clampedIndex >= max(0, totalWords)
         )
-        transientReadingLocations[documentID.uuidString] = location
         if persist {
+            transientReadingLocations.removeValue(forKey: documentID.uuidString)
             readingLocations[documentID.uuidString] = location
             saveReadingState()
+        } else {
+            transientReadingLocations[documentID.uuidString] = location
         }
     }
 
