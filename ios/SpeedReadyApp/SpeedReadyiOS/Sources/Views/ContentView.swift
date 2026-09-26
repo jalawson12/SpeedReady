@@ -46,6 +46,9 @@ private struct SettingsTabView: View {
         .onAppear {
             draftSettings = settings
         }
+        .onChange(of: settings) { _, newSettings in
+            draftSettings = newSettings
+        }
     }
 }
 

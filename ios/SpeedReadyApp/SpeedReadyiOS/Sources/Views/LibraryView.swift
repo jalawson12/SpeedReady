@@ -101,6 +101,7 @@ struct LibraryView: View {
                     editingDocument = nil
                     editedTitle = ""
                 }
+                .disabled(editedTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
             .alert("Import failed", isPresented: Binding(get: {
                 importErrorMessage != nil
@@ -163,16 +164,26 @@ private struct TextImportSheet: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Load") {
-                        let trimmedTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
-                        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                        guard !trimmedTitle.isEmpty, !trimmed.isEmpty else { return }
-                        onLoad(trimmedTitle, trimmed)
+                        onLoad(trimmedTitle, trimmedText)
                         title = ""
                         text = ""
                         dismiss()
                     }
+                    .disabled(!canLoad)
                 }
             }
         }
+    }
+
+    private var trimmedTitle: String {
+        title.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private var trimmedText: String {
+        text.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private var canLoad: Bool {
+        !trimmedTitle.isEmpty && !trimmedText.isEmpty
     }
 }
