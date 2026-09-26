@@ -20,12 +20,20 @@ enum BionicFocusPosition: String, CaseIterable, Codable {
     case late
 }
 
-struct ReadingDocument: Identifiable, Equatable {
-    let id = UUID()
+struct ReadingDocument: Identifiable, Equatable, Codable {
+    let id: UUID
     let title: String
     let text: String
     let wordCount: Int
     let createdAt: Date
+
+    init(id: UUID = UUID(), title: String, text: String, wordCount: Int, createdAt: Date = Date()) {
+        self.id = id
+        self.title = title
+        self.text = text
+        self.wordCount = wordCount
+        self.createdAt = createdAt
+    }
 
     static func sample() -> ReadingDocument {
         let text = "Speed reading turns reading into a rhythm. The goal is not to skim blindly but to train your eyes to land on the most useful information with less wasted motion."
@@ -38,14 +46,24 @@ struct ReadingDocument: Identifiable, Equatable {
     }
 }
 
-struct ReadingSession: Identifiable, Equatable {
-    let id = UUID()
+struct ReadingSession: Identifiable, Equatable, Codable {
+    let id: UUID
     let documentTitle: String
     let startedAt: Date
     let finishedAt: Date
     let wordsRead: Int
     let durationSeconds: Double
     let completed: Bool
+
+    init(id: UUID = UUID(), documentTitle: String, startedAt: Date, finishedAt: Date, wordsRead: Int, durationSeconds: Double, completed: Bool) {
+        self.id = id
+        self.documentTitle = documentTitle
+        self.startedAt = startedAt
+        self.finishedAt = finishedAt
+        self.wordsRead = wordsRead
+        self.durationSeconds = durationSeconds
+        self.completed = completed
+    }
 }
 
 struct ORPResult: Equatable {
@@ -77,16 +95,26 @@ final class SpeedReadyAppState: ObservableObject {
     @Published var currentDocument: ReadingDocument?
     @Published var sessions: [ReadingSession] = []
 
+    private let documentsKey = "speedready.documents.v1"
+    private let sessionsKey = "speedready.sessions.v1"
+
     init() {
-        let sample = ReadingDocument.sample()
-        self.currentDocument = sample
-        self.documents = [sample]
+        self.documents = Self.loadDocuments()
+        self.sessions = Self.loadSessions()
+        self.currentDocument = self.documents.first ?? ReadingDocument.sample()
+        if self.currentDocument == nil {
+            let sample = ReadingDocument.sample()
+            self.documents = [sample]
+            self.currentDocument = sample
+            saveDocuments()
+        }
     }
 
     func setCurrentDocument(_ document: ReadingDocument) {
         currentDocument = document
         if !documents.contains(document) {
             documents.insert(document, at: 0)
+            saveDocuments()
         }
     }
 
@@ -110,5 +138,36 @@ final class SpeedReadyAppState: ObservableObject {
             completed: completed
         )
         sessions.insert(session, at: 0)
+        saveSessions()
+    }
+
+    private func saveDocuments() {
+        if let data = try? JSONEncoder().encode(documents) {
+            UserDefaults.standard.set(data, forKey: documentsKey)
+        }
+    }
+
+    private func saveSessions() {
+        if let data = try? JSONEncoder().encode(sessions) {
+            UserDefaults.standard.set(data, forKey: sessionsKey)
+        }
+    }
+
+    private static func loadDocuments() -> [ReadingDocument] {
+        guard let data = UserDefaults.standard.data(forKey: "speedready.documents.v1"),
+              let decoded = try? JSONDecoder().decode([ReadingDocument].self, from: data)
+        else {
+            return [ReadingDocument.sample()]
+        }
+        return decoded
+    }
+
+    private static func loadSessions() -> [ReadingSession] {
+        guard let data = UserDefaults.standard.data(forKey: "speedready.sessions.v1"),
+              let decoded = try? JSONDecoder().decode([ReadingSession].self, from: data)
+        else {
+            return []
+        }
+        return decoded
     }
 }

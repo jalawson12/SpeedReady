@@ -14,6 +14,11 @@ struct ContentView: View {
                 .tabItem {
                     Label("Library", systemImage: "folder.fill")
                 }
+
+            StatsView(appState: appState)
+                .tabItem {
+                    Label("Stats", systemImage: "chart.line.uptrend.xyaxis")
+                }
         }
     }
 }
