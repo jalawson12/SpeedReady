@@ -41,6 +41,7 @@ private struct SettingsTabView: View {
     var body: some View {
         SettingsView(settings: $draftSettings) { newSettings in
             settings = newSettings
+            draftSettings = newSettings
             newSettings.persist()
         }
         .onAppear {
