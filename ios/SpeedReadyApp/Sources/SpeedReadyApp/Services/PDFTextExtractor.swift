@@ -220,7 +220,7 @@ struct PDFTextExtractor {
         var totalConfidence: Float = 0
         var observationCount = 0
 
-        let observations = request.results as? [VNRecognizedTextObservation] ?? []
+        let observations = request.results ?? []
         for observation in observations {
             guard let candidate = observation.topCandidates(1).first else { continue }
             collectedText.append(candidate.string)
