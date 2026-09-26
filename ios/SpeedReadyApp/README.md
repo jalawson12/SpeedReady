@@ -38,13 +38,17 @@ Native SwiftUI port of SpeedReady, a speed-reading app that uses RSVP (Rapid Ser
 ```
 ios/SpeedReadyApp/
 ├── Sources/SpeedReadyApp/
-│   ├── App/
-│   │   └── SpeedReadyApp.swift           # App entry point
 │   ├── Models/
 │   │   └── ReaderModels.swift            # Data models & app state
 │   ├── Services/
-│   │   ├── RSVPEngine.swift              # Core reading engine
-│   │   └── DocumentImportService.swift   # File & PDF import
+│   │   ├── EPUBTextExtractor.swift       # EPUB parsing
+│   │   ├── PDFTextExtractor.swift        # PDF extraction
+│   │   └── RSVPEngine.swift              # Core reading engine
+├── SpeedReadyiOS/Sources/
+│   ├── App/
+│   │   └── SpeedReadyApp.swift           # iOS app entry point
+│   ├── Services/
+│   │   └── DocumentImportService.swift   # File & PDF import UI bridge
 │   └── Views/
 │       ├── ContentView.swift             # Tab navigation
 │       ├── ReaderView.swift              # Main reader screen

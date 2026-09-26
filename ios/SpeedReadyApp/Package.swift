@@ -21,12 +21,7 @@ let package = Package(
             dependencies: [
                 .product(name: "ZIPFoundation", package: "ZIPFoundation")
             ],
-            path: "Sources/SpeedReadyApp",
-            exclude: [
-                "App",
-                "Views",
-                "Services/DocumentImportService.swift"
-            ]
+            path: "Sources/SpeedReadyApp"
         ),
         .testTarget(
             name: "SpeedReadyAppTests",

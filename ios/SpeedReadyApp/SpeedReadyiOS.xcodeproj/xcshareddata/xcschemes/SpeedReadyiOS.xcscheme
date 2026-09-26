@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "78BC0556026509C913253433"
+               BlueprintIdentifier = "B9CEB1509C901FDD9CD2922F"
                BuildableName = "SpeedReady.app"
                BlueprintName = "SpeedReadyiOS"
                ReferencedContainer = "container:SpeedReadyiOS.xcodeproj">
@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1169CF19FF6FB906F75CAF9A"
+               BlueprintIdentifier = "DE7E906E5213A0C85BB6AC6A"
                BuildableName = "SpeedReadyiOSTests.xctest"
                BlueprintName = "SpeedReadyiOSTests"
                ReferencedContainer = "container:SpeedReadyiOS.xcodeproj">
@@ -44,7 +44,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "78BC0556026509C913253433"
+            BlueprintIdentifier = "B9CEB1509C901FDD9CD2922F"
             BuildableName = "SpeedReady.app"
             BlueprintName = "SpeedReadyiOS"
             ReferencedContainer = "container:SpeedReadyiOS.xcodeproj">
@@ -55,7 +55,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1169CF19FF6FB906F75CAF9A"
+               BlueprintIdentifier = "DE7E906E5213A0C85BB6AC6A"
                BuildableName = "SpeedReadyiOSTests.xctest"
                BlueprintName = "SpeedReadyiOSTests"
                ReferencedContainer = "container:SpeedReadyiOS.xcodeproj">
@@ -77,7 +77,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "78BC0556026509C913253433"
+            BlueprintIdentifier = "B9CEB1509C901FDD9CD2922F"
             BuildableName = "SpeedReady.app"
             BlueprintName = "SpeedReadyiOS"
             ReferencedContainer = "container:SpeedReadyiOS.xcodeproj">
@@ -94,7 +94,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "78BC0556026509C913253433"
+            BlueprintIdentifier = "B9CEB1509C901FDD9CD2922F"
             BuildableName = "SpeedReady.app"
             BlueprintName = "SpeedReadyiOS"
             ReferencedContainer = "container:SpeedReadyiOS.xcodeproj">

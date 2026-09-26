@@ -3,9 +3,10 @@
 Before opening in Xcode, verify the following:
 
 ## File Structure
-- [x] All Swift files in `Sources/SpeedReadyApp/`
+- [x] Shared Swift files in `Sources/SpeedReadyApp/`
+- [x] App target Swift files in `SpeedReadyiOS/Sources/`
 - [x] Models, Views, Services organized by folder
-- [x] Main app entry point: `App/SpeedReadyApp.swift`
+- [x] Main app entry point: `SpeedReadyiOS/Sources/App/SpeedReadyApp.swift`
 - [x] Package.swift at root
 
 ## Import Dependencies

@@ -109,7 +109,10 @@ struct ReaderView: View {
             }
             .onChange(of: appState.currentDocument) { previousDocument, nextDocument in
                 recordSessionIfNeeded(for: previousDocument ?? activeDocument)
-                guard let nextDocument else { return }
+                guard let nextDocument else {
+                    clearActiveSession()
+                    return
+                }
                 loadDocument(nextDocument)
             }
             .onChange(of: engine.state.wordIndex) { _, _ in
@@ -264,6 +267,12 @@ struct ReaderView: View {
         activeDocument = document
         lastRecordedSessionID = nil
         engine.load(text: document.text, settings: settings)
+    }
+
+    private func clearActiveSession() {
+        activeDocument = nil
+        lastRecordedSessionID = nil
+        engine.load(text: "", settings: settings)
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
