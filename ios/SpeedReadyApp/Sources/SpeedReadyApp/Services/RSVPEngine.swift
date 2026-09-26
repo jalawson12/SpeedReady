@@ -167,7 +167,7 @@ final class RSVPEngine: ObservableObject {
         let targetIndex = min(max(0, currentIndex + offset), maxIndex)
 
         state.wordIndex = targetIndex
-        didCompleteSession = false
+        didCompleteSession = isAtCompletedEnd
         updateCurrentDisplay(index: targetIndex)
 
         if state.isPlaying {

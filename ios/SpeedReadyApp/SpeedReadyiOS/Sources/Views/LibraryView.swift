@@ -73,13 +73,7 @@ struct LibraryView: View {
                             Button("Load") {
                                 let trimmed = customText.trimmingCharacters(in: .whitespacesAndNewlines)
                                 guard !trimmed.isEmpty else { return }
-                                let document = ReadingDocument(
-                                    title: "Custom text",
-                                    text: trimmed,
-                                    wordCount: trimmed.split(whereSeparator: { $0.isWhitespace }).count,
-                                    createdAt: Date()
-                                )
-                                appState.setCurrentDocument(document)
+                                appState.addDocument(title: "Custom text", text: trimmed)
                                 customText = ""
                                 showingTextInput = false
                             }

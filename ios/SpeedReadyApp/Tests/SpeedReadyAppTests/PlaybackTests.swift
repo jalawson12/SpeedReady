@@ -120,6 +120,24 @@ final class PlaybackTests: XCTestCase {
         XCTAssertEqual(engine.state.wordIndex, 1)
         XCTAssertEqual(engine.state.currentWord, "One")
     }
+
+    func testSkipBackwardAtEndPreservesCompletedState() {
+        let scheduler = TestScheduler()
+        let clock = TestClock(start: Date())
+        let engine = RSVPEngine(now: { clock.now }, scheduler: scheduler)
+
+        engine.load(text: "One two three four five six")
+        engine.play()
+        repeat { scheduler.fireNext() } while engine.state.isPlaying
+
+        XCTAssertTrue(engine.sessionSummary().completed)
+
+        engine.skipBackward()
+
+        XCTAssertTrue(engine.sessionSummary().completed)
+        XCTAssertEqual(engine.state.wordIndex, 0)
+        XCTAssertEqual(engine.state.currentWord, "One")
+    }
 }
 
 private final class TestClock {
