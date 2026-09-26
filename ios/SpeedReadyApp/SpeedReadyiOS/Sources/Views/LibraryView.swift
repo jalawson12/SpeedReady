@@ -45,8 +45,8 @@ struct LibraryView: View {
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .font(.title3)
-                            .accessibilityLabel("Add reading material")
                     }
+                    .accessibilityLabel("Add reading material")
                 }
             }
             .sheet(item: $activeSheet) { sheet in
@@ -55,7 +55,7 @@ struct LibraryView: View {
                     DocumentImportSheet { result in
                         switch result {
                         case .success(let document):
-                            appState.addDocument(document)
+                            appState.importDocument(document)
                         case .failure(let error):
                             importErrorMessage = error.localizedDescription
                         }
