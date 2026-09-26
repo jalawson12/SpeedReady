@@ -282,9 +282,9 @@ struct ReaderView: View {
     }
 
     private func loadFallbackSample() {
-        activeDocument = nil
+        activeDocument = ReadingDocument.sample()
         lastRecordedSessionID = nil
-        engine.load(text: ReadingDocument.sample().text, settings: settings)
+        engine.load(text: activeDocument?.text ?? "", settings: settings)
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
