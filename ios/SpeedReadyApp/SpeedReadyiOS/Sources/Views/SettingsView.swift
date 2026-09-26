@@ -145,6 +145,7 @@ struct SettingsView: View {
             }
             .onDisappear {
                 pendingSaveTask?.cancel()
+                onSave(settings)
             }
         }
     }
