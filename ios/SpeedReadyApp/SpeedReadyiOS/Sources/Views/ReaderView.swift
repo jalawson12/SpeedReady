@@ -7,10 +7,6 @@ struct ReaderView: View {
     @State private var activeDocument: ReadingDocument?
     @State private var lastRecordedSessionID: UUID?
     @State private var showingSettings = false
-    @State private var showingDocumentPicker = false
-    @State private var showingTextInput = false
-    @State private var customText = ""
-    @State private var importErrorMessage: String?
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -60,50 +56,6 @@ struct ReaderView: View {
                     applySettings(newSettings)
                 }
             }
-            .sheet(isPresented: $showingDocumentPicker) {
-                DocumentPickerView { result in
-                    switch result {
-                    case .success(let document):
-                        appState.setCurrentDocument(document)
-                    case .failure(let error):
-                        importErrorMessage = error.localizedDescription
-                    }
-                    showingDocumentPicker = false
-                }
-            }
-            .sheet(isPresented: $showingTextInput) {
-                NavigationStack {
-                    Form {
-                        Section("Paste or type text") {
-                            TextEditor(text: $customText)
-                                .frame(minHeight: 220)
-                        }
-                    }
-                    .navigationTitle("New reading text")
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            Button("Cancel") {
-                                showingTextInput = false
-                            }
-                        }
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Load") {
-                                let trimmed = customText.trimmingCharacters(in: .whitespacesAndNewlines)
-                                guard !trimmed.isEmpty else { return }
-                                let doc = ReadingDocument(
-                                    title: "Custom text",
-                                    text: trimmed,
-                                    wordCount: trimmed.split(whereSeparator: { $0.isWhitespace }).count,
-                                    createdAt: Date()
-                                )
-                                appState.setCurrentDocument(doc)
-                                customText = ""
-                                showingTextInput = false
-                            }
-                        }
-                    }
-                }
-            }
             .onAppear {
                 if let currentDocument = appState.currentDocument {
                     loadDocument(currentDocument)
@@ -123,15 +75,6 @@ struct ReaderView: View {
                 let summary = engine.sessionSummary()
                 guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return }
                 recordSessionIfNeeded(for: activeDocument, completedOverride: true)
-            }
-            .alert("Import failed", isPresented: Binding(get: {
-                importErrorMessage != nil
-            }, set: { newValue in
-                if !newValue { importErrorMessage = nil }
-            })) {
-                Button("OK", role: .cancel) { importErrorMessage = nil }
-            } message: {
-                Text(importErrorMessage ?? "Unknown error.")
             }
         }
     }
@@ -234,42 +177,61 @@ struct ReaderView: View {
 
     private var actionsView: some View {
         VStack(spacing: 12) {
-            HStack(spacing: 12) {
-                Button(engine.state.isPlaying ? "Pause" : "Play") {
+            HStack(spacing: 18) {
+                Button {
+                    recordSessionIfNeeded(for: activeDocument)
+                    engine.restart()
+                } label: {
+                    Image(systemName: "arrow.counterclockwise")
+                        .font(.system(size: 20, weight: .semibold))
+                        .frame(width: 54, height: 54)
+                        .background(.thinMaterial, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Restart reading from beginning")
+
+                Button {
+                    engine.skipBackward()
+                } label: {
+                    Image(systemName: "gobackward.5")
+                        .font(.system(size: 22, weight: .semibold))
+                        .frame(width: 60, height: 60)
+                        .background(.thinMaterial, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Skip backward 5 words")
+                .accessibilityHint("Moves the current reading position back by 5 words")
+
+                Button {
                     if engine.state.isPlaying {
                         engine.pause()
                     } else {
                         engine.play()
                     }
+                } label: {
+                    Image(systemName: engine.state.isPlaying ? "pause.fill" : "play.fill")
+                        .font(.system(size: 28, weight: .bold))
+                        .frame(width: 78, height: 78)
+                        .foregroundStyle(.white)
+                        .background(Color.accentColor.gradient, in: Circle())
+                        .contentTransition(.symbolEffect(.replace))
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.plain)
                 .accessibilityLabel(engine.state.isPlaying ? "Pause reading" : "Start reading")
-                .frame(maxWidth: .infinity)
 
-                Button("Restart") {
-                    recordSessionIfNeeded(for: activeDocument)
-                    engine.restart()
+                Button {
+                    engine.skipForward()
+                } label: {
+                    Image(systemName: "goforward.5")
+                        .font(.system(size: 22, weight: .semibold))
+                        .frame(width: 60, height: 60)
+                        .background(.thinMaterial, in: Circle())
                 }
-                .buttonStyle(.bordered)
-                .accessibilityLabel("Restart reading from beginning")
-                .frame(maxWidth: .infinity)
+                .buttonStyle(.plain)
+                .accessibilityLabel("Skip forward 5 words")
+                .accessibilityHint("Moves the current reading position forward by 5 words")
             }
-
-            HStack(spacing: 12) {
-                Button("Load Doc") {
-                    showingDocumentPicker = true
-                }
-                .buttonStyle(.bordered)
-                .accessibilityLabel("Load document from file")
-                .frame(maxWidth: .infinity)
-
-                Button("Paste Text") {
-                    showingTextInput = true
-                }
-                .buttonStyle(.bordered)
-                .accessibilityLabel("Paste text from clipboard")
-                .frame(maxWidth: .infinity)
-            }
+            .foregroundStyle(settings.focusMode ? .white : .primary)
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.top, 4)

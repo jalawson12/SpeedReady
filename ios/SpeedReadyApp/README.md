@@ -17,7 +17,7 @@ Native SwiftUI port of SpeedReady, a speed-reading app that uses RSVP (Rapid Ser
 - **PDF import** with native text extraction + OCR fallback
 - **Plain text import** (TXT, MD)
 - **EPUB import** with native ZIP/XML spine parsing
-- **Paste text** directly into the app
+- **Paste text** directly into the Library import menu
 - **Local document library** with persistent storage
 - **Reading history** with session tracking
 
@@ -128,8 +128,8 @@ UIViewControllerRepresentable for:
 ## Testing
 
 - Use the **Sample Article** on first launch
-- **Load Document** to import local PDFs or text files
-- **Paste Text** to quickly load clipboard content
+- Use the Library page **Import** menu to load local PDFs or text files
+- Use the Library page **Import** menu to paste or type text quickly
 - Check **Stats** and **History** tabs to review session data
 
 ## Dependencies
