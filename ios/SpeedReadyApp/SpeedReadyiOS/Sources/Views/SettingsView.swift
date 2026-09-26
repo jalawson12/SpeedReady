@@ -142,7 +142,7 @@ struct SettingsView: View {
                 saveGeneration &+= 1
                 let generation = saveGeneration
                 pendingSaveTask?.cancel()
-                pendingSaveTask = Task {
+                pendingSaveTask = Task { @MainActor in
                     try? await Task.sleep(for: .milliseconds(400))
                     guard !Task.isCancelled, generation == saveGeneration else { return }
                     onSave(newSettings)
