@@ -2,9 +2,9 @@ import SwiftUI
 
 struct ReaderView: View {
     @ObservedObject var appState: SpeedReadyAppState
+    @Binding var settings: ReaderSettings
     @Environment(\.colorScheme) private var colorScheme
     @StateObject private var engine = RSVPEngine()
-    @State private var settings = ReaderSettings.loadPersisted()
     @State private var activeDocument: ReadingDocument?
     @State private var lastRecordedSessionID: UUID?
     @State private var showingSettings = false
@@ -61,7 +61,7 @@ struct ReaderView: View {
                 }
             }
             .sheet(isPresented: $showingSettings) {
-                SettingsView(settings: $settings, isPresented: $showingSettings) { newSettings in
+                SettingsView(settings: $settings) { newSettings in
                     applySettings(newSettings)
                 }
                 .preferredColorScheme(preferredColorScheme)
@@ -86,6 +86,9 @@ struct ReaderView: View {
                 let summary = engine.sessionSummary()
                 guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return }
                 recordSessionIfNeeded(for: activeDocument, completedOverride: true)
+            }
+            .onChange(of: settings) { _, newSettings in
+                engine.setSettings(newSettings)
             }
         }
         .preferredColorScheme(preferredColorScheme)
@@ -237,8 +240,7 @@ struct ReaderView: View {
             statPill(title: "Words", value: "\(summary.wordsRead)")
             statPill(title: "Time", value: String(format: "%.0fs", summary.duration))
             statPill(title: "Status", value: summary.completed ? "Done" : "Reading")
-        }
-        .opacity(settings.focusMode ? 0.75 : 1)
+        }.opacity(settings.focusMode ? 0.75 : 1)
     }
 
     private var progressView: some View {
@@ -540,5 +542,5 @@ private func colorFromHex(_ hex: String) -> Color? {
 }
 
 #Preview {
-    ReaderView(appState: SpeedReadyAppState())
+    ReaderView(appState: SpeedReadyAppState(), settings: .constant(ReaderSettings()))
 }
