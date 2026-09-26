@@ -15,144 +15,148 @@ struct SettingsView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Theme") {
-                    Picker("Appearance", selection: $settings.theme) {
-                        Text("System").tag(AppTheme.system)
-                        Text("Light").tag(AppTheme.light)
-                        Text("Dark").tag(AppTheme.dark)
-                    }
-                    .pickerStyle(.segmented)
-                }
-                .listRowBackground(palette.surface)
+            ZStack {
+                palette.background.ignoresSafeArea()
 
-                Section("Reading pace") {
-                    HStack {
-                        Text("WPM")
-                        Spacer()
-                        Text("\(Int(settings.wpm))")
+                Form {
+                    Section("Theme") {
+                        Picker("Appearance", selection: $settings.theme) {
+                            Text("System").tag(AppTheme.system)
+                            Text("Light").tag(AppTheme.light)
+                            Text("Dark").tag(AppTheme.dark)
+                        }
+                        .pickerStyle(.segmented)
                     }
-                    Slider(value: $settings.wpm, in: 100...1600, step: 25)
+                    .listRowBackground(palette.surface)
 
-                    Toggle("Smart speed", isOn: $settings.smartSpeed)
-                    Toggle("Speed ramp", isOn: $settings.speedRampEnabled)
-                    if settings.speedRampEnabled {
+                    Section("Reading pace") {
                         HStack {
-                            Text("Ramp target")
+                            Text("WPM")
                             Spacer()
-                            Text("\(Int(settings.speedRampTarget))")
+                            Text("\(Int(settings.wpm))")
                         }
-                        Slider(value: $settings.speedRampTarget, in: 100...1600, step: 25)
-                    }
-                }
-                .listRowBackground(palette.surface)
+                        Slider(value: $settings.wpm, in: 100...1600, step: 25)
 
-                Section("Typography") {
-                    HStack {
-                        Text("Font size")
-                        Spacer()
-                        Text("\(Int(settings.fontSize)) px")
-                    }
-                    Slider(value: $settings.fontSize, in: 16...256, step: 2)
-
-                    HStack {
-                        Text("Letter spacing")
-                        Spacer()
-                        Text(String(format: "%.2f em", settings.letterSpacing))
-                    }
-                    Slider(value: $settings.letterSpacing, in: 0...0.5, step: 0.01)
-
-                    Picker("Font weight", selection: $settings.fontWeight) {
-                        Text("Light").tag(300)
-                        Text("Regular").tag(400)
-                        Text("Medium").tag(500)
-                        Text("Semi").tag(600)
-                        Text("Bold").tag(700)
-                        Text("Extra").tag(800)
-                    }
-
-                    Toggle("Dyslexia mode", isOn: $settings.dyslexiaMode)
-                }
-                .listRowBackground(palette.surface)
-
-                Section("ORP & anchor") {
-                    HStack {
-                        Text("Pivot offset")
-                        Spacer()
-                        Text("\(Int(settings.pivotOffset))%")
-                    }
-                    Slider(value: $settings.pivotOffset, in: -30...30, step: 1)
-
-                    Picker("Bionic anchor position", selection: $settings.bionicFocusPosition) {
-                        ForEach(BionicFocusPosition.allCases, id: \.self) { value in
-                            Text(value.rawValue.capitalized).tag(value)
+                        Toggle("Smart speed", isOn: $settings.smartSpeed)
+                        Toggle("Speed ramp", isOn: $settings.speedRampEnabled)
+                        if settings.speedRampEnabled {
+                            HStack {
+                                Text("Ramp target")
+                                Spacer()
+                                Text("\(Int(settings.speedRampTarget))")
+                            }
+                            Slider(value: $settings.speedRampTarget, in: 100...1600, step: 25)
                         }
                     }
-                    .pickerStyle(.segmented)
+                    .listRowBackground(palette.surface)
 
-                    Toggle("ORP guide marks", isOn: $settings.showOrpGuides)
-                    Toggle("Hide trailing punctuation", isOn: $settings.hidePunctuationInDisplay)
-                }
-                .listRowBackground(palette.surface)
+                    Section("Typography") {
+                        HStack {
+                            Text("Font size")
+                            Spacer()
+                            Text("\(Int(settings.fontSize)) px")
+                        }
+                        Slider(value: $settings.fontSize, in: 16...256, step: 2)
 
-                Section("Timing") {
-                    HStack {
-                        Text("Sentence pause")
-                        Spacer()
-                        Text(String(format: "%.1fx", settings.sentencePauseMultiplier))
+                        HStack {
+                            Text("Letter spacing")
+                            Spacer()
+                            Text(String(format: "%.2f em", settings.letterSpacing))
+                        }
+                        Slider(value: $settings.letterSpacing, in: 0...0.5, step: 0.01)
+
+                        Picker("Font weight", selection: $settings.fontWeight) {
+                            Text("Light").tag(300)
+                            Text("Regular").tag(400)
+                            Text("Medium").tag(500)
+                            Text("Semi").tag(600)
+                            Text("Bold").tag(700)
+                            Text("Extra").tag(800)
+                        }
+
+                        Toggle("Dyslexia mode", isOn: $settings.dyslexiaMode)
                     }
-                    Slider(value: $settings.sentencePauseMultiplier, in: 1...10, step: 0.5)
+                    .listRowBackground(palette.surface)
 
-                    HStack {
-                        Text("Paragraph pause")
-                        Spacer()
-                        Text(String(format: "%.1fx", settings.paragraphPauseMultiplier))
+                    Section("ORP & anchor") {
+                        HStack {
+                            Text("Pivot offset")
+                            Spacer()
+                            Text("\(Int(settings.pivotOffset))%")
+                        }
+                        Slider(value: $settings.pivotOffset, in: -30...30, step: 1)
+
+                        Picker("Bionic anchor position", selection: $settings.bionicFocusPosition) {
+                            ForEach(BionicFocusPosition.allCases, id: \.self) { value in
+                                Text(value.rawValue.capitalized).tag(value)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+
+                        Toggle("ORP guide marks", isOn: $settings.showOrpGuides)
+                        Toggle("Hide trailing punctuation", isOn: $settings.hidePunctuationInDisplay)
                     }
-                    Slider(value: $settings.paragraphPauseMultiplier, in: 1...3, step: 0.1)
+                    .listRowBackground(palette.surface)
 
-                    Toggle("Punctuation pauses", isOn: $settings.punctuationPause)
-                    Toggle("Comma as sentence pause", isOn: $settings.commaAsPause)
-                    Toggle("Context pause on close", isOn: $settings.contextPauseOnClose)
-                }
-                .listRowBackground(palette.surface)
+                    Section("Timing") {
+                        HStack {
+                            Text("Sentence pause")
+                            Spacer()
+                            Text(String(format: "%.1fx", settings.sentencePauseMultiplier))
+                        }
+                        Slider(value: $settings.sentencePauseMultiplier, in: 1...10, step: 0.5)
 
-                Section("Visual highlights") {
-                    ColorPicker("Pivot highlight", selection: highlightColorBinding)
-                    Toggle("Colorize quotes", isOn: $settings.colorizeQuotes)
-                    if settings.colorizeQuotes {
-                        ColorPicker("Quote color", selection: quoteColorBinding)
+                        HStack {
+                            Text("Paragraph pause")
+                            Spacer()
+                            Text(String(format: "%.1fx", settings.paragraphPauseMultiplier))
+                        }
+                        Slider(value: $settings.paragraphPauseMultiplier, in: 1...3, step: 0.1)
+
+                        Toggle("Punctuation pauses", isOn: $settings.punctuationPause)
+                        Toggle("Comma as sentence pause", isOn: $settings.commaAsPause)
+                        Toggle("Context pause on close", isOn: $settings.contextPauseOnClose)
                     }
-                    Toggle("Colorize parentheses", isOn: $settings.colorizeParens)
-                    if settings.colorizeParens {
-                        ColorPicker("Paren color", selection: parenColorBinding)
-                    }
-                }
-                .listRowBackground(palette.surface)
+                    .listRowBackground(palette.surface)
 
-                Section("Pause view mode") {
-                    Picker("Pause view", selection: $settings.pauseView) {
-                        ForEach(PauseViewMode.allCases, id: \.self) { mode in
-                            Text(mode.rawValue.capitalized).tag(mode)
+                    Section("Visual highlights") {
+                        ColorPicker("Pivot highlight", selection: highlightColorBinding)
+                        Toggle("Colorize quotes", isOn: $settings.colorizeQuotes)
+                        if settings.colorizeQuotes {
+                            ColorPicker("Quote color", selection: quoteColorBinding)
+                        }
+                        Toggle("Colorize parentheses", isOn: $settings.colorizeParens)
+                        if settings.colorizeParens {
+                            ColorPicker("Paren color", selection: parenColorBinding)
                         }
                     }
-                    .pickerStyle(.segmented)
-                }
-                .listRowBackground(palette.surface)
+                    .listRowBackground(palette.surface)
 
-                Section("Reading features") {
-                    Toggle("Focus mode", isOn: $settings.focusMode)
-                    Toggle("Remove citations", isOn: $settings.removeCitations)
-                    Toggle("Peripheral context", isOn: $settings.peripheralContext)
-                    if settings.peripheralContext {
-                        Stepper("Peripheral density: \(settings.peripheralContextCount)", value: $settings.peripheralContextCount, in: 1...3)
+                    Section("Pause view mode") {
+                        Picker("Pause view", selection: $settings.pauseView) {
+                            ForEach(PauseViewMode.allCases, id: \.self) { mode in
+                                Text(mode.rawValue.capitalized).tag(mode)
+                            }
+                        }
+                        .pickerStyle(.segmented)
                     }
+                    .listRowBackground(palette.surface)
+
+                    Section("Reading features") {
+                        Toggle("Focus mode", isOn: $settings.focusMode)
+                        Toggle("Remove citations", isOn: $settings.removeCitations)
+                        Toggle("Peripheral context", isOn: $settings.peripheralContext)
+                        if settings.peripheralContext {
+                            Stepper("Peripheral density: \(settings.peripheralContextCount)", value: $settings.peripheralContextCount, in: 1...3)
+                        }
+                    }
+                    .listRowBackground(palette.surface)
                 }
-                .listRowBackground(palette.surface)
+                .navigationTitle("Settings")
+                .scrollContentBackground(.hidden)
+                .background(palette.background)
+                .tint(palette.accent)
             }
-            .navigationTitle("Settings")
-            .scrollContentBackground(.hidden)
-            .background(palette.background)
-            .tint(palette.accent)
             .onChange(of: settings) { _, newSettings in
                 hasPendingChanges = true
                 saveGeneration &+= 1

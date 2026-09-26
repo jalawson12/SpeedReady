@@ -87,8 +87,8 @@ final class AppStateDocumentTests: XCTestCase {
             return
         }
 
-        appState.updateReadingLocation(for: first.id, wordIndex: 3, maxWordIndex: 4, isCompleted: false)
-        appState.updateReadingLocation(for: second.id, wordIndex: 4, maxWordIndex: 4, isCompleted: true)
+        appState.updateReadingLocation(for: first.id, wordIndex: 3, totalWords: 4, isCompleted: false)
+        appState.updateReadingLocation(for: second.id, wordIndex: 4, totalWords: 4, isCompleted: true)
 
         let reloaded = SpeedReadyAppState()
         XCTAssertEqual(reloaded.readingLocation(for: first)?.wordIndex, 3)
@@ -106,7 +106,7 @@ final class AppStateDocumentTests: XCTestCase {
             return
         }
 
-        appState.updateReadingLocation(for: document.id, wordIndex: 99, maxWordIndex: 3, isCompleted: true)
+        appState.updateReadingLocation(for: document.id, wordIndex: 99, totalWords: 3, isCompleted: true)
 
         XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 3)
     }
@@ -120,7 +120,7 @@ final class AppStateDocumentTests: XCTestCase {
             return
         }
 
-        appState.updateReadingLocation(for: document.id, wordIndex: 3, maxWordIndex: 3, isCompleted: false)
+        appState.updateReadingLocation(for: document.id, wordIndex: 3, totalWords: 3, isCompleted: false)
 
         XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 2)
         XCTAssertEqual(appState.readingLocation(for: document)?.isCompleted, false)
@@ -135,7 +135,7 @@ final class AppStateDocumentTests: XCTestCase {
             return
         }
 
-        appState.updateReadingLocation(for: document.id, wordIndex: -1, maxWordIndex: 3, isCompleted: true)
+        appState.updateReadingLocation(for: document.id, wordIndex: -1, totalWords: 3, isCompleted: true)
 
         XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 0)
         XCTAssertEqual(appState.readingLocation(for: document)?.isCompleted, false)
@@ -161,7 +161,7 @@ final class AppStateDocumentTests: XCTestCase {
         appState.updateReadingLocation(
             for: document.id,
             wordIndex: engine.state.wordIndex,
-            maxWordIndex: engine.state.totalWords,
+            totalWords: engine.state.totalWords,
             isCompleted: summary.completed
         )
 
