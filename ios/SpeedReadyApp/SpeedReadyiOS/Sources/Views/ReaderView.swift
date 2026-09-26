@@ -212,6 +212,7 @@ struct ReaderView: View {
     }
 
     private var progressView: some View {
+        let remainingTime = estimatedTimeRemaining()
         VStack(alignment: .leading, spacing: 8) {
             ProgressView(
                 value: Double(engine.state.wordIndex),
@@ -229,10 +230,10 @@ struct ReaderView: View {
 
                 Spacer()
 
-                Text("\(estimatedTimeRemaining()) left")
+                Text("\(remainingTime) left")
                     .font(.caption)
                     .foregroundStyle(palette.mutedText)
-                    .accessibilityLabel("Estimated time left: \(estimatedTimeRemaining())")
+                    .accessibilityLabel("Estimated time left: \(remainingTime)")
             }
         }
         .opacity(settings.focusMode ? 0.7 : 1)
