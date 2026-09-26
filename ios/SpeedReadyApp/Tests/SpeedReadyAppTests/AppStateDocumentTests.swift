@@ -87,14 +87,28 @@ final class AppStateDocumentTests: XCTestCase {
             return
         }
 
-        appState.updateReadingLocation(for: first.id, wordIndex: 3, isCompleted: false)
-        appState.updateReadingLocation(for: second.id, wordIndex: 4, isCompleted: true)
+        appState.updateReadingLocation(for: first.id, wordIndex: 3, maxWordIndex: 4, isCompleted: false)
+        appState.updateReadingLocation(for: second.id, wordIndex: 4, maxWordIndex: 4, isCompleted: true)
 
         let reloaded = SpeedReadyAppState()
         XCTAssertEqual(reloaded.readingLocation(for: first)?.wordIndex, 3)
         XCTAssertEqual(reloaded.readingLocation(for: first)?.isCompleted, false)
         XCTAssertEqual(reloaded.readingLocation(for: second)?.wordIndex, 4)
         XCTAssertEqual(reloaded.readingLocation(for: second)?.isCompleted, true)
+    }
+
+    func testReadingLocationClampsToProvidedMaximum() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Clamped", text: "one two three")
+
+        guard let document = appState.documents.first(where: { $0.title == "Clamped" }) else {
+            XCTFail("Expected clamped document")
+            return
+        }
+
+        appState.updateReadingLocation(for: document.id, wordIndex: 99, maxWordIndex: 3, isCompleted: true)
+
+        XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 3)
     }
 
     private func clearPersistedState() {

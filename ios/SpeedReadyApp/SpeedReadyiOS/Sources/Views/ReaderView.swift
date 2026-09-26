@@ -333,6 +333,7 @@ struct ReaderView: View {
         appState.updateReadingLocation(
             for: document.id,
             wordIndex: engine.state.wordIndex,
+            maxWordIndex: engine.state.totalWords,
             isCompleted: summary.completed && engine.state.wordIndex >= engine.state.totalWords,
             persist: persist
         )
