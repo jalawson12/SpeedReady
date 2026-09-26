@@ -26,4 +26,10 @@ final class ORPCalculationTests: XCTestCase {
         let orp = engine.controlsForWord("123")
         XCTAssertFalse(orp.pivot.isEmpty)
     }
+
+    func testORPHandlesUnicodeGraphemeClusters() {
+        let orp = engine.controlsForWord("👨🏾‍💻coding")
+        XCTAssertFalse(orp.pivot.isEmpty)
+        XCTAssertTrue((orp.before + orp.pivot + orp.after).contains("coding"))
+    }
 }

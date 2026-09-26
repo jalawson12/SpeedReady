@@ -1,48 +1,93 @@
 import Foundation
 import SwiftUI
 
+protocol RSVPScheduler {
+    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask
+}
+
+protocol RSVPTask {
+    func cancel()
+}
+
+struct TimerRSVPTask: RSVPTask {
+    private weak var timer: Timer?
+
+    init(timer: Timer) {
+        self.timer = timer
+    }
+
+    func cancel() {
+        timer?.invalidate()
+    }
+}
+
+struct TimerRSVPScheduler: RSVPScheduler {
+    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask {
+        let timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in action() }
+        return TimerRSVPTask(timer: timer)
+    }
+}
+
 final class RSVPEngine: ObservableObject {
     @Published private(set) var state = ReaderState()
 
     private var tokens: [WordToken] = []
     private var settings = ReaderSettings()
-    private var timer: Timer?
+    private var scheduledTask: RSVPTask?
     private var sessionStartedAt: Date?
-    private var sessionWordCount: Int = 0
+    private var totalPausedDuration: TimeInterval = 0
+    private var pausedAt: Date?
+    private var didCompleteSession = false
+
+    private let now: () -> Date
+    private let scheduler: RSVPScheduler
+
+    init(now: @escaping () -> Date = Date.init, scheduler: RSVPScheduler = TimerRSVPScheduler()) {
+        self.now = now
+        self.scheduler = scheduler
+    }
 
     func load(text: String, settings: ReaderSettings = ReaderSettings()) {
         pause()
         self.settings = settings
         self.tokens = tokenize(text)
-        let totalWords = self.tokens.count
         self.state = ReaderState(
             isPlaying: false,
             wordIndex: 0,
-            totalWords: totalWords,
-            currentWord: totalWords > 0 ? self.tokens[0].text : "",
+            totalWords: self.tokens.count,
+            currentWord: self.tokens.first?.text ?? "",
             before: "",
             pivot: "",
             after: "",
             currentWpm: Int(settings.wpm)
         )
         updateCurrentDisplay(index: 0)
-        sessionStartedAt = Date()
-        sessionWordCount = 0
+        sessionStartedAt = now()
+        totalPausedDuration = 0
+        pausedAt = nil
+        didCompleteSession = false
     }
 
     func play() {
         guard !tokens.isEmpty else { return }
         if state.wordIndex >= tokens.count {
             state.wordIndex = 0
+            didCompleteSession = false
         }
-        sessionStartedAt = sessionStartedAt ?? Date()
+        if let pausedAt {
+            totalPausedDuration += now().timeIntervalSince(pausedAt)
+            self.pausedAt = nil
+        }
         state.isPlaying = true
         scheduleNext()
     }
 
     func pause() {
-        timer?.invalidate()
-        timer = nil
+        scheduledTask?.cancel()
+        scheduledTask = nil
+        if state.isPlaying {
+            pausedAt = now()
+        }
         state.isPlaying = false
     }
 
@@ -55,11 +100,14 @@ final class RSVPEngine: ObservableObject {
     }
 
     func restart() {
-        if !tokens.isEmpty {
-            state.wordIndex = 0
-            state.isPlaying = false
-            updateCurrentDisplay(index: 0)
-        }
+        guard !tokens.isEmpty else { return }
+        pause()
+        state.wordIndex = 0
+        didCompleteSession = false
+        updateCurrentDisplay(index: 0)
+        sessionStartedAt = now()
+        totalPausedDuration = 0
+        pausedAt = nil
     }
 
     func increaseWpm() {
@@ -75,9 +123,18 @@ final class RSVPEngine: ObservableObject {
     }
 
     func sessionSummary() -> (wordsRead: Int, duration: Double, completed: Bool) {
-        let duration = sessionStartedAt.map { Date().timeIntervalSince($0) } ?? 0
-        let completed = state.wordIndex >= tokens.count
-        return (max(0, state.wordIndex), duration, completed)
+        let duration = activeDuration()
+        return (max(0, min(state.wordIndex, tokens.count)), max(0, duration), didCompleteSession)
+    }
+
+    func controlsForWord(_ word: String) -> ORPResult {
+        computeORP(for: word, focusPosition: settings.bionicFocusPosition)
+    }
+
+    private func activeDuration() -> TimeInterval {
+        guard let sessionStartedAt else { return 0 }
+        let currentPause = pausedAt.map { now().timeIntervalSince($0) } ?? 0
+        return now().timeIntervalSince(sessionStartedAt) - totalPausedDuration - currentPause
     }
 
     private func updateCurrentDisplay(index: Int) {
@@ -96,7 +153,6 @@ final class RSVPEngine: ObservableObject {
         state.pivot = orp.pivot
         state.after = orp.after
         state.currentWpm = Int(currentWpmForWord(token.text))
-        sessionWordCount = max(sessionWordCount, index + 1)
     }
 
     private func scheduleNext() {
@@ -106,7 +162,7 @@ final class RSVPEngine: ObservableObject {
         }
 
         guard state.wordIndex < tokens.count else {
-            state.isPlaying = false
+            finishSessionIfNeeded()
             return
         }
 
@@ -114,17 +170,26 @@ final class RSVPEngine: ObservableObject {
         let delayMs = computeDelay(for: token)
         updateCurrentDisplay(index: state.wordIndex)
 
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: delayMs / 1000.0, repeats: false) { [weak self] _ in
+        scheduledTask?.cancel()
+        scheduledTask = scheduler.schedule(after: delayMs / 1000.0) { [weak self] in
             guard let self else { return }
             self.state.wordIndex += 1
             if self.state.wordIndex >= self.tokens.count {
-                self.pause()
                 self.state.wordIndex = self.tokens.count
                 self.updateCurrentDisplay(index: max(0, self.tokens.count - 1))
+                self.finishSessionIfNeeded()
                 return
             }
             self.scheduleNext()
+        }
+    }
+
+    private func finishSessionIfNeeded() {
+        scheduledTask?.cancel()
+        scheduledTask = nil
+        state.isPlaying = false
+        if !didCompleteSession {
+            didCompleteSession = true
         }
     }
 
@@ -167,27 +232,19 @@ final class RSVPEngine: ObservableObject {
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
         let paragraphs = normalized
-            .split(separator: "\n\n", omittingEmptySubsequences: true)
-            .map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
+            .components(separatedBy: "\n\n")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
 
         guard !paragraphs.isEmpty else { return [] }
 
-        var tokens: [WordToken] = []
+        var words: [WordToken] = []
         for (paragraphIndex, paragraph) in paragraphs.enumerated() {
-            let words = paragraph.split(whereSeparator: { $0.isWhitespace }).map(String.init)
-            for (wordIndex, word) in words.enumerated() {
-                let pauseMultiplier: Double
-                if word.hasSuffix(".") || word.hasSuffix("!") || word.hasSuffix("?") {
-                    pauseMultiplier = 2.0
-                } else if word.hasSuffix(",") || word.hasSuffix(";") || word.hasSuffix(":") {
-                    pauseMultiplier = 1.4
-                } else {
-                    pauseMultiplier = 1.0
-                }
-
-                let closesAside = word.hasSuffix(")") || word.hasSuffix("]") || word.hasSuffix("\"") || word.hasSuffix("'")
-                tokens.append(
+            let tokens = paragraph.split(whereSeparator: { $0.isWhitespace }).map(String.init)
+            for (wordIndex, word) in tokens.enumerated() {
+                let pauseMultiplier = punctuationPauseMultiplier(for: word)
+                let closesAside = closesContext(for: word)
+                words.append(
                     WordToken(
                         text: word,
                         pauseMultiplier: pauseMultiplier,
@@ -197,16 +254,74 @@ final class RSVPEngine: ObservableObject {
                 )
             }
         }
-        return tokens
+
+        return applyChunkSize(to: words)
+    }
+
+    private func applyChunkSize(to tokens: [WordToken]) -> [WordToken] {
+        let chunkSize = max(1, settings.chunkSize)
+        guard chunkSize > 1 else { return tokens }
+
+        var result: [WordToken] = []
+        var index = 0
+        while index < tokens.count {
+            let chunk = Array(tokens[index..<min(index + chunkSize, tokens.count)])
+            guard let first = chunk.first, let last = chunk.last else {
+                index += chunkSize
+                continue
+            }
+
+            result.append(
+                WordToken(
+                    text: chunk.map(\.text).joined(separator: " "),
+                    pauseMultiplier: chunk.map(\.pauseMultiplier).max() ?? 1.0,
+                    paragraphStart: first.paragraphStart,
+                    closesAside: last.closesAside
+                )
+            )
+            index += chunkSize
+        }
+        return result
+    }
+
+    private func punctuationPauseMultiplier(for word: String) -> Double {
+        let trailingClosers = CharacterSet(charactersIn: "\"'”’)]}")
+        var scalars = Array(word.unicodeScalars)
+        while let last = scalars.last, trailingClosers.contains(last) {
+            scalars.removeLast()
+        }
+        guard let last = scalars.last else { return 1.0 }
+        if ".!?".unicodeScalars.contains(last) { return 2.0 }
+        if ",;:".unicodeScalars.contains(last) { return 1.4 }
+        return 1.0
+    }
+
+    private func closesContext(for word: String) -> Bool {
+        let closers = CharacterSet(charactersIn: "\"”’)]}")
+        guard let scalar = word.unicodeScalars.last else { return false }
+        return closers.contains(scalar)
     }
 
     private func computeORP(for text: String, focusPosition: BionicFocusPosition) -> ORPResult {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            return ORPResult(before: "", pivot: "", after: "")
+        }
+
         let leading = trimmed.prefix { !$0.isLetter && !$0.isNumber }
         let trailing = trimmed.reversed().prefix { !$0.isLetter && !$0.isNumber }.reversed()
         let core = String(trimmed.dropFirst(leading.count).dropLast(trailing.count))
+
+        guard !core.isEmpty else {
+            return ORPResult(before: String(leading), pivot: String(trailing.prefix(1)), after: String(trailing.dropFirst()))
+        }
+
         let clean = core.filter { $0.isLetter || $0.isNumber }
         let len = clean.count
+        guard len > 0 else {
+            let pivotIndex = core.index(before: core.endIndex)
+            return ORPResult(before: String(leading) + String(core[..<pivotIndex]), pivot: String(core[pivotIndex]), after: String(trailing))
+        }
 
         var pivotIndex = 0
         if len <= 1 { pivotIndex = 0 }
@@ -225,14 +340,13 @@ final class RSVPEngine: ObservableObject {
 
         let originalIndex = findPivotCharacterIndex(in: core, cleanIndex: pivotIndex)
         let start = core.index(core.startIndex, offsetBy: originalIndex)
-        let pivotChar = String(core[start])
-        let end = core.index(start, offsetBy: pivotChar.count)
+        let end = core.index(after: start)
 
-        let before = String(leading) + core[..<start]
+        let before = String(leading) + String(core[..<start])
         let pivot = String(core[start..<end])
         let after = String(core[end...]) + String(trailing)
 
-        return ORPResult(before: String(before), pivot: pivot, after: after)
+        return ORPResult(before: before, pivot: pivot, after: after)
     }
 
     private func findPivotCharacterIndex(in text: String, cleanIndex: Int) -> Int {

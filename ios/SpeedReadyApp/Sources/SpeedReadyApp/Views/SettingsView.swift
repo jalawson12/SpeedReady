@@ -27,7 +27,7 @@ struct SettingsView: View {
 
                 Section("Display") {
                     Picker("Bionic focus", selection: $settings.bionicFocusPosition) {
-                        ForEach(BionicFocusPosition.allCases, id: \ .self) { value in
+                        ForEach(BionicFocusPosition.allCases, id: \.self) { value in
                             Text(value.rawValue.capitalized).tag(value)
                         }
                     }

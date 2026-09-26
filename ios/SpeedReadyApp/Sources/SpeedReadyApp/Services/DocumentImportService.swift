@@ -2,84 +2,92 @@ import Foundation
 import SwiftUI
 import UniformTypeIdentifiers
 import UIKit
-import PDFKit
 
-final class DocumentImportService: NSObject, ObservableObject {
-    private var onPick: ((ReadingDocument) -> Void)?
-    private var picker: UIDocumentPickerViewController?
+enum DocumentImportError: LocalizedError, Equatable {
+    case unsupportedType
+    case unreadableText
+    case emptyDocument
+    case pdf(PDFTextExtractor.ExtractionError)
+    case epub(EPUBTextExtractor.ExtractionError)
 
-    func present(from viewController: UIViewController, onPick: @escaping (ReadingDocument) -> Void) {
-        self.onPick = onPick
-        let picker = UIDocumentPickerViewController(
-            forOpeningContentTypes: [UTType.plainText, UTType.text, UTType.pdf],
-            asCopy: true
-        )
-        picker.delegate = self
-        picker.allowsMultipleSelection = false
-        self.picker = picker
-        viewController.present(picker, animated: true)
+    var errorDescription: String? {
+        switch self {
+        case .unsupportedType:
+            return "That file type is not supported. Choose TXT, MD, PDF, or EPUB."
+        case .unreadableText:
+            return "The selected text file could not be decoded."
+        case .emptyDocument:
+            return "The selected document does not contain readable text."
+        case .pdf(let error):
+            return error.localizedDescription
+        case .epub(let error):
+            return error.localizedDescription
+        }
+    }
+}
+
+struct DocumentImportPipeline {
+    private static let markdownType = UTType(filenameExtension: "md")
+
+    static var supportedContentTypes: [UTType] {
+        [UTType.plainText, UTType.text, markdownType, UTType.pdf, UTType.epub].compactMap { $0 }
     }
 
-    private func makeDocument(from url: URL) -> ReadingDocument {
+    static func importDocument(from url: URL) throws -> ReadingDocument {
         let title = url.deletingPathExtension().lastPathComponent
-        let text = extractTextFromURL(url)
-        let cleanedText = text.isEmpty ? "Imported document loaded successfully. Add content from a text or PDF file to begin reading." : text
+        let ext = url.pathExtension.lowercased()
+        let text: String
+
+        switch ext {
+        case "txt", "md", "markdown":
+            text = try extractText(from: url)
+        case "pdf":
+            do {
+                text = try PDFTextExtractor.extract(from: url)
+            } catch let error as PDFTextExtractor.ExtractionError {
+                throw DocumentImportError.pdf(error)
+            }
+        case "epub":
+            do {
+                text = try EPUBTextExtractor.extract(from: url)
+            } catch let error as EPUBTextExtractor.ExtractionError {
+                throw DocumentImportError.epub(error)
+            }
+        default:
+            throw DocumentImportError.unsupportedType
+        }
+
+        let cleaned = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !cleaned.isEmpty else {
+            throw DocumentImportError.emptyDocument
+        }
+
         return ReadingDocument(
             title: title,
-            text: cleanedText,
-            wordCount: cleanedText.split(whereSeparator: { $0.isWhitespace }).count,
+            text: cleaned,
+            wordCount: cleaned.split(whereSeparator: \.isWhitespace).count,
             createdAt: Date()
         )
     }
 
-    private func extractTextFromURL(_ url: URL) -> String {
-        let ext = url.pathExtension.lowercased()
-
-        // Handle PDF files
-        if ext == "pdf", let pdf = PDFDocument(url: url) {
-            var parts: [String] = []
-            for pageIndex in 0..<pdf.pageCount {
-                if let page = pdf.page(at: pageIndex), let pageText = page.string {
-                    let cleaned = pageText
-                        .replacingOccurrences(of: "\u{0000}", with: "")
-                        .replacingOccurrences(of: "\n{3,}", with: "\n\n", options: .regularExpression)
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                    if !cleaned.isEmpty {
-                        parts.append(cleaned)
-                    }
-                }
-            }
-            let combined = parts.joined(separator: "\n\n")
-            if !combined.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                return combined
-            }
-        }
-
-        // Handle text files
+    private static func extractText(from url: URL) throws -> String {
         if let content = try? String(contentsOf: url, encoding: .utf8) {
+            return content
+        }
+        if let content = try? String(contentsOf: url, encoding: .utf16) {
             return content
         }
         if let content = try? String(contentsOf: url, encoding: .isoLatin1) {
             return content
         }
-        return ""
+        throw DocumentImportError.unreadableText
     }
 }
 
-extension DocumentImportService: UIDocumentPickerDelegate {
-    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-        guard let url = urls.first else { return }
-        let doc = makeDocument(from: url)
-        onPick?(doc)
-    }
-
-    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
-        controller.dismiss(animated: true)
-    }
-}
+final class DocumentImportService: NSObject, ObservableObject {}
 
 struct DocumentPickerView: UIViewControllerRepresentable {
-    let onPick: (ReadingDocument) -> Void
+    let onPick: (Result<ReadingDocument, DocumentImportError>) -> Void
 
     func makeCoordinator() -> Coordinator {
         Coordinator(parent: self)
@@ -87,7 +95,7 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         let picker = UIDocumentPickerViewController(
-            forOpeningContentTypes: [UTType.plainText, UTType.text, UTType.pdf],
+            forOpeningContentTypes: DocumentImportPipeline.supportedContentTypes,
             asCopy: true
         )
         picker.delegate = context.coordinator
@@ -106,48 +114,14 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             guard let url = urls.first else { return }
-            let extracted = extractText(from: url)
-            let finalText = extracted.isEmpty ? "Imported document loaded successfully." : extracted
-            let doc = ReadingDocument(
-                title: url.deletingPathExtension().lastPathComponent,
-                text: finalText,
-                wordCount: finalText.split(whereSeparator: { $0.isWhitespace }).count,
-                createdAt: Date()
-            )
-            parent.onPick(doc)
-        }
-
-        private func extractText(from url: URL) -> String {
-            let ext = url.pathExtension.lowercased()
-            
-            // Handle PDF
-            if ext == "pdf", let pdf = PDFDocument(url: url) {
-                var parts: [String] = []
-                for pageIndex in 0..<pdf.pageCount {
-                    if let page = pdf.page(at: pageIndex), let pageText = page.string {
-                        let cleaned = pageText
-                            .replacingOccurrences(of: "\u{0000}", with: "")
-                            .replacingOccurrences(of: "\n{3,}", with: "\n\n", options: .regularExpression)
-                            .trimmingCharacters(in: .whitespacesAndNewlines)
-                        if !cleaned.isEmpty {
-                            parts.append(cleaned)
-                        }
-                    }
-                }
-                let combined = parts.joined(separator: "\n\n")
-                if !combined.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                    return combined
-                }
+            do {
+                let document = try DocumentImportPipeline.importDocument(from: url)
+                parent.onPick(.success(document))
+            } catch let error as DocumentImportError {
+                parent.onPick(.failure(error))
+            } catch {
+                parent.onPick(.failure(.emptyDocument))
             }
-
-            // Handle text files
-            if let content = try? String(contentsOf: url, encoding: .utf8) {
-                return content
-            }
-            if let content = try? String(contentsOf: url, encoding: .isoLatin1) {
-                return content
-            }
-            return ""
         }
     }
 }

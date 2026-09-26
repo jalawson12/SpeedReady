@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-struct ReaderSettings: Equatable {
+struct ReaderSettings: Equatable, Codable {
     var wpm: Double = 300
     var smartSpeed: Bool = true
     var chunkSize: Int = 1
@@ -12,6 +12,22 @@ struct ReaderSettings: Equatable {
     var focusMode: Bool = false
     var fontScale: Double = 1.0
     var punctuationPause: Bool = true
+
+    private static let defaultsKey = "speedready.readerSettings.v1"
+
+    static func loadPersisted() -> ReaderSettings {
+        guard let data = UserDefaults.standard.data(forKey: defaultsKey),
+              let decoded = try? JSONDecoder().decode(ReaderSettings.self, from: data)
+        else {
+            return ReaderSettings()
+        }
+        return decoded
+    }
+
+    func persist() {
+        guard let data = try? JSONEncoder().encode(self) else { return }
+        UserDefaults.standard.set(data, forKey: Self.defaultsKey)
+    }
 }
 
 enum BionicFocusPosition: String, CaseIterable, Codable {

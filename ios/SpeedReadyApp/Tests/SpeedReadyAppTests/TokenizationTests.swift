@@ -35,4 +35,11 @@ final class TokenizationTests: XCTestCase {
         let firstWord = engine.state.currentWord
         XCTAssertTrue(firstWord.contains(","))
     }
+
+    func testChunkSizeCombinesTokens() {
+        var settings = ReaderSettings()
+        settings.chunkSize = 2
+        engine.load(text: "One two three four", settings: settings)
+        XCTAssertEqual(engine.state.totalWords, 2)
+    }
 }

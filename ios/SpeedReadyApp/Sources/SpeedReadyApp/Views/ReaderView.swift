@@ -3,11 +3,12 @@ import SwiftUI
 struct ReaderView: View {
     @ObservedObject var appState: SpeedReadyAppState
     @StateObject private var engine = RSVPEngine()
-    @State private var settings = ReaderSettings()
+    @State private var settings = ReaderSettings.loadPersisted()
     @State private var showingSettings = false
     @State private var showingDocumentPicker = false
     @State private var showingTextInput = false
     @State private var customText = ""
+    @State private var importErrorMessage: String?
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -55,13 +56,19 @@ struct ReaderView: View {
             .sheet(isPresented: $showingSettings) {
                 SettingsView(settings: $settings, isPresented: $showingSettings) { newSettings in
                     settings = newSettings
+                    settings.persist()
                     engine.setSettings(newSettings)
                 }
             }
             .sheet(isPresented: $showingDocumentPicker) {
-                DocumentPickerView { document in
-                    appState.setCurrentDocument(document)
-                    engine.load(text: document.text, settings: settings)
+                DocumentPickerView { result in
+                    switch result {
+                    case .success(let document):
+                        appState.setCurrentDocument(document)
+                        engine.load(text: document.text, settings: settings)
+                    case .failure(let error):
+                        importErrorMessage = error.localizedDescription
+                    }
                     showingDocumentPicker = false
                 }
             }
@@ -104,6 +111,15 @@ struct ReaderView: View {
             }
             .onChange(of: currentDocument.id) { _, _ in
                 engine.load(text: currentDocument.text, settings: settings)
+            }
+            .alert("Import failed", isPresented: Binding(get: {
+                importErrorMessage != nil
+            }, set: { newValue in
+                if !newValue { importErrorMessage = nil }
+            })) {
+                Button("OK", role: .cancel) { importErrorMessage = nil }
+            } message: {
+                Text(importErrorMessage ?? "Unknown error.")
             }
         }
     }

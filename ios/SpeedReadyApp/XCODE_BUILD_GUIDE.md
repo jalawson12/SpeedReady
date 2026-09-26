@@ -9,9 +9,10 @@ Before opening in Xcode, verify the following:
 - [x] Package.swift at root
 
 ## Import Dependencies
-- [x] `PDFKit` imported in DocumentImportService.swift
+- [x] `PDFKit` + `Vision` imported for PDF extraction
+- [x] `ZIPFoundation` dependency declared in `Package.swift` for EPUB extraction
 - [x] `SwiftUI`, `Foundation`, `UIKit` available
-- [x] No external CocoaPods/SPM required
+- [x] SwiftPM dependency resolution succeeds for package dependencies
 
 ## Known Xcode Issues to Watch For
 
@@ -87,4 +88,4 @@ If build fails:
 
 ---
 
-**You're ready for Xcode!** If any issues arise during build, refer to the troubleshooting section above.
+**Package scope note:** This repository currently ships a Swift package implementation; final app-target setup (signing/bundle ID/icons/simulator validation) remains an Xcode-only step.
