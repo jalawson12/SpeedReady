@@ -1,228 +1,145 @@
+import Foundation
 import SwiftUI
+import UniformTypeIdentifiers
+import UIKit
+import PDFKit
 
-struct ReaderView: View {
-    @ObservedObject var appState: SpeedReadyAppState
-    @StateObject private var engine = RSVPEngine()
-    @State private var settings = ReaderSettings()
-    @State private var showingSettings = false
-    @State private var showingDocumentPicker = false
-    @State private var showingTextInput = false
-    @State private var customText = ""
+final class DocumentImportService: NSObject, ObservableObject {
+    private var onPick: ((ReadingDocument) -> Void)?
+    private var picker: UIDocumentPickerViewController?
 
-    private var currentDocument: ReadingDocument {
-        appState.currentDocument ?? ReadingDocument.sample()
+    func present(from viewController: UIViewController, onPick: @escaping (ReadingDocument) -> Void) {
+        self.onPick = onPick
+        let picker = UIDocumentPickerViewController(
+            forOpeningContentTypes: [UTType.plainText, UTType.text, UTType.pdf, UTType.epub],
+            asCopy: true
+        )
+        picker.delegate = self
+        picker.allowsMultipleSelection = false
+        self.picker = picker
+        viewController.present(picker, animated: true)
     }
 
-    var body: some View {
-        NavigationStack {
-            VStack(spacing: 18) {
-                headerView
+    private func makeDocument(from url: URL) -> ReadingDocument {
+        let title = url.deletingPathExtension().lastPathComponent
+        let text = extractTextFromURL(url)
+        let cleanedText = text.isEmpty ? "Imported document loaded successfully. Add content from a text or PDF file to begin reading." : text
+        return ReadingDocument(
+            title: title,
+            text: cleanedText,
+            wordCount: cleanedText.split(whereSeparator: { $0.isWhitespace }).count,
+            createdAt: Date()
+        )
+    }
 
-                wordDisplayView
+    private func extractTextFromURL(_ url: URL) -> String {
+        let ext = url.pathExtension.lowercased()
 
-                controlsView
-
-                sessionStatsView
-
-                progressView
-
-                actionsView
-
-                Spacer()
-            }
-            .padding()
-            .navigationTitle("SpeedReady")
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingSettings = true
-                    } label: {
-                        Image(systemName: "slider.horizontal.3")
-                    }
+        if ext == "pdf", let pdf = PDFDocument(url: url) {
+            var parts: [String] = []
+            for pageIndex in 0..<pdf.pageCount {
+                if let page = pdf.page(at: pageIndex), let pageText = page.string {
+                    let cleaned = pageText
+                        .replacingOccurrences(of: "\u{0000}", with: "")
+                        .replacingOccurrences(of: "\n{3,}", with: "\n\n", options: .regularExpression)
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                    if !cleaned.isEmpty { parts.append(cleaned) }
                 }
             }
-            .sheet(isPresented: $showingSettings) {
-                SettingsView(settings: $settings, isPresented: $showingSettings) { newSettings in
-                    settings = newSettings
-                    engine.setSettings(newSettings)
-                }
-            }
-            .sheet(isPresented: $showingDocumentPicker) {
-                DocumentPickerView { document in
-                    appState.setCurrentDocument(document)
-                    engine.load(text: document.text, settings: settings)
-                    showingDocumentPicker = false
-                }
-            }
-            .sheet(isPresented: $showingTextInput) {
-                NavigationStack {
-                    Form {
-                        Section("Paste or type text") {
-                            TextEditor(text: $customText)
-                                .frame(minHeight: 220)
-                        }
-                    }
-                    .navigationTitle("New reading text")
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            Button("Cancel") {
-                                showingTextInput = false
-                            }
-                        }
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Load") {
-                                let trimmed = customText.trimmingCharacters(in: .whitespacesAndNewlines)
-                                guard !trimmed.isEmpty else { return }
-                                let doc = ReadingDocument(
-                                    title: "Custom text",
-                                    text: trimmed,
-                                    wordCount: trimmed.split(whereSeparator: { $0.isWhitespace }).count,
-                                    createdAt: Date()
-                                )
-                                appState.setCurrentDocument(doc)
-                                engine.load(text: doc.text, settings: settings)
-                                customText = ""
-                                showingTextInput = false
-                            }
-                        }
-                    }
-                }
-            }
-            .onAppear {
-                engine.load(text: currentDocument.text, settings: settings)
-            }
-            .onChange(of: currentDocument.id) { _, _ in
-                engine.load(text: currentDocument.text, settings: settings)
+            let combined = parts.joined(separator: "\n\n")
+            if !combined.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return combined
             }
         }
-    }
 
-    private var headerView: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(currentDocument.title)
-                .font(.title2.bold())
-            Text("\(engine.state.totalWords) words")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
+        if let content = try? String(contentsOf: url, encoding: .utf8) {
+            return content
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    private var wordDisplayView: some View {
-        VStack {
-            HStack(alignment: .firstTextBaseline, spacing: 0) {
-                Text(engine.state.before)
-                    .font(.system(size: settings.fontScale > 1 ? 54 : 48, weight: .regular, design: .rounded))
-                    .foregroundStyle(.secondary)
-                Text(engine.state.pivot)
-                    .font(.system(size: settings.fontScale > 1 ? 58 : 52, weight: .bold, design: .rounded))
-                    .foregroundStyle(.primary)
-                    .padding(.horizontal, 4)
-                Text(engine.state.after)
-                    .font(.system(size: settings.fontScale > 1 ? 54 : 48, weight: .regular, design: .rounded))
-                    .foregroundStyle(.secondary)
-            }
-            .frame(maxWidth: .infinity, minHeight: 180, alignment: .center)
-            .padding()
-            .background(.thinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
+        if let content = try? String(contentsOf: url, encoding: .isoLatin1) {
+            return content
         }
+        return ""
+    }
+}
+
+extension DocumentImportService: UIDocumentPickerDelegate {
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let url = urls.first else { return }
+        let doc = makeDocument(from: url)
+        onPick?(doc)
     }
 
-    private var controlsView: some View {
-        HStack {
-            Button {
-                engine.decreaseWpm()
-            } label: {
-                Image(systemName: "minus.circle")
-            }
-            .buttonStyle(.bordered)
+    func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+        controller.dismiss(animated: true)
+    }
+}
 
-            Spacer()
+struct DocumentPickerView: UIViewControllerRepresentable {
+    let onPick: (ReadingDocument) -> Void
 
-            Text("\(engine.state.currentWpm) WPM")
-                .font(.title2.bold())
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
+    }
 
-            Spacer()
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let picker = UIDocumentPickerViewController(
+            forOpeningContentTypes: [UTType.plainText, UTType.text, UTType.pdf, UTType.epub],
+            asCopy: true
+        )
+        picker.delegate = context.coordinator
+        picker.allowsMultipleSelection = false
+        return picker
+    }
 
-            Button {
-                engine.increaseWpm()
-            } label: {
-                Image(systemName: "plus.circle")
-            }
-            .buttonStyle(.bordered)
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+
+    final class Coordinator: NSObject, UIDocumentPickerDelegate {
+        private let parent: DocumentPickerView
+
+        init(parent: DocumentPickerView) {
+            self.parent = parent
         }
-        .padding(.horizontal)
-    }
 
-    private var sessionStatsView: some View {
-        let summary = engine.sessionSummary()
-        return HStack(spacing: 18) {
-            statPill(title: "Words", value: "\(summary.wordsRead)")
-            statPill(title: "Time", value: String(format: "%.0fs", summary.duration))
-            statPill(title: "Status", value: summary.completed ? "Done" : "Reading")
-        }
-    }
-
-    private var progressView: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            ProgressView(
-                value: Double(engine.state.wordIndex),
-                total: Double(max(engine.state.totalWords, 1))
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            guard let url = urls.first else { return }
+            let extracted = extractText(from: url)
+            let finalText = extracted.isEmpty ? "Imported document loaded successfully." : extracted
+            let doc = ReadingDocument(
+                title: url.deletingPathExtension().lastPathComponent,
+                text: finalText,
+                wordCount: finalText.split(whereSeparator: { $0.isWhitespace }).count,
+                createdAt: Date()
             )
-            .progressViewStyle(.linear)
-
-            Text("\(engine.state.wordIndex)/\(engine.state.totalWords) words")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            parent.onPick(doc)
         }
-    }
 
-    private var actionsView: some View {
-        HStack {
-            Button(engine.state.isPlaying ? "Pause" : "Play") {
-                if engine.state.isPlaying {
-                    engine.pause()
-                } else {
-                    engine.play()
+        private func extractText(from url: URL) -> String {
+            let ext = url.pathExtension.lowercased()
+            if ext == "pdf", let pdf = PDFDocument(url: url) {
+                var parts: [String] = []
+                for pageIndex in 0..<pdf.pageCount {
+                    if let page = pdf.page(at: pageIndex), let pageText = page.string {
+                        let cleaned = pageText
+                            .replacingOccurrences(of: "\u{0000}", with: "")
+                            .replacingOccurrences(of: "\n{3,}", with: "\n\n", options: .regularExpression)
+                            .trimmingCharacters(in: .whitespacesAndNewlines)
+                        if !cleaned.isEmpty { parts.append(cleaned) }
+                    }
+                }
+                let combined = parts.joined(separator: "\n\n")
+                if !combined.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    return combined
                 }
             }
-            .buttonStyle(.borderedProminent)
 
-            Button("Load Doc") {
-                showingDocumentPicker = true
+            if let content = try? String(contentsOf: url, encoding: .utf8) {
+                return content
             }
-            .buttonStyle(.bordered)
-
-            Button("Paste Text") {
-                showingTextInput = true
+            if let content = try? String(contentsOf: url, encoding: .isoLatin1) {
+                return content
             }
-            .buttonStyle(.bordered)
-
-            Button("Restart") {
-                engine.restart()
-            }
-            .buttonStyle(.bordered)
+            return ""
         }
-        .frame(maxWidth: .infinity, alignment: .center)
-        .padding(.top, 4)
-    }
-
-    private func statPill(title: String, value: String) -> some View {
-        VStack(spacing: 4) {
-            Text(title)
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-            Text(value)
-                .font(.headline)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
-        .background(Color(uiColor: .secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 
-#Preview {
-    ReaderView(appState: SpeedReadyAppState())
-}
