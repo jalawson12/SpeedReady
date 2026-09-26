@@ -1,0 +1,129 @@
+{
+  "" : {
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp-primary.dia",
+    "emit-module-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp-primary-emit-module.d",
+    "emit-module-diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp-primary-emit-module.dia",
+    "pch" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp-primary-Bridging-header.pch",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp-primary.swiftdeps"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/App/SpeedReadyApp.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SpeedReadyApp~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Models/ReaderModels.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderModels.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderModels.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderModels.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderModels.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderModels.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderModels.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderModels.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderModels~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Services/DocumentImportService.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/DocumentImportService.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/DocumentImportService.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/DocumentImportService.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/DocumentImportService.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/DocumentImportService.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/DocumentImportService.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/DocumentImportService.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/DocumentImportService~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Services/EPUBTextExtractor.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/EPUBTextExtractor.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/EPUBTextExtractor.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/EPUBTextExtractor.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/EPUBTextExtractor.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/EPUBTextExtractor.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/EPUBTextExtractor.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/EPUBTextExtractor.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/EPUBTextExtractor~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Services/PDFTextExtractor.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/PDFTextExtractor.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/PDFTextExtractor.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/PDFTextExtractor.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/PDFTextExtractor.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/PDFTextExtractor.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/PDFTextExtractor.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/PDFTextExtractor.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/PDFTextExtractor~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Services/RSVPEngine.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/RSVPEngine.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/RSVPEngine.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/RSVPEngine.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/RSVPEngine.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/RSVPEngine.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/RSVPEngine.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/RSVPEngine.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/RSVPEngine~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/ContentView.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ContentView.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ContentView.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ContentView.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ContentView.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ContentView.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ContentView.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ContentView.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ContentView~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/LibraryView.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/LibraryView.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/LibraryView.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/LibraryView.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/LibraryView.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/LibraryView.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/LibraryView.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/LibraryView.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/LibraryView~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/ReaderView.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderView.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderView.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderView.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderView.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderView.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderView.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderView.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/ReaderView~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/SessionHistoryView.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SessionHistoryView.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SessionHistoryView.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SessionHistoryView.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SessionHistoryView.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SessionHistoryView.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SessionHistoryView.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SessionHistoryView.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SessionHistoryView~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/SettingsView.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SettingsView.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SettingsView.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SettingsView.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SettingsView.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SettingsView.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SettingsView.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SettingsView.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/SettingsView~partial.swiftmodule"
+  },
+  "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/StatsView.swift" : {
+    "const-values" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/StatsView.swiftconstvalues",
+    "dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/StatsView.d",
+    "diagnostics" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/StatsView.dia",
+    "index-unit-output-path" : "/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/StatsView.o",
+    "llvm-bc" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/StatsView.bc",
+    "object" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/StatsView.o",
+    "swift-dependencies" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/StatsView.swiftdeps",
+    "swiftmodule" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/out/Intermediates.noindex/SpeedReadyApp.build/Debug-linux-x86_64/SpeedReadyApp-p.build/Objects-normal/x86_64/StatsView~partial.swiftmodule"
+  }
+}

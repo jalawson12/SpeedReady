@@ -1,0 +1,12 @@
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/App/SpeedReadyApp.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Models/ReaderModels.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Services/DocumentImportService.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Services/EPUBTextExtractor.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Services/PDFTextExtractor.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Services/RSVPEngine.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/ContentView.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/LibraryView.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/ReaderView.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/SessionHistoryView.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/SettingsView.swift
+/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp/Views/StatsView.swift
