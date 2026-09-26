@@ -21,12 +21,30 @@ struct ContentView: View {
                     Label("Stats", systemImage: "chart.line.uptrend.xyaxis")
                 }
 
-            SettingsView(settings: $settings) { newSettings in
-                newSettings.persist()
-            }
+            SettingsTabView(settings: $settings)
                 .tabItem {
                     Label("Settings", systemImage: "slider.horizontal.3")
                 }
+        }
+    }
+}
+
+private struct SettingsTabView: View {
+    @Binding var settings: ReaderSettings
+    @State private var draftSettings: ReaderSettings
+
+    init(settings: Binding<ReaderSettings>) {
+        _settings = settings
+        _draftSettings = State(initialValue: settings.wrappedValue)
+    }
+
+    var body: some View {
+        SettingsView(settings: $draftSettings) { newSettings in
+            settings = newSettings
+            settings.persist()
+        }
+        .onAppear {
+            draftSettings = settings
         }
     }
 }
