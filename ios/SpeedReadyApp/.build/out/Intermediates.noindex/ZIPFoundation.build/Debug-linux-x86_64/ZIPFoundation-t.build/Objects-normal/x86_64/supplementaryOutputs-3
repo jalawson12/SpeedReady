@@ -1,0 +1,37 @@
+{
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Data+Compression.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Compression.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Compression.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Compression.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Compression.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Compression.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Data+CompressionDeprecated.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+CompressionDeprecated.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+CompressionDeprecated.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+CompressionDeprecated.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+CompressionDeprecated.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+CompressionDeprecated.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Data+Serialization.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Serialization.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Serialization.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Serialization.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Serialization.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Data+Serialization.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Date+ZIP.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Date+ZIP.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Date+ZIP.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Date+ZIP.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Date+ZIP.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Date+ZIP.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Entry+Serialization.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Entry+Serialization.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Entry+Serialization.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Entry+Serialization.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Entry+Serialization.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Entry+Serialization.swiftdeps"
+  }
+}

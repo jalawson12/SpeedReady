@@ -1,0 +1,37 @@
+{
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Archive+ReadingDeprecated.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ReadingDeprecated.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ReadingDeprecated.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ReadingDeprecated.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ReadingDeprecated.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ReadingDeprecated.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Archive+Writing.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+Writing.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+Writing.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+Writing.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+Writing.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+Writing.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Archive+WritingDeprecated.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+WritingDeprecated.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+WritingDeprecated.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+WritingDeprecated.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+WritingDeprecated.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+WritingDeprecated.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Archive+ZIP64.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ZIP64.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ZIP64.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ZIP64.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ZIP64.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive+ZIP64.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/checkouts\/ZIPFoundation\/Sources\/ZIPFoundation\/Archive.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/ZIPFoundation.build\/Debug-linux-x86_64\/ZIPFoundation-t.build\/Objects-normal\/x86_64\/Archive.swiftdeps"
+  }
+}

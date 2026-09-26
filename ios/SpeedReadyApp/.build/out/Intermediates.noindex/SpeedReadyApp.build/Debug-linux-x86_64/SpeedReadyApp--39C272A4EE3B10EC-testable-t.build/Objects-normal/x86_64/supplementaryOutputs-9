@@ -1,0 +1,23 @@
+{
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/Sources\/SpeedReadyApp\/App\/SpeedReadyApp.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/SpeedReadyApp.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/SpeedReadyApp.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/SpeedReadyApp.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/SpeedReadyApp.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/SpeedReadyApp.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/Sources\/SpeedReadyApp\/Models\/ReaderModels.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/ReaderModels.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/ReaderModels.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/ReaderModels.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/ReaderModels.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/ReaderModels.swiftdeps"
+  },
+  "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/Sources\/SpeedReadyApp\/Services\/DocumentImportService.swift" : {
+    "const-values" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/DocumentImportService.swiftconstvalues",
+    "dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/DocumentImportService.d",
+    "diagnostics" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/DocumentImportService.dia",
+    "object" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/DocumentImportService.o",
+    "swift-dependencies" : "\/home\/runner\/work\/SpeedReady\/SpeedReady\/ios\/SpeedReadyApp\/.build\/out\/Intermediates.noindex\/SpeedReadyApp.build\/Debug-linux-x86_64\/SpeedReadyApp--39C272A4EE3B10EC-testable-t.build\/Objects-normal\/x86_64\/DocumentImportService.swiftdeps"
+  }
+}

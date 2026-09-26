@@ -5,11 +5,12 @@
       "name" : "SpeedReadyApp",
       "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp",
       "projects" : [
-        "42275e673480de0bdcf2d1ddaf57236743efc093d2f8a3a87f5c9b70f54eac2e",
-        "32d126425e706c3e84aa3256996f24d93e08bb2ba62b1680c5af8c489bdd5769"
+        "1d46303a8198f23049d927b7cf0f12de7c706d17312e6d6eaec30c2fe67279b4",
+        "934f34e4af18782808f410ba113261e4fca90aecf88ef101feac0083aa1c69e3",
+        "ea03dd17c4a61e6f618cd59244a9ccb94f9e418815ec6b95669632f6cedf6f98"
       ]
     },
-    "signature" : "a3551d5d860fc8c852b290743cfe36658de41b1973445936ca63c133444661ab",
+    "signature" : "575bb9386113be238cd0cff6f8d1cf042dfba493dd6c726a707e3873d04f2cb3",
     "type" : "workspace"
   },
   {
@@ -201,127 +202,71 @@
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_0",
-                "name" : "App/SpeedReadyApp.swift",
-                "path" : "App/SpeedReadyApp.swift",
+                "name" : "EPUBTextExtractorTests.swift",
+                "path" : "EPUBTextExtractorTests.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               },
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_1",
-                "name" : "Models/ReaderModels.swift",
-                "path" : "Models/ReaderModels.swift",
+                "name" : "EdgeCaseTests.swift",
+                "path" : "EdgeCaseTests.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               },
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_2",
-                "name" : "ReaderView.swift",
-                "path" : "ReaderView.swift",
+                "name" : "ORPCalculationTests.swift",
+                "path" : "ORPCalculationTests.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               },
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_3",
-                "name" : "Services/DocumentImportService.swift",
-                "path" : "Services/DocumentImportService.swift",
+                "name" : "PDFTextExtractorTests.swift",
+                "path" : "PDFTextExtractorTests.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               },
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_4",
-                "name" : "Services/EPUBTextExtractor.swift",
-                "path" : "Services/EPUBTextExtractor.swift",
+                "name" : "PlaybackTests.swift",
+                "path" : "PlaybackTests.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               },
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_5",
-                "name" : "Services/PDFTextExtractor.swift",
-                "path" : "Services/PDFTextExtractor.swift",
+                "name" : "RSVPEngineTests.swift",
+                "path" : "RSVPEngineTests.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               },
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_6",
-                "name" : "Services/RSVPEngine.swift",
-                "path" : "Services/RSVPEngine.swift",
+                "name" : "ReaderSettingsPersistenceTests.swift",
+                "path" : "ReaderSettingsPersistenceTests.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               },
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_7",
-                "name" : "SpeedReadyApp.swift",
-                "path" : "SpeedReadyApp.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_8",
-                "name" : "Views/ContentView.swift",
-                "path" : "Views/ContentView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_9",
-                "name" : "Views/DocumentPickerView.swift",
-                "path" : "Views/DocumentPickerView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_10",
-                "name" : "Views/LibraryView.swift",
-                "path" : "Views/LibraryView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_11",
-                "name" : "Views/ReaderView.swift",
-                "path" : "Views/ReaderView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_12",
-                "name" : "Views/SessionHistoryView.swift",
-                "path" : "Views/SessionHistoryView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_13",
-                "name" : "Views/SettingsView.swift",
-                "path" : "Views/SettingsView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_14",
-                "name" : "Views/StatsView.swift",
-                "path" : "Views/StatsView.swift",
+                "name" : "TokenizationTests.swift",
+                "path" : "TokenizationTests.swift",
                 "sourceTree" : "<group>",
                 "type" : "file"
               }
             ],
             "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2",
-            "name" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp",
-            "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp",
+            "name" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Tests/SpeedReadyAppTests",
+            "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Tests/SpeedReadyAppTests",
             "sourceTree" : "<absolute>",
             "type" : "group"
           },
@@ -346,14 +291,6 @@
               {
                 "fileType" : "sourcecode.swift",
                 "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_2",
-                "name" : "ReaderView.swift",
-                "path" : "ReaderView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_3",
                 "name" : "Services/DocumentImportService.swift",
                 "path" : "Services/DocumentImportService.swift",
                 "sourceTree" : "<group>",
@@ -361,7 +298,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_4",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_3",
                 "name" : "Services/EPUBTextExtractor.swift",
                 "path" : "Services/EPUBTextExtractor.swift",
                 "sourceTree" : "<group>",
@@ -369,7 +306,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_5",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_4",
                 "name" : "Services/PDFTextExtractor.swift",
                 "path" : "Services/PDFTextExtractor.swift",
                 "sourceTree" : "<group>",
@@ -377,7 +314,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_6",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_5",
                 "name" : "Services/RSVPEngine.swift",
                 "path" : "Services/RSVPEngine.swift",
                 "sourceTree" : "<group>",
@@ -385,15 +322,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_7",
-                "name" : "SpeedReadyApp.swift",
-                "path" : "SpeedReadyApp.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_8",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_6",
                 "name" : "Views/ContentView.swift",
                 "path" : "Views/ContentView.swift",
                 "sourceTree" : "<group>",
@@ -401,15 +330,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_9",
-                "name" : "Views/DocumentPickerView.swift",
-                "path" : "Views/DocumentPickerView.swift",
-                "sourceTree" : "<group>",
-                "type" : "file"
-              },
-              {
-                "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_10",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_7",
                 "name" : "Views/LibraryView.swift",
                 "path" : "Views/LibraryView.swift",
                 "sourceTree" : "<group>",
@@ -417,7 +338,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_11",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_8",
                 "name" : "Views/ReaderView.swift",
                 "path" : "Views/ReaderView.swift",
                 "sourceTree" : "<group>",
@@ -425,7 +346,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_12",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_9",
                 "name" : "Views/SessionHistoryView.swift",
                 "path" : "Views/SessionHistoryView.swift",
                 "sourceTree" : "<group>",
@@ -433,7 +354,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_13",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_10",
                 "name" : "Views/SettingsView.swift",
                 "path" : "Views/SettingsView.swift",
                 "sourceTree" : "<group>",
@@ -441,7 +362,7 @@
               },
               {
                 "fileType" : "sourcecode.swift",
-                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_14",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_11",
                 "name" : "Views/StatsView.swift",
                 "path" : "Views/StatsView.swift",
                 "sourceTree" : "<group>",
@@ -449,6 +370,111 @@
               }
             ],
             "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3",
+            "name" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp",
+            "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp",
+            "sourceTree" : "<absolute>",
+            "type" : "group"
+          },
+          {
+            "children" : [
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_0",
+                "name" : "App/SpeedReadyApp.swift",
+                "path" : "App/SpeedReadyApp.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_1",
+                "name" : "Models/ReaderModels.swift",
+                "path" : "Models/ReaderModels.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_2",
+                "name" : "Services/DocumentImportService.swift",
+                "path" : "Services/DocumentImportService.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_3",
+                "name" : "Services/EPUBTextExtractor.swift",
+                "path" : "Services/EPUBTextExtractor.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_4",
+                "name" : "Services/PDFTextExtractor.swift",
+                "path" : "Services/PDFTextExtractor.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_5",
+                "name" : "Services/RSVPEngine.swift",
+                "path" : "Services/RSVPEngine.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_6",
+                "name" : "Views/ContentView.swift",
+                "path" : "Views/ContentView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_7",
+                "name" : "Views/LibraryView.swift",
+                "path" : "Views/LibraryView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_8",
+                "name" : "Views/ReaderView.swift",
+                "path" : "Views/ReaderView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_9",
+                "name" : "Views/SessionHistoryView.swift",
+                "path" : "Views/SessionHistoryView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_10",
+                "name" : "Views/SettingsView.swift",
+                "path" : "Views/SettingsView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_11",
+                "name" : "Views/StatsView.swift",
+                "path" : "Views/StatsView.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              }
+            ],
+            "guid" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4",
             "name" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp",
             "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/Sources/SpeedReadyApp",
             "sourceTree" : "<absolute>",
@@ -467,13 +493,441 @@
       "projectIsPackage" : "true",
       "projectName" : "SpeedReadyApp",
       "targets" : [
-        "c030d63eb999b626ed468007f90c28604cb64293a8ad1a0d17aa17c80e5ca8c0",
-        "197f34922aace90042a28e8c4f8a931eec2274a6cf9e0e0171f9717b341eddc2",
-        "d721aae883e81274f90fb373051e75c0edc079c73d65bc27fb7065ce2ddb5d0a"
+        "2ef51f131e08896fd555da32efa88caebc4de48522aab77cacb58242f3032962",
+        "cb3a0c3a68310842c47f413c1b847c4037a6b711698df48e60be475a0317a60a",
+        "89912058bcbb335d2aab18dfa52ef4d11af2b70dd916392fb5dcd01da357aca6",
+        "d648bf3fbcd67c4e330c12121e381808a40e21eacb542ab9c131b3dc872826e9",
+        "8e7166a9ba22a5f81ed8e2370aa34c5c07e6918f469823537c9ad11f27d26f69"
       ]
     },
-    "signature" : "42275e673480de0bdcf2d1ddaf57236743efc093d2f8a3a87f5c9b70f54eac2e",
+    "signature" : "1d46303a8198f23049d927b7cf0f12de7c706d17312e6d6eaec30c2fe67279b4",
     "type" : "project"
+  },
+  {
+    "contents" : {
+      "approvedByUser" : "true",
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "APPLE_TEST_BUNDLE_RPATH" : "$(APPLE_TEST_BUNDLE_RPATH_SHALLOW_BUNDLE_$(SHALLOW_BUNDLE:default=NO))",
+            "APPLE_TEST_BUNDLE_RPATH_SHALLOW_BUNDLE_NO" : "@loader_path/../../..",
+            "APPLE_TEST_BUNDLE_RPATH_SHALLOW_BUNDLE_YES" : "@loader_path/../..",
+            "BUILD_SERVER_PROTOCOL_TARGET_TAGS" : [
+              "$(inherited)",
+              "test"
+            ],
+            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
+            "DRIVERKIT_DEPLOYMENT_TARGET" : "21.0",
+            "GENERATE_EMBED_IN_CODE_ACCESSORS" : "NO",
+            "GENERATE_INFOPLIST_FILE" : "YES",
+            "GENERATE_RESOURCE_ACCESSORS" : "YES",
+            "INDEX_ENABLE_DATA_STORE" : "YES",
+            "IPHONEOS_DEPLOYMENT_TARGET" : "17.0",
+            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "17.0",
+            "LD_RUNPATH_SEARCH_PATHS" : [
+              "$(RPATH_ORIGIN)/Frameworks",
+              "$(RPATH_ORIGIN)/../Frameworks",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=driverkit]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=ios-maccatalyst]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=ios;ios-simulator]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=macos]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=tvos;tvos-simulator]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=watchos;watchos-simulator]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=xros;xros-simulator]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "MACOSX_DEPLOYMENT_TARGET" : "12.0",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyAppTests",
+            "PRODUCT_MODULE_NAME" : "SpeedReadyAppTests",
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "SKIP_INSTALL" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)"
+            ],
+            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
+            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
+            "SWIFT_LIBRARIES_ONLY" : "YES",
+            "SWIFT_PACKAGE_NAME" : "speedreadyapp",
+            "SWIFT_VERSION" : "5",
+            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyAppTests.symbolgraphs",
+            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyAppTests.symbolgraphs",
+            "TARGET_NAME" : "SpeedReadyAppTests",
+            "TARGET_TEMP_DIR_SUFFIX" : "-p",
+            "TVOS_DEPLOYMENT_TARGET" : "15.0",
+            "WATCHOS_DEPLOYMENT_TARGET" : "9.0",
+            "XROS_DEPLOYMENT_TARGET" : "1.0"
+          },
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "APPLE_TEST_BUNDLE_RPATH" : "$(APPLE_TEST_BUNDLE_RPATH_SHALLOW_BUNDLE_$(SHALLOW_BUNDLE:default=NO))",
+            "APPLE_TEST_BUNDLE_RPATH_SHALLOW_BUNDLE_NO" : "@loader_path/../../..",
+            "APPLE_TEST_BUNDLE_RPATH_SHALLOW_BUNDLE_YES" : "@loader_path/../..",
+            "BUILD_SERVER_PROTOCOL_TARGET_TAGS" : [
+              "$(inherited)",
+              "test"
+            ],
+            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
+            "DRIVERKIT_DEPLOYMENT_TARGET" : "21.0",
+            "GENERATE_EMBED_IN_CODE_ACCESSORS" : "NO",
+            "GENERATE_INFOPLIST_FILE" : "YES",
+            "GENERATE_RESOURCE_ACCESSORS" : "YES",
+            "INDEX_ENABLE_DATA_STORE" : "YES",
+            "IPHONEOS_DEPLOYMENT_TARGET" : "17.0",
+            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "17.0",
+            "LD_RUNPATH_SEARCH_PATHS" : [
+              "$(RPATH_ORIGIN)/Frameworks",
+              "$(RPATH_ORIGIN)/../Frameworks",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=driverkit]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=ios-maccatalyst]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=ios;ios-simulator]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=macos]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=tvos;tvos-simulator]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=watchos;watchos-simulator]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "LD_RUNPATH_SEARCH_PATHS[__platform_filter=xros;xros-simulator]" : [
+              "$(APPLE_TEST_BUNDLE_RPATH)",
+              "$(inherited)"
+            ],
+            "MACOSX_DEPLOYMENT_TARGET" : "12.0",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyAppTests",
+            "PRODUCT_MODULE_NAME" : "SpeedReadyAppTests",
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "SKIP_INSTALL" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)"
+            ],
+            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
+            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
+            "SWIFT_LIBRARIES_ONLY" : "YES",
+            "SWIFT_PACKAGE_NAME" : "speedreadyapp",
+            "SWIFT_VERSION" : "5",
+            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyAppTests.symbolgraphs",
+            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/SpeedReadyAppTests.symbolgraphs",
+            "TARGET_NAME" : "SpeedReadyAppTests",
+            "TARGET_TEMP_DIR_SUFFIX" : "-p",
+            "TVOS_DEPLOYMENT_TARGET" : "15.0",
+            "WATCHOS_DEPLOYMENT_TARGET" : "9.0",
+            "XROS_DEPLOYMENT_TARGET" : "1.0"
+          },
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+        {
+          "buildFiles" : [
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_0",
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0::0",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_1",
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0::1",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_2",
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0::2",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_3",
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0::3",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_4",
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0::4",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_5",
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0::5",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_6",
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0::6",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_7",
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0::7",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            }
+          ],
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_0",
+          "type" : "com.apple.buildphase.sources"
+        },
+        {
+          "buildFiles" : [
+            {
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_1::0",
+              "platformFilters" : [
+
+              ],
+              "targetReference" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation"
+            },
+            {
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_1::1",
+              "platformFilters" : [
+
+              ],
+              "targetReference" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable"
+            }
+          ],
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests::BUILDPHASE_1",
+          "type" : "com.apple.buildphase.frameworks"
+        }
+      ],
+      "buildRules" : [
+
+      ],
+      "customTasks" : [
+
+      ],
+      "dependencies" : [
+        {
+          "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation",
+          "platformFilters" : [
+
+          ]
+        },
+        {
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp",
+          "platformFilters" : [
+
+          ]
+        },
+        {
+          "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable",
+          "platformFilters" : [
+
+          ]
+        }
+      ],
+      "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests",
+      "name" : "SpeedReadyAppTests-product",
+      "productReference" : {
+        "guid" : "PRODUCTREF-PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests",
+        "name" : "$(EXECUTABLE_NAME)",
+        "type" : "file"
+      },
+      "productTypeIdentifier" : "com.apple.product-type.bundle.unit-test",
+      "type" : "standard"
+    },
+    "signature" : "2ef51f131e08896fd555da32efa88caebc4de48522aab77cacb58242f3032962",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "approvedByUser" : "true",
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "DRIVERKIT_DEPLOYMENT_TARGET" : "21.0",
+            "IPHONEOS_DEPLOYMENT_TARGET" : "17.0",
+            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "17.0",
+            "LD_RUNPATH_SEARCH_PATHS" : [
+              "$(inherited)",
+              "$(RPATH_ORIGIN)"
+            ],
+            "LINKER_DRIVER" : "swiftc",
+            "MACOSX_DEPLOYMENT_TARGET" : "12.0",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyAppTests-test-runner",
+            "PRODUCT_MODULE_NAME" : "SpeedReadyAppTests_test_runner",
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "SKIP_INSTALL" : "NO",
+            "SWIFT_VERSION" : "5.0",
+            "TARGET_NAME" : "SpeedReadyAppTests-test-runner",
+            "TVOS_DEPLOYMENT_TARGET" : "15.0",
+            "WATCHOS_DEPLOYMENT_TARGET" : "9.0",
+            "XROS_DEPLOYMENT_TARGET" : "1.0"
+          },
+          "guid" : "PACKAGE-TARGET:SpeedReadyAppTests_test_runner::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "DRIVERKIT_DEPLOYMENT_TARGET" : "21.0",
+            "IPHONEOS_DEPLOYMENT_TARGET" : "17.0",
+            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "17.0",
+            "LD_RUNPATH_SEARCH_PATHS" : [
+              "$(inherited)",
+              "$(RPATH_ORIGIN)"
+            ],
+            "LINKER_DRIVER" : "swiftc",
+            "MACOSX_DEPLOYMENT_TARGET" : "12.0",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "speedreadyapp.SpeedReadyAppTests-test-runner",
+            "PRODUCT_MODULE_NAME" : "SpeedReadyAppTests_test_runner",
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "SKIP_INSTALL" : "NO",
+            "SWIFT_VERSION" : "5.0",
+            "TARGET_NAME" : "SpeedReadyAppTests-test-runner",
+            "TVOS_DEPLOYMENT_TARGET" : "15.0",
+            "WATCHOS_DEPLOYMENT_TARGET" : "9.0",
+            "XROS_DEPLOYMENT_TARGET" : "1.0"
+          },
+          "guid" : "PACKAGE-TARGET:SpeedReadyAppTests_test_runner::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+        {
+          "buildFiles" : [
+
+          ],
+          "guid" : "PACKAGE-TARGET:SpeedReadyAppTests_test_runner::BUILDPHASE_0",
+          "type" : "com.apple.buildphase.sources"
+        },
+        {
+          "buildFiles" : [
+            {
+              "guid" : "PACKAGE-TARGET:SpeedReadyAppTests_test_runner::BUILDPHASE_1::0",
+              "platformFilters" : [
+
+              ],
+              "targetReference" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests"
+            }
+          ],
+          "guid" : "PACKAGE-TARGET:SpeedReadyAppTests_test_runner::BUILDPHASE_1",
+          "type" : "com.apple.buildphase.frameworks"
+        }
+      ],
+      "buildRules" : [
+
+      ],
+      "customTasks" : [
+
+      ],
+      "dependencies" : [
+        {
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests",
+          "platformFilters" : [
+
+          ]
+        }
+      ],
+      "guid" : "PACKAGE-TARGET:SpeedReadyAppTests_test_runner",
+      "name" : "SpeedReadyAppTests-test-runner",
+      "productReference" : {
+        "guid" : "PRODUCTREF-PACKAGE-TARGET:SpeedReadyAppTests_test_runner",
+        "name" : "SpeedReadyAppTests-test-runner",
+        "type" : "file"
+      },
+      "productTypeIdentifier" : "com.apple.product-type.tool.swiftpm-test-runner",
+      "type" : "standard"
+    },
+    "signature" : "cb3a0c3a68310842c47f413c1b847c4037a6b711698df48e60be475a0317a60a",
+    "type" : "target"
   },
   {
     "contents" : {
@@ -579,7 +1033,7 @@
           "buildFiles" : [
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_0",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_0",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::0",
               "platformFilters" : [
 
@@ -588,7 +1042,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_1",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_1",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::1",
               "platformFilters" : [
 
@@ -597,7 +1051,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_2",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_2",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::2",
               "platformFilters" : [
 
@@ -606,7 +1060,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_3",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_3",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::3",
               "platformFilters" : [
 
@@ -615,7 +1069,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_4",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_4",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::4",
               "platformFilters" : [
 
@@ -624,7 +1078,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_5",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_5",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::5",
               "platformFilters" : [
 
@@ -633,7 +1087,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_6",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_6",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::6",
               "platformFilters" : [
 
@@ -642,7 +1096,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_7",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_7",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::7",
               "platformFilters" : [
 
@@ -651,7 +1105,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_8",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_8",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::8",
               "platformFilters" : [
 
@@ -660,7 +1114,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_9",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_9",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::9",
               "platformFilters" : [
 
@@ -669,7 +1123,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_10",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_10",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::10",
               "platformFilters" : [
 
@@ -678,35 +1132,8 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_11",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_11",
               "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::11",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_12",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::12",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_13",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::13",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_2::REF_14",
-              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0::14",
               "platformFilters" : [
 
               ],
@@ -715,6 +1142,19 @@
           ],
           "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_0",
           "type" : "com.apple.buildphase.sources"
+        },
+        {
+          "buildFiles" : [
+            {
+              "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_1::0",
+              "platformFilters" : [
+
+              ],
+              "targetReference" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation"
+            }
+          ],
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp::BUILDPHASE_1",
+          "type" : "com.apple.buildphase.frameworks"
         }
       ],
       "buildRules" : [
@@ -724,7 +1164,12 @@
 
       ],
       "dependencies" : [
+        {
+          "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation",
+          "platformFilters" : [
 
+          ]
+        }
       ],
       "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp",
       "name" : "SpeedReadyApp-product",
@@ -736,7 +1181,7 @@
       "productTypeIdentifier" : "com.apple.product-type.tool",
       "type" : "standard"
     },
-    "signature" : "c030d63eb999b626ed468007f90c28604cb64293a8ad1a0d17aa17c80e5ca8c0",
+    "signature" : "89912058bcbb335d2aab18dfa52ef4d11af2b70dd916392fb5dcd01da357aca6",
     "type" : "target"
   },
   {
@@ -874,7 +1319,7 @@
           "buildFiles" : [
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_0",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_0",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::0",
               "platformFilters" : [
 
@@ -883,7 +1328,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_1",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_1",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::1",
               "platformFilters" : [
 
@@ -892,7 +1337,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_2",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_2",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::2",
               "platformFilters" : [
 
@@ -901,7 +1346,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_3",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_3",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::3",
               "platformFilters" : [
 
@@ -910,7 +1355,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_4",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_4",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::4",
               "platformFilters" : [
 
@@ -919,7 +1364,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_5",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_5",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::5",
               "platformFilters" : [
 
@@ -928,7 +1373,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_6",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_6",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::6",
               "platformFilters" : [
 
@@ -937,7 +1382,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_7",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_7",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::7",
               "platformFilters" : [
 
@@ -946,7 +1391,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_8",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_8",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::8",
               "platformFilters" : [
 
@@ -955,7 +1400,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_9",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_9",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::9",
               "platformFilters" : [
 
@@ -964,7 +1409,7 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_10",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_10",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::10",
               "platformFilters" : [
 
@@ -973,35 +1418,8 @@
             },
             {
               "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_11",
+              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_4::REF_11",
               "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::11",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_12",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::12",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_13",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::13",
-              "platformFilters" : [
-
-              ],
-              "removeHeadersOnCopy" : "false"
-            },
-            {
-              "codeSignOnCopy" : "false",
-              "fileReference" : "PACKAGE:speedreadyapp::MAINGROUP::REF_3::REF_14",
-              "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable::BUILDPHASE_0::14",
               "platformFilters" : [
 
               ],
@@ -1019,7 +1437,12 @@
 
       ],
       "dependencies" : [
+        {
+          "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation",
+          "platformFilters" : [
 
+          ]
+        }
       ],
       "guid" : "PACKAGE-TARGET:SpeedReadyApp--39C272A4EE3B10EC-testable",
       "name" : "SpeedReadyApp",
@@ -1031,7 +1454,7 @@
       "productTypeIdentifier" : "org.swift.product-type.common.object",
       "type" : "standard"
     },
-    "signature" : "197f34922aace90042a28e8c4f8a931eec2274a6cf9e0e0171f9717b341eddc2",
+    "signature" : "d648bf3fbcd67c4e330c12121e381808a40e21eacb542ab9c131b3dc872826e9",
     "type" : "target"
   },
   {
@@ -1072,13 +1495,1505 @@
 
       ],
       "dependencies" : [
+        {
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests",
+          "platformFilters" : [
 
+          ]
+        },
+        {
+          "guid" : "PACKAGE-TARGET:SpeedReadyAppTests_test_runner",
+          "platformFilters" : [
+
+          ]
+        }
       ],
       "guid" : "PACKAGE-PRODUCT:speedreadyapp-SpeedReadyAppPackageTests.SpeedReadyAppPackageTests",
       "name" : "SpeedReadyAppPackageTests-product",
       "type" : "aggregate"
     },
-    "signature" : "d721aae883e81274f90fb373051e75c0edc079c73d65bc27fb7065ce2ddb5d0a",
+    "signature" : "8e7166a9ba22a5f81ed8e2370aa34c5c07e6918f469823537c9ad11f27d26f69",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "BUILD_SERVER_PROTOCOL_TARGET_TAGS" : [
+              "$(inherited)",
+              "dependency"
+            ],
+            "CLANG_ENABLE_MODULES[__platform_filter=driverkit]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=ios-maccatalyst]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=ios;ios-simulator]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=macos]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=tvos;tvos-simulator]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=watchos;watchos-simulator]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=xros;xros-simulator]" : "YES",
+            "CODE_SIGNING_REQUIRED" : "NO",
+            "CODE_SIGN_IDENTITY" : "",
+            "COMPILER_WORKING_DIRECTORY" : "$(WORKSPACE_DIR)",
+            "COPY_PHASE_STRIP" : "NO",
+            "DEBUG_INFORMATION_FORMAT" : "dwarf",
+            "DRIVERKIT_DEPLOYMENT_TARGET" : "21.0",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=driverkit]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=ios-maccatalyst]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=ios;ios-simulator]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=macos]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=tvos;tvos-simulator]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=watchos;watchos-simulator]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=xros;xros-simulator]" : "@rpath",
+            "ENABLE_NS_ASSERTIONS" : "YES",
+            "ENABLE_TESTABILITY" : "YES",
+            "ENABLE_TESTING_SEARCH_PATHS" : "YES",
+            "ENTITLEMENTS_REQUIRED" : "NO",
+            "GCC_OPTIMIZATION_LEVEL" : "0",
+            "GCC_PREPROCESSOR_DEFINITIONS" : [
+              "$(inherited)",
+              "SWIFT_PACKAGE",
+              "DEBUG=1"
+            ],
+            "INDEX_ENABLE_DATA_STORE" : "YES",
+            "IPHONEOS_DEPLOYMENT_TARGET" : "15.0",
+            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "15.0",
+            "KEEP_PRIVATE_EXTERNS" : "NO",
+            "LIBTOOL_NO_WARNING_FOR_NO_SYMBOLS" : "YES",
+            "LINKER_DRIVER" : "auto",
+            "MACOSX_DEPLOYMENT_TARGET" : "12.0",
+            "ONLY_ACTIVE_ARCH" : "YES",
+            "OTHER_CFLAGS" : [
+              "$(inherited)",
+              "-DXcode"
+            ],
+            "OTHER_LDRFLAGS" : [
+
+            ],
+            "OTHER_SWIFT_FLAGS" : [
+              "$(inherited)",
+              "-DXcode"
+            ],
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SKIP_CLANG_STATIC_ANALYZER" : "YES",
+            "SKIP_INSTALL" : "YES",
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=ios;ios-simulator]" : [
+
+            ],
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=macos]" : [
+
+            ],
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=tvos;tvos-simulator]" : [
+
+            ],
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=watchos;watchos-simulator]" : [
+
+            ],
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=xros;xros-simulator]" : [
+
+            ],
+            "SUPPORTED_PLATFORMS" : [
+              "$(AVAILABLE_PLATFORMS)"
+            ],
+            "SUPPRESS_WARNINGS" : "YES",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_PACKAGE",
+              "DEBUG"
+            ],
+            "SWIFT_INSTALL_OBJC_HEADER" : "NO",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "",
+            "SWIFT_OPTIMIZATION_LEVEL" : "-Onone",
+            "TARGETED_DEVICE_FAMILY" : "",
+            "TVOS_DEPLOYMENT_TARGET" : "15.0",
+            "USE_HEADERMAP" : "NO",
+            "WATCHOS_DEPLOYMENT_TARGET" : "9.0",
+            "XROS_DEPLOYMENT_TARGET" : "1.0"
+          },
+          "guid" : "PACKAGE:zipfoundation::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "BUILD_SERVER_PROTOCOL_TARGET_TAGS" : [
+              "$(inherited)",
+              "dependency"
+            ],
+            "CLANG_ENABLE_MODULES[__platform_filter=driverkit]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=ios-maccatalyst]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=ios;ios-simulator]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=macos]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=tvos;tvos-simulator]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=watchos;watchos-simulator]" : "YES",
+            "CLANG_ENABLE_MODULES[__platform_filter=xros;xros-simulator]" : "YES",
+            "CODE_SIGNING_REQUIRED" : "NO",
+            "CODE_SIGN_IDENTITY" : "",
+            "COMPILER_WORKING_DIRECTORY" : "$(WORKSPACE_DIR)",
+            "COPY_PHASE_STRIP" : "YES",
+            "DEBUG_INFORMATION_FORMAT" : "dwarf-with-dsym",
+            "DEPLOYMENT_POSTPROCESSING" : "YES",
+            "DRIVERKIT_DEPLOYMENT_TARGET" : "21.0",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=driverkit]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=ios-maccatalyst]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=ios;ios-simulator]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=macos]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=tvos;tvos-simulator]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=watchos;watchos-simulator]" : "@rpath",
+            "DYLIB_INSTALL_NAME_BASE[__platform_filter=xros;xros-simulator]" : "@rpath",
+            "ENABLE_TESTING_SEARCH_PATHS" : "YES",
+            "ENTITLEMENTS_REQUIRED" : "NO",
+            "GCC_OPTIMIZATION_LEVEL" : "s",
+            "GCC_PREPROCESSOR_DEFINITIONS" : [
+              "$(inherited)",
+              "SWIFT_PACKAGE"
+            ],
+            "IPHONEOS_DEPLOYMENT_TARGET" : "15.0",
+            "IPHONEOS_DEPLOYMENT_TARGET[__platform_filter=ios-maccatalyst]" : "15.0",
+            "KEEP_PRIVATE_EXTERNS" : "NO",
+            "LIBTOOL_NO_WARNING_FOR_NO_SYMBOLS" : "YES",
+            "LINKER_DRIVER" : "auto",
+            "MACOSX_DEPLOYMENT_TARGET" : "12.0",
+            "OTHER_CFLAGS" : [
+              "$(inherited)",
+              "-DXcode"
+            ],
+            "OTHER_LDRFLAGS" : [
+
+            ],
+            "OTHER_SWIFT_FLAGS" : [
+              "$(inherited)",
+              "-DXcode"
+            ],
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SKIP_CLANG_STATIC_ANALYZER" : "YES",
+            "SKIP_INSTALL" : "YES",
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=ios;ios-simulator]" : [
+
+            ],
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=macos]" : [
+
+            ],
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=tvos;tvos-simulator]" : [
+
+            ],
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=watchos;watchos-simulator]" : [
+
+            ],
+            "SPECIALIZATION_SDK_OPTIONS[__platform_filter=xros;xros-simulator]" : [
+
+            ],
+            "SUPPORTED_PLATFORMS" : [
+              "$(AVAILABLE_PLATFORMS)"
+            ],
+            "SUPPRESS_WARNINGS" : "YES",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_PACKAGE"
+            ],
+            "SWIFT_INSTALL_OBJC_HEADER" : "NO",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "",
+            "SWIFT_OPTIMIZATION_LEVEL" : "-Owholemodule",
+            "TARGETED_DEVICE_FAMILY" : "",
+            "TVOS_DEPLOYMENT_TARGET" : "15.0",
+            "USE_HEADERMAP" : "NO",
+            "WATCHOS_DEPLOYMENT_TARGET" : "9.0",
+            "XROS_DEPLOYMENT_TARGET" : "1.0"
+          },
+          "guid" : "PACKAGE:zipfoundation::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "defaultConfigurationName" : "Release",
+      "groupTree" : {
+        "children" : [
+          {
+            "children" : [
+
+            ],
+            "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_0",
+            "name" : "AdditionalFiles",
+            "path" : "/",
+            "sourceTree" : "<absolute>",
+            "type" : "group"
+          },
+          {
+            "children" : [
+
+            ],
+            "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_1",
+            "name" : "Binaries",
+            "path" : "/",
+            "sourceTree" : "<absolute>",
+            "type" : "group"
+          },
+          {
+            "children" : [
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_0",
+                "name" : "Archive+BackingConfiguration.swift",
+                "path" : "Archive+BackingConfiguration.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_1",
+                "name" : "Archive+Deprecated.swift",
+                "path" : "Archive+Deprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_2",
+                "name" : "Archive+Helpers.swift",
+                "path" : "Archive+Helpers.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_3",
+                "name" : "Archive+MemoryFile.swift",
+                "path" : "Archive+MemoryFile.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_4",
+                "name" : "Archive+Progress.swift",
+                "path" : "Archive+Progress.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_5",
+                "name" : "Archive+Reading.swift",
+                "path" : "Archive+Reading.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_6",
+                "name" : "Archive+ReadingDeprecated.swift",
+                "path" : "Archive+ReadingDeprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_7",
+                "name" : "Archive+Writing.swift",
+                "path" : "Archive+Writing.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_8",
+                "name" : "Archive+WritingDeprecated.swift",
+                "path" : "Archive+WritingDeprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_9",
+                "name" : "Archive+ZIP64.swift",
+                "path" : "Archive+ZIP64.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_10",
+                "name" : "Archive.swift",
+                "path" : "Archive.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_11",
+                "name" : "Data+Compression.swift",
+                "path" : "Data+Compression.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_12",
+                "name" : "Data+CompressionDeprecated.swift",
+                "path" : "Data+CompressionDeprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_13",
+                "name" : "Data+Serialization.swift",
+                "path" : "Data+Serialization.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_14",
+                "name" : "Date+ZIP.swift",
+                "path" : "Date+ZIP.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_15",
+                "name" : "Entry+Serialization.swift",
+                "path" : "Entry+Serialization.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_16",
+                "name" : "Entry+ZIP64.swift",
+                "path" : "Entry+ZIP64.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_17",
+                "name" : "Entry.swift",
+                "path" : "Entry.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_18",
+                "name" : "FileManager+ZIP.swift",
+                "path" : "FileManager+ZIP.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_19",
+                "name" : "FileManager+ZIPDeprecated.swift",
+                "path" : "FileManager+ZIPDeprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_20",
+                "name" : "URL+ZIP.swift",
+                "path" : "URL+ZIP.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              }
+            ],
+            "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_2",
+            "name" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Sources/ZIPFoundation",
+            "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Sources/ZIPFoundation",
+            "sourceTree" : "<absolute>",
+            "type" : "group"
+          },
+          {
+            "children" : [
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_0",
+                "name" : "Archive+BackingConfiguration.swift",
+                "path" : "Archive+BackingConfiguration.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_1",
+                "name" : "Archive+Deprecated.swift",
+                "path" : "Archive+Deprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_2",
+                "name" : "Archive+Helpers.swift",
+                "path" : "Archive+Helpers.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_3",
+                "name" : "Archive+MemoryFile.swift",
+                "path" : "Archive+MemoryFile.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_4",
+                "name" : "Archive+Progress.swift",
+                "path" : "Archive+Progress.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_5",
+                "name" : "Archive+Reading.swift",
+                "path" : "Archive+Reading.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_6",
+                "name" : "Archive+ReadingDeprecated.swift",
+                "path" : "Archive+ReadingDeprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_7",
+                "name" : "Archive+Writing.swift",
+                "path" : "Archive+Writing.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_8",
+                "name" : "Archive+WritingDeprecated.swift",
+                "path" : "Archive+WritingDeprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_9",
+                "name" : "Archive+ZIP64.swift",
+                "path" : "Archive+ZIP64.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_10",
+                "name" : "Archive.swift",
+                "path" : "Archive.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_11",
+                "name" : "Data+Compression.swift",
+                "path" : "Data+Compression.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_12",
+                "name" : "Data+CompressionDeprecated.swift",
+                "path" : "Data+CompressionDeprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_13",
+                "name" : "Data+Serialization.swift",
+                "path" : "Data+Serialization.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_14",
+                "name" : "Date+ZIP.swift",
+                "path" : "Date+ZIP.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_15",
+                "name" : "Entry+Serialization.swift",
+                "path" : "Entry+Serialization.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_16",
+                "name" : "Entry+ZIP64.swift",
+                "path" : "Entry+ZIP64.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_17",
+                "name" : "Entry.swift",
+                "path" : "Entry.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_18",
+                "name" : "FileManager+ZIP.swift",
+                "path" : "FileManager+ZIP.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_19",
+                "name" : "FileManager+ZIPDeprecated.swift",
+                "path" : "FileManager+ZIPDeprecated.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              },
+              {
+                "fileType" : "sourcecode.swift",
+                "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_20",
+                "name" : "URL+ZIP.swift",
+                "path" : "URL+ZIP.swift",
+                "sourceTree" : "<group>",
+                "type" : "file"
+              }
+            ],
+            "guid" : "PACKAGE:zipfoundation::MAINGROUP::REF_3",
+            "name" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Sources/ZIPFoundation",
+            "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Sources/ZIPFoundation",
+            "sourceTree" : "<absolute>",
+            "type" : "group"
+          }
+        ],
+        "guid" : "PACKAGE:zipfoundation::MAINGROUP",
+        "name" : "",
+        "path" : "",
+        "sourceTree" : "<group>",
+        "type" : "group"
+      },
+      "guid" : "PACKAGE:zipfoundation",
+      "path" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift",
+      "projectDirectory" : "/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation",
+      "projectIsPackage" : "true",
+      "projectName" : "ZIPFoundation",
+      "targets" : [
+        "7e3635c2ef8c7d4e0e12c152979977f2c64b11addb660d70fbf2b7c76793a541",
+        "c17a0c61155a65f261788004b7e381b17f4a2de09bb591a366ae139c857f7761",
+        "045ab09759411ffc5029e956adfeb59608d4bcec69ed80dcbdc066b1b0be0820",
+        "1b02dfd51a5bf67d0c12e9fde78a422a8cc5b326c0d40bac61378cc4434cbc29",
+        "d6682523f44e168fa840f6b9a59c8635ad10ca0b8ac8cca37076d3101e3bbe70"
+      ]
+    },
+    "signature" : "934f34e4af18782808f410ba113261e4fca90aecf88ef101feac0083aa1c69e3",
+    "type" : "project"
+  },
+  {
+    "contents" : {
+      "approvedByUser" : "true",
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "USES_SWIFTPM_UNSAFE_FLAGS" : "NO"
+          },
+          "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "USES_SWIFTPM_UNSAFE_FLAGS" : "NO"
+          },
+          "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "customTasks" : [
+
+      ],
+      "dependencies" : [
+        {
+          "guid" : "PACKAGE-TARGET:ZIPFoundation",
+          "platformFilters" : [
+
+          ]
+        }
+      ],
+      "frameworksBuildPhase" : {
+        "buildFiles" : [
+          {
+            "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation::BUILDPHASE_0::0",
+            "platformFilters" : [
+
+            ],
+            "targetReference" : "PACKAGE-TARGET:ZIPFoundation"
+          }
+        ],
+        "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation::BUILDPHASE_0",
+        "type" : "com.apple.buildphase.frameworks"
+      },
+      "guid" : "PACKAGE-PRODUCT:zipfoundation_ZIPFoundation.ZIPFoundation",
+      "name" : "ZIPFoundation-product",
+      "type" : "packageProduct"
+    },
+    "signature" : "7e3635c2ef8c7d4e0e12c152979977f2c64b11addb660d70fbf2b7c76793a541",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "approvedByUser" : "true",
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "DEFINES_MODULE" : "YES",
+            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
+            "GCC_PREPROCESSOR_DEFINITIONS" : [
+              "$(inherited)",
+              "_GNU_SOURCE=1"
+            ],
+            "GENERATE_PRELINK_OBJECT_FILE" : "NO",
+            "MODULEMAP_FILE_CONTENTS" : "module ZIPFoundation {\nheader \"ZIPFoundation-Swift.h\"\nexport *\n}",
+            "MODULEMAP_PATH" : "$(GENERATED_MODULEMAP_DIR)/ZIPFoundation.modulemap",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "zipfoundation.ZIPFoundation",
+            "PRODUCT_MODULE_NAME" : "ZIPFoundation",
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "STRIP_INSTALLED_PRODUCT" : "NO",
+            "SUPPORTS_TEXT_BASED_API" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+            ],
+            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
+            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
+            "SWIFT_LIBRARIES_ONLY" : "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_DIR" : "$(GENERATED_MODULEMAP_DIR)",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "ZIPFoundation-Swift.h",
+            "SWIFT_PACKAGE_NAME" : "zipfoundation",
+            "SWIFT_VERSION" : "5",
+            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/ZIPFoundation.symbolgraphs",
+            "TAPI_DYLIB_INSTALL_NAME" : "ZIPFoundation",
+            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/ZIPFoundation.symbolgraphs",
+            "TARGET_NAME" : "ZIPFoundation",
+            "TARGET_TEMP_DIR_SUFFIX" : "-t"
+          },
+          "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "FRAMEWORK_SEARCH_PATHS" : [
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_RUNPATH_SEARCH_PATHS" : [
+                "$(RPATH_ORIGIN)",
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_WARN_DUPLICATE_LIBRARIES" : "NO",
+              "OTHER_CFLAGS" : [
+                "-fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/ZIPFoundation.modulemap",
+                "$(inherited)"
+              ]
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "DEFINES_MODULE" : "YES",
+            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
+            "GCC_PREPROCESSOR_DEFINITIONS" : [
+              "$(inherited)",
+              "_GNU_SOURCE=1"
+            ],
+            "GENERATE_PRELINK_OBJECT_FILE" : "NO",
+            "MODULEMAP_FILE_CONTENTS" : "module ZIPFoundation {\nheader \"ZIPFoundation-Swift.h\"\nexport *\n}",
+            "MODULEMAP_PATH" : "$(GENERATED_MODULEMAP_DIR)/ZIPFoundation.modulemap",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "zipfoundation.ZIPFoundation",
+            "PRODUCT_MODULE_NAME" : "ZIPFoundation",
+            "PRODUCT_NAME" : "$(TARGET_NAME)",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "STRIP_INSTALLED_PRODUCT" : "NO",
+            "SUPPORTS_TEXT_BASED_API" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+            ],
+            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
+            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
+            "SWIFT_LIBRARIES_ONLY" : "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_DIR" : "$(GENERATED_MODULEMAP_DIR)",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "ZIPFoundation-Swift.h",
+            "SWIFT_PACKAGE_NAME" : "zipfoundation",
+            "SWIFT_VERSION" : "5",
+            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/ZIPFoundation.symbolgraphs",
+            "TAPI_DYLIB_INSTALL_NAME" : "ZIPFoundation",
+            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/ZIPFoundation.symbolgraphs",
+            "TARGET_NAME" : "ZIPFoundation",
+            "TARGET_TEMP_DIR_SUFFIX" : "-t"
+          },
+          "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "FRAMEWORK_SEARCH_PATHS" : [
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_RUNPATH_SEARCH_PATHS" : [
+                "$(RPATH_ORIGIN)",
+                "$(inherited)"
+              ],
+              "LD_WARN_DUPLICATE_LIBRARIES" : "NO",
+              "OTHER_CFLAGS" : [
+                "-fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/ZIPFoundation.modulemap",
+                "$(inherited)"
+              ]
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+        {
+          "buildFiles" : [
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_0",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::0",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_1",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::1",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_2",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::2",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_3",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::3",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_4",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::4",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_5",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::5",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_6",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::6",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_7",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::7",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_8",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::8",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_9",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::9",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_10",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::10",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_11",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::11",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_12",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::12",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_13",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::13",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_14",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::14",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_15",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::15",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_16",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::16",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_17",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::17",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_18",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::18",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_19",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::19",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_2::REF_20",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0::20",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            }
+          ],
+          "guid" : "PACKAGE-TARGET:ZIPFoundation::BUILDPHASE_0",
+          "type" : "com.apple.buildphase.sources"
+        }
+      ],
+      "buildRules" : [
+
+      ],
+      "customTasks" : [
+
+      ],
+      "dependencies" : [
+        {
+          "guid" : "PACKAGE-TARGET:CZLib",
+          "platformFilters" : [
+
+          ]
+        }
+      ],
+      "dynamicTargetVariantGuid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic",
+      "guid" : "PACKAGE-TARGET:ZIPFoundation",
+      "name" : "ZIPFoundation",
+      "productReference" : {
+        "guid" : "PRODUCTREF-PACKAGE-TARGET:ZIPFoundation",
+        "name" : "$(EXECUTABLE_NAME)",
+        "type" : "file"
+      },
+      "productTypeIdentifier" : "org.swift.product-type.library.static",
+      "type" : "standard"
+    },
+    "signature" : "c17a0c61155a65f261788004b7e381b17f4a2de09bb591a366ae139c857f7761",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto"
+          },
+          "guid" : "PACKAGE-TARGET:CZLib::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "OTHER_CFLAGS" : [
+                "-fmodule-map-file=/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Sources/CZLib/module.modulemap",
+                "$(inherited)"
+              ],
+              "OTHER_LDFLAGS" : [
+                "$(inherited)",
+                "-L/usr/lib/x86_64-linux-gnu",
+                "-L/usr/lib/x86_64-linux-gnu",
+                "-lz"
+              ],
+              "OTHER_SWIFT_FLAGS" : [
+                "-Xcc",
+                "-fmodule-map-file=/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Sources/CZLib/module.modulemap",
+                "$(inherited)"
+              ]
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto"
+          },
+          "guid" : "PACKAGE-TARGET:CZLib::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "OTHER_CFLAGS" : [
+                "-fmodule-map-file=/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Sources/CZLib/module.modulemap",
+                "$(inherited)"
+              ],
+              "OTHER_LDFLAGS" : [
+                "$(inherited)",
+                "-L/usr/lib/x86_64-linux-gnu",
+                "-L/usr/lib/x86_64-linux-gnu",
+                "-lz"
+              ],
+              "OTHER_SWIFT_FLAGS" : [
+                "-Xcc",
+                "-fmodule-map-file=/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/.build/checkouts/ZIPFoundation/Sources/CZLib/module.modulemap",
+                "$(inherited)"
+              ]
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+
+      ],
+      "buildRules" : [
+
+      ],
+      "customTasks" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "guid" : "PACKAGE-TARGET:CZLib",
+      "name" : "CZLib",
+      "type" : "aggregate"
+    },
+    "signature" : "1b02dfd51a5bf67d0c12e9fde78a422a8cc5b326c0d40bac61378cc4434cbc29",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+
+          },
+          "guid" : "PACKAGE-PRODUCT:zipfoundation-ZIPFoundationPackageTests.ZIPFoundationPackageTests::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+
+          },
+          "guid" : "PACKAGE-PRODUCT:zipfoundation-ZIPFoundationPackageTests.ZIPFoundationPackageTests::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+
+      ],
+      "buildRules" : [
+
+      ],
+      "customTasks" : [
+
+      ],
+      "dependencies" : [
+
+      ],
+      "guid" : "PACKAGE-PRODUCT:zipfoundation-ZIPFoundationPackageTests.ZIPFoundationPackageTests",
+      "name" : "ZIPFoundationPackageTests-product",
+      "type" : "aggregate"
+    },
+    "signature" : "d6682523f44e168fa840f6b9a59c8635ad10ca0b8ac8cca37076d3101e3bbe70",
+    "type" : "target"
+  },
+  {
+    "contents" : {
+      "approvedByUser" : "true",
+      "buildConfigurations" : [
+        {
+          "buildSettings" : {
+            "DEFINES_MODULE" : "YES",
+            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
+            "EXECUTABLE_PREFIX" : "lib",
+            "EXECUTABLE_PREFIX[__platform_filter=windows-msvc]" : "",
+            "GCC_PREPROCESSOR_DEFINITIONS" : [
+              "$(inherited)",
+              "_GNU_SOURCE=1"
+            ],
+            "MODULEMAP_FILE_CONTENTS" : "module ZIPFoundation {\nheader \"ZIPFoundation-Swift.h\"\nexport *\n}",
+            "MODULEMAP_PATH" : "$(GENERATED_MODULEMAP_DIR)/ZIPFoundation.modulemap",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "zipfoundation.ZIPFoundation",
+            "PRODUCT_MODULE_NAME" : "ZIPFoundation",
+            "PRODUCT_NAME" : "ZIPFoundation",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "SUPPORTS_TEXT_BASED_API" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+            ],
+            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
+            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
+            "SWIFT_LIBRARIES_ONLY" : "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_DIR" : "$(GENERATED_MODULEMAP_DIR)",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "ZIPFoundation-Swift.h",
+            "SWIFT_PACKAGE_NAME" : "zipfoundation",
+            "SWIFT_VERSION" : "5",
+            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/ZIPFoundation.symbolgraphs",
+            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/ZIPFoundation.symbolgraphs",
+            "TARGET_NAME" : "ZIPFoundation",
+            "TARGET_TEMP_DIR_SUFFIX" : "-t"
+          },
+          "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDCONFIG_0",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "FRAMEWORK_SEARCH_PATHS" : [
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_RUNPATH_SEARCH_PATHS" : [
+                "$(RPATH_ORIGIN)",
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_WARN_DUPLICATE_LIBRARIES" : "NO",
+              "OTHER_CFLAGS" : [
+                "-fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/ZIPFoundation.modulemap",
+                "$(inherited)"
+              ]
+            }
+          },
+          "name" : "Debug"
+        },
+        {
+          "buildSettings" : {
+            "DEFINES_MODULE" : "YES",
+            "DOCC_EXTRACT_PROJECT_HEADERS_DOCUMENTATION" : "YES",
+            "EXECUTABLE_PREFIX" : "lib",
+            "EXECUTABLE_PREFIX[__platform_filter=windows-msvc]" : "",
+            "GCC_PREPROCESSOR_DEFINITIONS" : [
+              "$(inherited)",
+              "_GNU_SOURCE=1"
+            ],
+            "MODULEMAP_FILE_CONTENTS" : "module ZIPFoundation {\nheader \"ZIPFoundation-Swift.h\"\nexport *\n}",
+            "MODULEMAP_PATH" : "$(GENERATED_MODULEMAP_DIR)/ZIPFoundation.modulemap",
+            "PACKAGE_RESOURCE_TARGET_KIND" : "regular",
+            "PRODUCT_BUNDLE_IDENTIFIER" : "zipfoundation.ZIPFoundation",
+            "PRODUCT_MODULE_NAME" : "ZIPFoundation",
+            "PRODUCT_NAME" : "ZIPFoundation",
+            "SDKROOT" : "auto",
+            "SDK_VARIANT" : "auto",
+            "SUPPORTS_TEXT_BASED_API" : "NO",
+            "SWIFT_ACTIVE_COMPILATION_CONDITIONS" : [
+              "$(inherited)",
+              "SWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE"
+            ],
+            "SWIFT_DISABLE_PARSE_AS_LIBRARY" : "NO",
+            "SWIFT_ENABLE_BARE_SLASH_REGEX" : "NO",
+            "SWIFT_LIBRARIES_ONLY" : "YES",
+            "SWIFT_OBJC_INTERFACE_HEADER_DIR" : "$(GENERATED_MODULEMAP_DIR)",
+            "SWIFT_OBJC_INTERFACE_HEADER_NAME" : "ZIPFoundation-Swift.h",
+            "SWIFT_PACKAGE_NAME" : "zipfoundation",
+            "SWIFT_VERSION" : "5",
+            "SYMBOL_GRAPH_EXTRACTOR_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/ZIPFoundation.symbolgraphs",
+            "TAPI_EXTRACT_API_OUTPUT_DIR" : "$(TARGET_BUILD_DIR)/$(CURRENT_ARCH)/ZIPFoundation.symbolgraphs",
+            "TARGET_NAME" : "ZIPFoundation",
+            "TARGET_TEMP_DIR_SUFFIX" : "-t"
+          },
+          "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDCONFIG_1",
+          "impartedBuildProperties" : {
+            "buildSettings" : {
+              "FRAMEWORK_SEARCH_PATHS" : [
+                "$(BUILT_PRODUCTS_DIR)/PackageFrameworks",
+                "$(inherited)"
+              ],
+              "LD_RUNPATH_SEARCH_PATHS" : [
+                "$(RPATH_ORIGIN)",
+                "$(inherited)"
+              ],
+              "LD_WARN_DUPLICATE_LIBRARIES" : "NO",
+              "OTHER_CFLAGS" : [
+                "-fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/ZIPFoundation.modulemap",
+                "$(inherited)"
+              ]
+            }
+          },
+          "name" : "Release"
+        }
+      ],
+      "buildPhases" : [
+        {
+          "buildFiles" : [
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_0",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::0",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_1",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::1",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_2",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::2",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_3",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::3",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_4",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::4",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_5",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::5",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_6",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::6",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_7",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::7",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_8",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::8",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_9",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::9",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_10",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::10",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_11",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::11",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_12",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::12",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_13",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::13",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_14",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::14",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_15",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::15",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_16",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::16",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_17",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::17",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_18",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::18",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_19",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::19",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            },
+            {
+              "codeSignOnCopy" : "false",
+              "fileReference" : "PACKAGE:zipfoundation::MAINGROUP::REF_3::REF_20",
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0::20",
+              "platformFilters" : [
+
+              ],
+              "removeHeadersOnCopy" : "false"
+            }
+          ],
+          "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_0",
+          "type" : "com.apple.buildphase.sources"
+        },
+        {
+          "buildFiles" : [
+            {
+              "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_1::0",
+              "platformFilters" : [
+
+              ],
+              "targetReference" : "PACKAGE-TARGET:CZLib"
+            }
+          ],
+          "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic::BUILDPHASE_1",
+          "type" : "com.apple.buildphase.frameworks"
+        }
+      ],
+      "buildRules" : [
+
+      ],
+      "customTasks" : [
+
+      ],
+      "dependencies" : [
+        {
+          "guid" : "PACKAGE-TARGET:CZLib",
+          "platformFilters" : [
+
+          ]
+        }
+      ],
+      "guid" : "PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic",
+      "name" : "ZIPFoundation",
+      "productReference" : {
+        "guid" : "PRODUCTREF-PACKAGE-TARGET:ZIPFoundation--14A6248D789D2CE9-dynamic",
+        "name" : "$(EXECUTABLE_NAME)",
+        "type" : "file"
+      },
+      "productTypeIdentifier" : "com.apple.product-type.library.dynamic",
+      "type" : "standard"
+    },
+    "signature" : "045ab09759411ffc5029e956adfeb59608d4bcec69ed80dcbdc066b1b0be0820",
     "type" : "target"
   },
   {
@@ -1139,11 +3054,11 @@
       "projectIsPackage" : "true",
       "projectName" : "Aggregate",
       "targets" : [
-        "f543aa0e6e3d86410eb76562fbdb11010aa3f6b5c9d9206359eb3473e76ef368",
+        "bc24ba59da671678d412998b96a40ed43b1c1a0cb6b4a9afc8777c9b5d8733cc",
         "b761fe3150f26a89acda5e8698578ca6b22ec49d527a1ce8617af1bd77087bd1"
       ]
     },
-    "signature" : "32d126425e706c3e84aa3256996f24d93e08bb2ba62b1680c5af8c489bdd5769",
+    "signature" : "ea03dd17c4a61e6f618cd59244a9ccb94f9e418815ec6b95669632f6cedf6f98",
     "type" : "project"
   },
   {
@@ -1185,6 +3100,18 @@
       ],
       "dependencies" : [
         {
+          "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyAppTests.SpeedReadyAppTests",
+          "platformFilters" : [
+
+          ]
+        },
+        {
+          "guid" : "PACKAGE-TARGET:SpeedReadyAppTests_test_runner",
+          "platformFilters" : [
+
+          ]
+        },
+        {
           "guid" : "PACKAGE-PRODUCT:speedreadyapp_SpeedReadyApp.SpeedReadyApp",
           "platformFilters" : [
 
@@ -1195,7 +3122,7 @@
       "name" : "AllIncludingTests",
       "type" : "aggregate"
     },
-    "signature" : "f543aa0e6e3d86410eb76562fbdb11010aa3f6b5c9d9206359eb3473e76ef368",
+    "signature" : "bc24ba59da671678d412998b96a40ed43b1c1a0cb6b4a9afc8777c9b5d8733cc",
     "type" : "target"
   },
   {
