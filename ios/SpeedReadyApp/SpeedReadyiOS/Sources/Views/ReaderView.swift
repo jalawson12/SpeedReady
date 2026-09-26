@@ -491,7 +491,8 @@ struct ReaderView: View {
 
     private func readerDisplayHeight(for availableHeight: CGFloat) -> CGFloat {
         let proposedHeight = availableHeight * (settings.focusMode ? 0.48 : 0.54)
-        return max(settings.focusMode ? 320 : 360, min(proposedHeight, 520))
+        let minimumHeight = max(availableHeight * 0.38, settings.focusMode ? 220 : 250)
+        return max(minimumHeight, min(proposedHeight, 520))
     }
 }
 

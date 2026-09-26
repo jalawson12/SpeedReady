@@ -57,6 +57,7 @@ struct LibraryView: View {
                         }
                     }
                     .buttonStyle(.plain)
+                    .accessibilityHint("Selects this document and opens it in the Reader tab")
                     .padding(.vertical, 8)
                     .listRowBackground(appState.currentDocument?.id == document.id ? palette.selectedSurface : palette.surface)
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {

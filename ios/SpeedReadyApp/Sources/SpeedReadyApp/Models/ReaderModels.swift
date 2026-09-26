@@ -239,6 +239,7 @@ final class SpeedReadyAppState: ObservableObject {
 
     func updateReadingLocation(for documentID: UUID, wordIndex: Int, totalWords: Int, isCompleted: Bool, persist: Bool = true) {
         guard persist else { return }
+        guard documents.contains(where: { $0.id == documentID }) else { return }
         let upperBound = isCompleted ? max(0, totalWords) : max(0, totalWords - 1)
         let clampedIndex = min(max(0, wordIndex), upperBound)
         let location = ReadingLocation(
