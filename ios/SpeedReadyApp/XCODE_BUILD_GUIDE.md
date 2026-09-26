@@ -43,7 +43,7 @@ Before opening in Xcode, verify the following:
 
 ## First Build Checklist
 
-1. [ ] Open `/home/runner/work/SpeedReady/SpeedReady/ios/SpeedReadyApp/SpeedReadyiOS.xcworkspace` in Xcode
+1. [ ] Open `ios/SpeedReadyApp/SpeedReadyiOS.xcworkspace` in Xcode
 2. [ ] Select `SpeedReadyiOS` target
 3. [ ] Select iPhone simulator or device
 4. [ ] Clean build folder (⇧⌘K)

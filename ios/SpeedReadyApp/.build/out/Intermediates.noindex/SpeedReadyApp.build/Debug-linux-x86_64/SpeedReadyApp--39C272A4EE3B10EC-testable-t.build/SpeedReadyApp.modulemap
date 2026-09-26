@@ -1,4 +1,0 @@
-module SpeedReadyApp {
-header "SpeedReadyApp-Swift.h"
-export *
-}

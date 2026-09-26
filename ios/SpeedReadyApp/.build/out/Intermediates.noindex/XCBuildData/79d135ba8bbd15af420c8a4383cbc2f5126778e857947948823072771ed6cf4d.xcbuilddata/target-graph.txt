@@ -1,4 +1,0 @@
-Target dependency graph (2 targets)
-Target 'AllIncludingTests' in project 'Aggregate'
-➜ Explicit dependency on target 'SpeedReadyApp-product' in project 'SpeedReadyApp'
-Target 'SpeedReadyApp-product' in project 'SpeedReadyApp' (no dependencies)

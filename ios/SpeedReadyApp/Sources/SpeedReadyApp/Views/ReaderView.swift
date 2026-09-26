@@ -107,9 +107,9 @@ struct ReaderView: View {
             .onAppear {
                 loadDocument(currentDocument)
             }
-            .onChange(of: currentDocument.id) { _, _ in
-                recordSessionIfNeeded(for: activeDocument)
-                loadDocument(currentDocument)
+            .onChange(of: appState.currentDocument) { previousDocument, nextDocument in
+                recordSessionIfNeeded(for: previousDocument ?? activeDocument)
+                loadDocument(nextDocument ?? ReadingDocument.sample())
             }
             .onChange(of: engine.state.wordIndex) { _, _ in
                 let summary = engine.sessionSummary()
