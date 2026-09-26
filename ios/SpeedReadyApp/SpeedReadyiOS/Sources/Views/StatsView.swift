@@ -79,7 +79,7 @@ struct StatsView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
-                        SessionHistoryView(appState: appState, settings: settings)
+                        SessionHistoryView(appState: appState, settings: settings, embedInNavigationStack: false)
                     } label: {
                         Label("History", systemImage: "clock.fill")
                             .foregroundStyle(palette.accent)

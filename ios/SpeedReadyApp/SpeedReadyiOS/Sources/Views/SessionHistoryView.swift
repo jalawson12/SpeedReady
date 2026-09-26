@@ -3,6 +3,7 @@ import SwiftUI
 struct SessionHistoryView: View {
     @ObservedObject var appState: SpeedReadyAppState
     let settings: ReaderSettings
+    var embedInNavigationStack: Bool = true
     @Environment(\.colorScheme) private var colorScheme
 
     private var palette: AppPalette {
@@ -10,6 +11,18 @@ struct SessionHistoryView: View {
     }
 
     var body: some View {
+        Group {
+            if embedInNavigationStack {
+                NavigationStack {
+                    content
+                }
+            } else {
+                content
+            }
+        }
+    }
+
+    private var content: some View {
         ZStack {
             palette.background.ignoresSafeArea()
 

@@ -58,8 +58,8 @@ struct ReaderView: View {
                 }
             }
             .onChange(of: appState.currentDocument) { previousDocument, nextDocument in
-                saveCurrentLocation(for: previousDocument ?? activeDocument, persist: true)
-                recordSessionIfNeeded(for: previousDocument ?? activeDocument)
+                saveCurrentLocation(for: previousDocument, persist: true)
+                recordSessionIfNeeded(for: previousDocument)
                 guard let nextDocument else {
                     loadFallbackSample()
                     return
