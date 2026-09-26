@@ -6,6 +6,8 @@ struct ReaderView: View {
     @State private var settings = ReaderSettings()
     @State private var showingSettings = false
     @State private var showingDocumentPicker = false
+    @State private var showingTextInput = false
+    @State private var customText = ""
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -13,16 +15,18 @@ struct ReaderView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 20) {
+            VStack(spacing: 18) {
                 headerView
 
                 wordDisplayView
 
                 controlsView
 
+                sessionStatsView
+
                 progressView
 
-                documentActionsView
+                actionsView
 
                 Spacer()
             }
@@ -50,6 +54,40 @@ struct ReaderView: View {
                     showingDocumentPicker = false
                 }
             }
+            .sheet(isPresented: $showingTextInput) {
+                NavigationStack {
+                    Form {
+                        Section("Paste or type text") {
+                            TextEditor(text: $customText)
+                                .frame(minHeight: 220)
+                        }
+                    }
+                    .navigationTitle("New reading text")
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button("Cancel") {
+                                showingTextInput = false
+                            }
+                        }
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Load") {
+                                let trimmed = customText.trimmingCharacters(in: .whitespacesAndNewlines)
+                                guard !trimmed.isEmpty else { return }
+                                let doc = ReadingDocument(
+                                    title: "Custom text",
+                                    text: trimmed,
+                                    wordCount: trimmed.split(whereSeparator: { $0.isWhitespace }).count,
+                                    createdAt: Date()
+                                )
+                                appState.setCurrentDocument(doc)
+                                engine.load(text: doc.text, settings: settings)
+                                customText = ""
+                                showingTextInput = false
+                            }
+                        }
+                    }
+                }
+            }
             .onAppear {
                 engine.load(text: currentDocument.text, settings: settings)
             }
@@ -72,12 +110,6 @@ struct ReaderView: View {
 
     private var wordDisplayView: some View {
         VStack {
-            Text(engine.state.before + engine.state.pivot + engine.state.after)
-                .font(.system(size: 28, weight: .semibold))
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .opacity(0.0)
-
             HStack(alignment: .firstTextBaseline, spacing: 0) {
                 Text(engine.state.before)
                     .font(.system(size: settings.fontScale > 1 ? 54 : 48, weight: .regular, design: .rounded))
@@ -123,6 +155,15 @@ struct ReaderView: View {
         .padding(.horizontal)
     }
 
+    private var sessionStatsView: some View {
+        let summary = engine.sessionSummary()
+        return HStack(spacing: 18) {
+            statPill(title: "Words", value: "\(summary.wordsRead)")
+            statPill(title: "Time", value: String(format: "%.0fs", summary.duration))
+            statPill(title: "Status", value: summary.completed ? "Done" : "Reading")
+        }
+    }
+
     private var progressView: some View {
         VStack(alignment: .leading, spacing: 8) {
             ProgressView(
@@ -137,7 +178,7 @@ struct ReaderView: View {
         }
     }
 
-    private var documentActionsView: some View {
+    private var actionsView: some View {
         HStack {
             Button(engine.state.isPlaying ? "Pause" : "Play") {
                 if engine.state.isPlaying {
@@ -148,11 +189,37 @@ struct ReaderView: View {
             }
             .buttonStyle(.borderedProminent)
 
-            Button("Load Document") {
+            Button("Load Doc") {
                 showingDocumentPicker = true
             }
             .buttonStyle(.bordered)
+
+            Button("Paste Text") {
+                showingTextInput = true
+            }
+            .buttonStyle(.bordered)
+
+            Button("Restart") {
+                engine.restart()
+            }
+            .buttonStyle(.bordered)
         }
+        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.top, 4)
+    }
+
+    private func statPill(title: String, value: String) -> some View {
+        VStack(spacing: 4) {
+            Text(title)
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+            Text(value)
+                .font(.headline)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
+        .background(Color(uiColor: .secondarySystemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 

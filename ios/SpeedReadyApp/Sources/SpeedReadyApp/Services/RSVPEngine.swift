@@ -7,12 +7,12 @@ final class RSVPEngine: ObservableObject {
     private var tokens: [WordToken] = []
     private var settings = ReaderSettings()
     private var timer: Timer?
-    private var currentDocumentText: String = ""
+    private var sessionStartedAt: Date?
+    private var sessionWordCount: Int = 0
 
     func load(text: String, settings: ReaderSettings = ReaderSettings()) {
         pause()
         self.settings = settings
-        self.currentDocumentText = text
         self.tokens = tokenize(text)
         let totalWords = self.tokens.count
         self.state = ReaderState(
@@ -26,6 +26,8 @@ final class RSVPEngine: ObservableObject {
             currentWpm: Int(settings.wpm)
         )
         updateCurrentDisplay(index: 0)
+        sessionStartedAt = Date()
+        sessionWordCount = 0
     }
 
     func play() {
@@ -33,6 +35,7 @@ final class RSVPEngine: ObservableObject {
         if state.wordIndex >= tokens.count {
             state.wordIndex = 0
         }
+        sessionStartedAt = sessionStartedAt ?? Date()
         state.isPlaying = true
         scheduleNext()
     }
@@ -51,8 +54,12 @@ final class RSVPEngine: ObservableObject {
         }
     }
 
-    func controlsForWord(_ word: String) -> ORPResult {
-        computeORP(for: word, focusPosition: settings.bionicFocusPosition)
+    func restart() {
+        if !tokens.isEmpty {
+            state.wordIndex = 0
+            state.isPlaying = false
+            updateCurrentDisplay(index: 0)
+        }
     }
 
     func increaseWpm() {
@@ -65,6 +72,12 @@ final class RSVPEngine: ObservableObject {
         settings.wpm = max(100, settings.wpm - 25)
         state.currentWpm = Int(settings.wpm)
         if state.isPlaying { scheduleNext() }
+    }
+
+    func sessionSummary() -> (wordsRead: Int, duration: Double, completed: Bool) {
+        let duration = sessionStartedAt.map { Date().timeIntervalSince($0) } ?? 0
+        let completed = state.wordIndex >= tokens.count
+        return (max(0, state.wordIndex), duration, completed)
     }
 
     private func updateCurrentDisplay(index: Int) {
@@ -83,6 +96,7 @@ final class RSVPEngine: ObservableObject {
         state.pivot = orp.pivot
         state.after = orp.after
         state.currentWpm = Int(currentWpmForWord(token.text))
+        sessionWordCount = max(sessionWordCount, index + 1)
     }
 
     private func scheduleNext() {
@@ -118,10 +132,10 @@ final class RSVPEngine: ObservableObject {
         let baseMs = 60000.0 / settings.wpm
         let smartMultiplier = settings.smartSpeed ? self.smartMultiplier(for: token.text) : 1.0
         let adjusted = max(150.0, baseMs * smartMultiplier)
-        let pauseBoost = token.pauseMultiplier > 1 ? adjusted * (token.pauseMultiplier - 1.0) : 0
-        let paragraphBoost = token.paragraphStart ? adjusted * 0.5 : 0
-        let asideBoost = token.closesAside ? adjusted * 0.2 : 0
-        return adjusted + pauseBoost + paragraphBoost + asideBoost
+        let punctuationBoost = settings.punctuationPause && (token.pauseMultiplier > 1.0) ? adjusted * (token.pauseMultiplier - 1.0) : 0
+        let paragraphBoost = token.paragraphStart ? adjusted * (settings.paragraphPauseMultiplier - 1.0) : 0
+        let asideBoost = token.closesAside && settings.contextPauseOnClose ? adjusted * 0.2 : 0
+        return adjusted + punctuationBoost + paragraphBoost + asideBoost
     }
 
     private func smartMultiplier(for word: String) -> Double {
@@ -190,7 +204,6 @@ final class RSVPEngine: ObservableObject {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         let leading = trimmed.prefix { !$0.isLetter && !$0.isNumber }
         let trailing = trimmed.reversed().prefix { !$0.isLetter && !$0.isNumber }.reversed()
-
         let core = String(trimmed.dropFirst(leading.count).dropLast(trailing.count))
         let clean = core.filter { $0.isLetter || $0.isNumber }
         let len = clean.count
@@ -210,15 +223,16 @@ final class RSVPEngine: ObservableObject {
             break
         }
 
-        let pivotCharacterIndex = findPivotCharacterIndex(in: core, cleanIndex: pivotIndex)
-        let startIndex = core.index(core.startIndex, offsetBy: pivotCharacterIndex)
-        let pivotChar = String(core[startIndex])
-        let afterStart = core.index(startIndex, offsetBy: pivotChar.count)
-        let before = String(leading) + core.prefix(upTo: startIndex)
-        let pivot = String(core[startIndex..<afterStart])
-        let after = String(core[afterStart...]) + String(trailing)
+        let originalIndex = findPivotCharacterIndex(in: core, cleanIndex: pivotIndex)
+        let start = core.index(core.startIndex, offsetBy: originalIndex)
+        let pivotChar = String(core[start])
+        let end = core.index(start, offsetBy: pivotChar.count)
 
-        return ORPResult(before: before, pivot: pivot, after: after)
+        let before = String(leading) + core[..<start]
+        let pivot = String(core[start..<end])
+        let after = String(core[end...]) + String(trailing)
+
+        return ORPResult(before: String(before), pivot: pivot, after: after)
     }
 
     private func findPivotCharacterIndex(in text: String, cleanIndex: Int) -> Int {

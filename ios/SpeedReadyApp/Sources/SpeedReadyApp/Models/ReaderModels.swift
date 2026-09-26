@@ -11,6 +11,7 @@ struct ReaderSettings: Equatable {
     var dyslexiaMode: Bool = false
     var focusMode: Bool = false
     var fontScale: Double = 1.0
+    var punctuationPause: Bool = true
 }
 
 enum BionicFocusPosition: String, CaseIterable, Codable {
@@ -35,6 +36,16 @@ struct ReadingDocument: Identifiable, Equatable {
             createdAt: Date()
         )
     }
+}
+
+struct ReadingSession: Identifiable, Equatable {
+    let id = UUID()
+    let documentTitle: String
+    let startedAt: Date
+    let finishedAt: Date
+    let wordsRead: Int
+    let durationSeconds: Double
+    let completed: Bool
 }
 
 struct ORPResult: Equatable {
@@ -64,6 +75,7 @@ struct ReaderState: Equatable {
 final class SpeedReadyAppState: ObservableObject {
     @Published var documents: [ReadingDocument] = []
     @Published var currentDocument: ReadingDocument?
+    @Published var sessions: [ReadingSession] = []
 
     init() {
         let sample = ReadingDocument.sample()
@@ -86,5 +98,17 @@ final class SpeedReadyAppState: ObservableObject {
             createdAt: Date()
         )
         setCurrentDocument(doc)
+    }
+
+    func recordSession(documentTitle: String, wordsRead: Int, durationSeconds: Double, completed: Bool) {
+        let session = ReadingSession(
+            documentTitle: documentTitle,
+            startedAt: Date().addingTimeInterval(-durationSeconds),
+            finishedAt: Date(),
+            wordsRead: wordsRead,
+            durationSeconds: durationSeconds,
+            completed: completed
+        )
+        sessions.insert(session, at: 0)
     }
 }
