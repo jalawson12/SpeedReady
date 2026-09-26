@@ -4,6 +4,7 @@ import UIKit
 struct SettingsView: View {
     @Binding var settings: ReaderSettings
     @State private var pendingSaveTask: Task<Void, Never>?
+    @State private var saveGeneration: UInt = 0
     let onSave: (ReaderSettings) -> Void
 
     var body: some View {
@@ -136,15 +137,19 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .onChange(of: settings) { _, newSettings in
+                saveGeneration &+= 1
+                let generation = saveGeneration
                 pendingSaveTask?.cancel()
                 pendingSaveTask = Task {
                     try? await Task.sleep(for: .milliseconds(400))
-                    guard !Task.isCancelled else { return }
+                    guard !Task.isCancelled, generation == saveGeneration else { return }
                     onSave(newSettings)
                 }
             }
             .onDisappear {
+                saveGeneration &+= 1
                 pendingSaveTask?.cancel()
+                pendingSaveTask = nil
                 onSave(settings)
             }
         }

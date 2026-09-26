@@ -53,5 +53,6 @@ final class AppStateDocumentTests: XCTestCase {
     private func clearPersistedState() {
         UserDefaults.standard.removeObject(forKey: "speedready.documents.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.sessions.v1")
+        UserDefaults.standard.removeObject(forKey: "speedready.readerSettings.v1")
     }
 }
