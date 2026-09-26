@@ -254,7 +254,7 @@ func testTextCleaningRemovesExcessiveWhitespace() // Whitespace handling
    - Scanned PDF (e.g., from Google Books)
    - Mixed PDF (some pages native, some scanned)
 
-2. Import each into the app from the reader's Import menu
+2. Import each into the app from the Library page Import menu
 
 3. Check:
    - Text extracts correctly

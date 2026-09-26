@@ -7,10 +7,6 @@ struct ReaderView: View {
     @State private var activeDocument: ReadingDocument?
     @State private var lastRecordedSessionID: UUID?
     @State private var showingSettings = false
-    @State private var showingDocumentPicker = false
-    @State private var showingTextInput = false
-    @State private var customText = ""
-    @State private var importErrorMessage: String?
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -46,22 +42,6 @@ struct ReaderView: View {
             .padding()
             .navigationTitle("SpeedReady")
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Menu {
-                        Button("Load Document", systemImage: "doc.badge.plus") {
-                            showingDocumentPicker = true
-                        }
-
-                        Button("Paste Text", systemImage: "doc.on.clipboard") {
-                            showingTextInput = true
-                        }
-                    } label: {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title3)
-                            .accessibilityLabel("Import reading text")
-                    }
-                }
-
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         showingSettings = true
@@ -74,50 +54,6 @@ struct ReaderView: View {
             .sheet(isPresented: $showingSettings) {
                 SettingsView(settings: $settings, isPresented: $showingSettings) { newSettings in
                     applySettings(newSettings)
-                }
-            }
-            .sheet(isPresented: $showingDocumentPicker) {
-                DocumentPickerView { result in
-                    switch result {
-                    case .success(let document):
-                        appState.setCurrentDocument(document)
-                    case .failure(let error):
-                        importErrorMessage = error.localizedDescription
-                    }
-                    showingDocumentPicker = false
-                }
-            }
-            .sheet(isPresented: $showingTextInput) {
-                NavigationStack {
-                    Form {
-                        Section("Paste or type text") {
-                            TextEditor(text: $customText)
-                                .frame(minHeight: 220)
-                        }
-                    }
-                    .navigationTitle("New reading text")
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            Button("Cancel") {
-                                showingTextInput = false
-                            }
-                        }
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button("Load") {
-                                let trimmed = customText.trimmingCharacters(in: .whitespacesAndNewlines)
-                                guard !trimmed.isEmpty else { return }
-                                let doc = ReadingDocument(
-                                    title: "Custom text",
-                                    text: trimmed,
-                                    wordCount: trimmed.split(whereSeparator: { $0.isWhitespace }).count,
-                                    createdAt: Date()
-                                )
-                                appState.setCurrentDocument(doc)
-                                customText = ""
-                                showingTextInput = false
-                            }
-                        }
-                    }
                 }
             }
             .onAppear {
@@ -137,17 +73,8 @@ struct ReaderView: View {
             }
             .onChange(of: engine.state.wordIndex) { _, _ in
                 let summary = engine.sessionSummary()
-                guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return }
+                guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return                 }
                 recordSessionIfNeeded(for: activeDocument, completedOverride: true)
-            }
-            .alert("Import failed", isPresented: Binding(get: {
-                importErrorMessage != nil
-            }, set: { newValue in
-                if !newValue { importErrorMessage = nil }
-            })) {
-                Button("OK", role: .cancel) { importErrorMessage = nil }
-            } message: {
-                Text(importErrorMessage ?? "Unknown error.")
             }
         }
     }

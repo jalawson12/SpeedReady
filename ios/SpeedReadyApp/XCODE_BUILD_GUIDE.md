@@ -51,7 +51,7 @@ Before opening in Xcode, verify the following:
 5. [ ] Build (⌘B) — should complete in ~20 seconds
 6. [ ] Run (⌘R) — app should launch with sample article
 7. [ ] Test Play/Pause button
-8. [ ] Load a document from the reader's Import menu
+8. [ ] Load a document from the Library page Import menu
 9. [ ] Adjust settings
 10. [ ] Check Library, Stats, and History tabs
 
@@ -82,7 +82,7 @@ If build fails:
 ✅ "Play" button advances words  
 ✅ WPM controls work  
 ✅ Settings sheet opens  
-✅ The reader Import menu opens the file picker  
+✅ The Library page Import menu opens the file picker  
 ✅ Library view shows imported documents  
 ✅ Stats tab shows session data  
 ✅ History tab displays reading sessions  
