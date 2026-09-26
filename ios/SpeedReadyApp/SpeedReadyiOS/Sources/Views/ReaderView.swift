@@ -69,7 +69,9 @@ struct ReaderView: View {
             .onChange(of: engine.state.wordIndex) { _, _ in
                 let summary = engine.sessionSummary()
                 let shouldPersistLocation = !engine.state.isPlaying || (summary.completed && engine.state.wordIndex >= engine.state.totalWords)
-                saveCurrentLocation(for: activeDocument, persist: shouldPersistLocation)
+                if shouldPersistLocation {
+                    saveCurrentLocation(for: activeDocument, persist: true)
+                }
                 guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return }
                 recordSessionIfNeeded(for: activeDocument, completedOverride: true)
             }
@@ -82,7 +84,6 @@ struct ReaderView: View {
                 engine.setSettings(newSettings)
             }
             .onDisappear {
-                recordSessionIfNeeded(for: activeDocument)
                 saveCurrentLocation(for: activeDocument, persist: true)
             }
         }
