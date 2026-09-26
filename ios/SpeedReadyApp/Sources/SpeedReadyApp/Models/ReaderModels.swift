@@ -134,7 +134,7 @@ final class SpeedReadyAppState: ObservableObject {
     }
 
     func addDocument(_ document: ReadingDocument) {
-        setCurrentDocument(document)
+        importDocument(document)
     }
 
     func importDocument(_ document: ReadingDocument) {

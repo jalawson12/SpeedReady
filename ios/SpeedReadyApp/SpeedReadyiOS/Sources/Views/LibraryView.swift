@@ -70,11 +70,6 @@ struct LibraryView: View {
                 if nextValue != ActiveSheet.textInput.id {
                     customText = ""
                 }
-
-                private func pastedDocumentTitle() -> String {
-                    let timestamp = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium)
-                    return "Pasted text \(timestamp)"
-                }
             }
             .alert("Import failed", isPresented: Binding(get: {
                 importErrorMessage != nil
@@ -88,6 +83,10 @@ struct LibraryView: View {
         }
     }
 
+    private func pastedDocumentTitle() -> String {
+        let timestamp = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium)
+        return "Pasted text \(timestamp)"
+    }
 }
 
 #Preview {
