@@ -47,7 +47,7 @@ struct LibraryView: View {
                 DocumentPickerView { result in
                     switch result {
                     case .success(let document):
-                        appState.setCurrentDocument(document)
+                        appState.addDocument(document)
                     case .failure(let error):
                         importErrorMessage = error.localizedDescription
                     }
