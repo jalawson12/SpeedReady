@@ -14,8 +14,9 @@ Native SwiftUI port of SpeedReady, a speed-reading app that uses RSVP (Rapid Ser
 - **Dyslexia mode** with enhanced typography and spacing
 
 ### Document Management
-- **PDF import** with native text extraction
+- **PDF import** with native text extraction + OCR fallback
 - **Plain text import** (TXT, MD)
+- **EPUB import** with native ZIP/XML spine parsing
 - **Paste text** directly into the app
 - **Local document library** with persistent storage
 - **Reading history** with session tracking
@@ -61,7 +62,7 @@ ios/SpeedReadyApp/
    open ios/SpeedReadyApp
    ```
 
-2. **Select target:** `SpeedReadyApp` for iOS 17+
+2. **Select target:** `SpeedReadyApp` for iOS 17.0 (from `Package.swift`)
 
 3. **Build:** ⌘B or Product → Build
 
@@ -85,9 +86,9 @@ Manages app-wide state:
 
 ### `DocumentPickerView`
 UIViewControllerRepresentable for:
-- Native file picker (TXT, PDF)
-- PDF text extraction via `PDFKit`
-- Fallback text encoding support
+- Native file picker (TXT/MD, PDF, EPUB)
+- Typed import pipeline with surfaced extraction errors
+- PDF extraction via `PDFKit`/Vision and EPUB extraction via ZIPFoundation/XML parsing
 
 ## Settings & Customization
 
@@ -108,10 +109,9 @@ UIViewControllerRepresentable for:
 - **Documents:** Stored in `UserDefaults` as JSON-encoded array
 - **Sessions:** Persistent reading history with timestamps
 - **Settings:** Applied per-session, not persisted (stored locally in ReaderView)
+- **Settings:** Persisted via UserDefaults (`ReaderSettings` Codable storage)
 
 ## Known Limitations & TODOs
-
-- [ ] EPUB support (currently placeholder)
 - [ ] Cloud sync / iCloud integration
 - [ ] Advanced reading stats (WPM trends, reading patterns)
 - [ ] Bookmark/highlight system
@@ -130,7 +130,15 @@ UIViewControllerRepresentable for:
 
 - **SwiftUI** (iOS 17+): Native UI framework
 - **PDFKit**: Native PDF text extraction
+- **Vision**: OCR fallback for scanned PDF pages
+- **ZIPFoundation**: EPUB archive extraction
 - **Foundation**: Core data structures and persistence
+
+## Xcode-only Remaining Steps
+
+- Create and configure an `.xcodeproj` app target if needed.
+- Configure signing, bundle identifier, and app icon assets in Xcode.
+- Run simulator/device validation in Xcode (not done in this package-only repository workflow).
 
 ## Next Steps for Production
 

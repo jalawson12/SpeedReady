@@ -1,23 +1,33 @@
 import Foundation
 import PDFKit
+import UIKit
 import Vision
 
 struct PDFTextExtractor {
-    enum ExtractionError: LocalizedError {
+    enum ExtractionError: LocalizedError, Equatable {
         case unreadable
-        case imageOnly
+        case emptyDocument
+        case noExtractableText
         case ocrFailed
 
         var errorDescription: String? {
             switch self {
             case .unreadable:
                 return "The PDF could not be opened or read."
-            case .imageOnly:
-                return "This PDF contains scanned pages. Attempting OCR extraction..."
+            case .emptyDocument:
+                return "The PDF contains zero pages."
+            case .noExtractableText:
+                return "No readable text could be extracted from this PDF."
             case .ocrFailed:
-                return "OCR processing failed. Please try another PDF."
+                return "OCR processing failed for all pages."
             }
         }
+    }
+
+    struct Options: Equatable {
+        var ocrLanguages: [String] = ["en-US"]
+        var ocrRenderScale: CGFloat = 2.0
+        var includePageMarkers: Bool = false
     }
 
     struct ExtractionResult {
@@ -27,7 +37,7 @@ struct PDFTextExtractor {
     }
 
     struct PDFMetadata {
-        let title: String?
+        let title: String
         let author: String?
         let subject: String?
         let creator: String?
@@ -37,246 +47,174 @@ struct PDFTextExtractor {
 
     struct ExtractionStatistics {
         let totalPages: Int
-        let pagesWithText: Int
-        let ocrPagesProcessed: Int
-        let ocrConfidence: Double // 0.0 to 1.0
+        let pagesWithNativeText: Int
+        let pagesWithOCRText: Int
+        let skippedPages: Int
+        let ocrConfidence: Double
         let extractedCharacterCount: Int
         let estimatedWordCount: Int
-        let extractionQuality: Quality
-
-        enum Quality: String {
-            case excellent = "Excellent (native text)"
-            case good = "Good (mostly native text)"
-            case fair = "Fair (mixed native + OCR)"
-            case poor = "Poor (mostly OCR)"
-            case veryPoor = "Very Poor (corrupted or encrypted)"
-        }
     }
 
-    static func extract(from url: URL) throws -> String {
-        let result = try extractWithMetadata(from: url)
-        return result.text
+    static func extract(from url: URL, options: Options = Options()) throws -> String {
+        try extractWithMetadata(from: url, options: options).text
     }
 
-    static func extractWithMetadata(from url: URL) throws -> ExtractionResult {
+    static func extractWithMetadata(from url: URL, options: Options = Options()) throws -> ExtractionResult {
         guard let pdf = PDFDocument(url: url) else {
             throw ExtractionError.unreadable
         }
+        guard pdf.pageCount > 0 else {
+            throw ExtractionError.emptyDocument
+        }
 
-        // Extract metadata
-        let metadata = extractMetadata(from: pdf)
+        let metadata = extractMetadata(from: pdf, sourceURL: url)
+        let nativeText = extractNativePageText(from: pdf)
 
-        // Try native text extraction first
-        var nativePages: [String?] = []
-        var pagesWithText = 0
-        var totalCharacters = 0
+        var pagesWithOCRText = 0
+        var totalOCRConfidence: Double = 0
+        var skippedPages = 0
+        var combinedPages: [String] = []
 
-        for index in 0..<pdf.pageCount {
-            guard let page = pdf.page(at: index) else {
-                nativePages.append(nil)
+        for pageIndex in 0..<pdf.pageCount {
+            if let native = nativeText[pageIndex], !native.isEmpty {
+                combinedPages.append(options.includePageMarkers ? "[Page \(pageIndex + 1)]\n\(native)" : native)
                 continue
             }
 
-            if let text = page.string, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                let cleaned = cleanText(text)
-                nativePages.append(cleaned)
-                pagesWithText += 1
-                totalCharacters += cleaned.count
-            } else {
-                nativePages.append(nil)
+            guard let page = pdf.page(at: pageIndex),
+                  let image = renderedImage(for: page, scale: options.ocrRenderScale)
+            else {
+                skippedPages += 1
+                continue
             }
-        }
 
-        // If most pages have no text, attempt OCR
-        let nativeTextRatio = Double(pagesWithText) / Double(pdf.pageCount)
-        var ocrPages = 0
-        var ocrConfidence: Double = 0
-
-        if nativeTextRatio < 0.5 {
-            // Attempt OCR on pages without text
-            let ocrResult = try attemptOCR(on: pdf, skipPages: nativePages)
-            ocrPages = ocrResult.processedPages
-            ocrConfidence = ocrResult.averageConfidence
-
-            // Merge OCR results
-            for (index, ocrText) in ocrResult.extractedText.enumerated() {
-                if nativePages[index] == nil {
-                    nativePages[index] = ocrText
-                    totalCharacters += ocrText.count
+            do {
+                let ocr = try performOCR(on: image, languages: options.ocrLanguages)
+                if !ocr.text.isEmpty {
+                    let content = options.includePageMarkers ? "[Page \(pageIndex + 1)]\n\(ocr.text)" : ocr.text
+                    combinedPages.append(content)
+                    pagesWithOCRText += 1
+                    totalOCRConfidence += ocr.confidence
+                } else {
+                    skippedPages += 1
                 }
+            } catch {
+                skippedPages += 1
             }
         }
 
-        // Combine all text
-        let allText = nativePages.compactMap { $0 }.joined(separator: "\n\n")
-        guard !allText.isEmpty else {
-            throw ExtractionError.imageOnly
+        let fullText = normalizeExtractedText(combinedPages.joined(separator: "\n\n")).trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !fullText.isEmpty else {
+            throw pagesWithOCRText == 0 ? ExtractionError.noExtractableText : ExtractionError.ocrFailed
         }
 
-        // Calculate statistics
-        let quality = determineQuality(
-            nativeRatio: nativeTextRatio,
-            ocrConfidence: ocrConfidence,
-            ocrPages: ocrPages
-        )
-        let wordCount = allText.split(whereSeparator: { $0.isWhitespace }).count
-
-        let statistics = ExtractionStatistics(
+        let avgOCRConfidence = pagesWithOCRText > 0 ? totalOCRConfidence / Double(pagesWithOCRText) : 0
+        let stats = ExtractionStatistics(
             totalPages: pdf.pageCount,
-            pagesWithText: pagesWithText,
-            ocrPagesProcessed: ocrPages,
-            ocrConfidence: ocrConfidence,
-            extractedCharacterCount: totalCharacters,
-            estimatedWordCount: wordCount,
-            extractionQuality: quality
+            pagesWithNativeText: nativeText.compactMap { $0 }.count,
+            pagesWithOCRText: pagesWithOCRText,
+            skippedPages: skippedPages,
+            ocrConfidence: avgOCRConfidence,
+            extractedCharacterCount: fullText.count,
+            estimatedWordCount: fullText.split(whereSeparator: \.isWhitespace).count
         )
 
-        return ExtractionResult(
-            text: allText,
-            metadata: metadata,
-            statistics: statistics
-        )
+        return ExtractionResult(text: fullText, metadata: metadata, statistics: stats)
     }
 
-    // MARK: - Private Helpers
-
-    private static func extractMetadata(from pdf: PDFDocument) -> PDFMetadata {
-        let dict = pdf.documentAttributes ?? [:]
+    private static func extractMetadata(from pdf: PDFDocument, sourceURL: URL) -> PDFMetadata {
+        let attrs = pdf.documentAttributes ?? [:]
+        let title = (attrs[PDFDocumentAttribute.titleAttribute] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let fallbackTitle = sourceURL.deletingPathExtension().lastPathComponent
+        let normalizedTitle = (title?.isEmpty == false ? title : nil) ?? fallbackTitle
 
         return PDFMetadata(
-            title: dict[PDFDocumentAttribute.titleAttribute] as? String,
-            author: dict[PDFDocumentAttribute.authorAttribute] as? String,
-            subject: dict[PDFDocumentAttribute.subjectAttribute] as? String,
-            creator: dict[PDFDocumentAttribute.creatorAttribute] as? String,
-            creationDate: dict[PDFDocumentAttribute.creationDateAttribute] as? Date,
+            title: normalizedTitle,
+            author: attrs[PDFDocumentAttribute.authorAttribute] as? String,
+            subject: attrs[PDFDocumentAttribute.subjectAttribute] as? String,
+            creator: attrs[PDFDocumentAttribute.creatorAttribute] as? String,
+            creationDate: attrs[PDFDocumentAttribute.creationDateAttribute] as? Date,
             pageCount: pdf.pageCount
         )
     }
 
-    private static func cleanText(_ text: String) -> String {
-        var result = text
-
-        // Remove null characters
-        result = result.replacingOccurrences(of: "\u{0000}", with: "")
-
-        // Handle multi-column layout: collapse excessive whitespace
-        result = result.replacingOccurrences(
-            of: "[ \\t]{2,}",
-            with: " ",
-            options: .regularExpression
-        )
-
-        // Preserve paragraph breaks but normalize
-        result = result.replacingOccurrences(
-            of: "\\n{3,}",
-            with: "\n\n",
-            options: .regularExpression
-        )
-
-        // Remove trailing spaces on lines
-        result = result.replacingOccurrences(
-            of: "[ \\t]+\n",
-            with: "\n",
-            options: .regularExpression
-        )
-
-        return result.trimmingCharacters(in: .whitespacesAndNewlines)
+    private static func extractNativePageText(from pdf: PDFDocument) -> [String?] {
+        (0..<pdf.pageCount).map { pageIndex in
+            guard let page = pdf.page(at: pageIndex), let text = page.string else {
+                return nil
+            }
+            let cleaned = normalizeExtractedText(text).trimmingCharacters(in: .whitespacesAndNewlines)
+            return cleaned.isEmpty ? nil : cleaned
+        }
     }
 
-    private static func attemptOCR(on pdf: PDFDocument, skipPages: [String?]) throws -> OCRResult {
-        var extractedText: [String] = Array(repeating: "", count: pdf.pageCount)
-        var totalConfidence: Double = 0
-        var processedCount = 0
-
-        for index in 0..<pdf.pageCount {
-            // Skip pages that already have native text
-            if skipPages[index] != nil {
-                continue
-            }
-
-            guard let page = pdf.page(at: index) else {
-                continue
-            }
-
-            // Render page as thumbnail image for OCR
-            if let thumbnail = page.thumbnail(of: CGSize(width: 1024, height: 1024)) {
-                do {
-                    let result = try performOCR(on: thumbnail)
-                    extractedText[index] = result.text
-                    totalConfidence += result.confidence
-                    processedCount += 1
-                } catch {
-                    // Continue with next page on OCR failure
-                    continue
-                }
-            }
+    private static func renderedImage(for page: PDFPage, scale: CGFloat) -> UIImage? {
+        let pageBounds = page.bounds(for: .mediaBox)
+        guard pageBounds.width > 0, pageBounds.height > 0 else {
+            return nil
         }
 
-        let averageConfidence = processedCount > 0 ? totalConfidence / Double(processedCount) : 0
+        let renderScale = max(1.0, min(scale, 3.0))
+        let format = UIGraphicsImageRendererFormat.default()
+        format.scale = 1
+        let renderSize = CGSize(width: pageBounds.width * renderScale, height: pageBounds.height * renderScale)
+        let renderer = UIGraphicsImageRenderer(size: renderSize, format: format)
 
-        return OCRResult(
-            extractedText: extractedText,
-            processedPages: processedCount,
-            averageConfidence: averageConfidence
-        )
+        return renderer.image { context in
+            UIColor.white.setFill()
+            context.fill(CGRect(origin: .zero, size: renderSize))
+
+            context.cgContext.saveGState()
+            context.cgContext.translateBy(x: 0, y: renderSize.height)
+            context.cgContext.scaleBy(x: renderScale, y: -renderScale)
+            page.draw(with: .mediaBox, to: context.cgContext)
+            context.cgContext.restoreGState()
+        }
     }
 
-    private static func performOCR(on image: UIImage) throws -> OCRPageResult {
+    private static func performOCR(on image: UIImage, languages: [String]) throws -> OCRPageResult {
         guard let cgImage = image.cgImage else {
             throw ExtractionError.ocrFailed
         }
 
         let request = VNRecognizeTextRequest()
-        request.recognitionLanguages = ["en"] // Configurable for other languages
+        request.recognitionLevel = .accurate
+        request.recognitionLanguages = languages.isEmpty ? ["en-US"] : languages
         request.usesLanguageCorrection = true
 
-        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        let handler = VNImageRequestHandler(cgImage: cgImage)
         try handler.perform([request])
 
-        var recognizedText = ""
+        var collectedText: [String] = []
         var totalConfidence: Float = 0
-        var recognitionCount = 0
+        var observationCount = 0
 
-        if let results = request.results as? [VNRecognizedTextObservation] {
-            for observation in results {
-                if let topCandidate = observation.topCandidates(1).first {
-                    recognizedText += topCandidate.string + " "
-                    totalConfidence += observation.confidence
-                    recognitionCount += 1
-                }
-            }
+        let observations = request.results as? [VNRecognizedTextObservation] ?? []
+        for observation in observations {
+            guard let candidate = observation.topCandidates(1).first else { continue }
+            collectedText.append(candidate.string)
+            totalConfidence += observation.confidence
+            observationCount += 1
         }
 
-        let avgConfidence = recognitionCount > 0 ? Double(totalConfidence / Float(recognitionCount)) : 0
-        return OCRPageResult(
-            text: cleanText(recognizedText),
-            confidence: avgConfidence
-        )
+        let confidence = observationCount > 0 ? Double(totalConfidence) / Double(observationCount) : 0
+        return OCRPageResult(text: normalizeExtractedText(collectedText.joined(separator: "\n")), confidence: confidence)
     }
 
-    private static func determineQuality(
-        nativeRatio: Double,
-        ocrConfidence: Double,
-        ocrPages: Int
-    ) -> ExtractionStatistics.Quality {
-        if nativeRatio >= 0.9 {
-            return .excellent
-        } else if nativeRatio >= 0.7 {
-            return .good
-        } else if nativeRatio >= 0.5 {
-            return ocrConfidence >= 0.85 ? .fair : .poor
-        } else {
-            return ocrConfidence >= 0.75 ? .poor : .veryPoor
-        }
+    static func normalizeExtractedText(_ text: String) -> String {
+        guard !text.isEmpty else { return "" }
+
+        var normalized = text
+        normalized = normalized.replacingOccurrences(of: "\u{0000}", with: "")
+        normalized = normalized.replacingOccurrences(of: "\r\n", with: "\n")
+        normalized = normalized.replacingOccurrences(of: "\r", with: "\n")
+        normalized = normalized.replacingOccurrences(of: "([A-Za-z])\\-\\n([A-Za-z])", with: "$1$2", options: .regularExpression)
+        normalized = normalized.replacingOccurrences(of: "(?<!\\n)\\n(?!\\n)", with: " ", options: .regularExpression)
+        normalized = normalized.replacingOccurrences(of: "[\\t ]+", with: " ", options: .regularExpression)
+        normalized = normalized.replacingOccurrences(of: "\\n{3,}", with: "\n\n", options: .regularExpression)
+
+        return normalized.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-}
-
-// MARK: - Helper Structures
-
-private struct OCRResult {
-    let extractedText: [String]
-    let processedPages: Int
-    let averageConfidence: Double
 }
 
 private struct OCRPageResult {

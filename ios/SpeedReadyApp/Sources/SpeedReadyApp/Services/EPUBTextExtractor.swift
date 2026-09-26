@@ -1,250 +1,265 @@
 import Foundation
-import ZipArchive
+import FoundationXML
+import ZIPFoundation
 
 struct EPUBTextExtractor {
-    enum ExtractionError: LocalizedError {
+    enum ExtractionError: LocalizedError, Equatable {
         case invalidFormat
-        case noContent
         case corruptedArchive
-        case xmlParseError
+        case missingContainer
+        case malformedContainerXML
+        case missingPackageDocument
+        case malformedPackageDocument
+        case noReadableContent
 
         var errorDescription: String? {
             switch self {
             case .invalidFormat:
-                return "This does not appear to be a valid EPUB file."
-            case .noContent:
-                return "No readable content found in EPUB."
+                return "This file is not a valid EPUB archive."
             case .corruptedArchive:
-                return "The EPUB file is corrupted or cannot be extracted."
-            case .xmlParseError:
-                return "Failed to parse EPUB metadata or content."
+                return "The EPUB archive is corrupted and could not be read."
+            case .missingContainer:
+                return "The EPUB container metadata is missing."
+            case .malformedContainerXML:
+                return "The EPUB container metadata is malformed."
+            case .missingPackageDocument:
+                return "The EPUB package document (OPF) could not be found."
+            case .malformedPackageDocument:
+                return "The EPUB package document is malformed."
+            case .noReadableContent:
+                return "No readable XHTML/HTML content was found in this EPUB."
             }
         }
+    }
+
+    struct SpineItem: Equatable {
+        let id: String
+        let href: String
+        let mediaType: String
     }
 
     static func extract(from url: URL) throws -> String {
-        // Create temporary directory for extraction
-        let tempDir = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
-        try FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
-        
-        defer {
-            try? FileManager.default.removeItem(at: tempDir)
+        let root = try unzipEPUB(at: url)
+        defer { try? FileManager.default.removeItem(at: root) }
+
+        let containerURL = root.appendingPathComponent("META-INF/container.xml")
+        guard FileManager.default.fileExists(atPath: containerURL.path) else {
+            throw ExtractionError.missingContainer
         }
 
-        // Extract ZIP contents
-        guard FileManager.default.fileExists(atPath: url.path) else {
-            throw ExtractionError.corruptedArchive
+        let opfRelativePath = try parseContainerXML(data: Data(contentsOf: containerURL))
+        guard let opfURL = resolvePath(opfRelativePath, relativeTo: root, within: root),
+              FileManager.default.fileExists(atPath: opfURL.path)
+        else {
+            throw ExtractionError.missingPackageDocument
         }
 
-        // Use Foundation's built-in ZIP support or manual ZIP extraction
-        do {
-            try extractZIP(from: url, to: tempDir)
-        } catch {
-            throw ExtractionError.corruptedArchive
+        let spineItems = try parseOPF(data: Data(contentsOf: opfURL))
+        guard !spineItems.isEmpty else {
+            throw ExtractionError.noReadableContent
         }
 
-        // Find and parse container.xml to locate content.opf
-        let containerPath = tempDir.appendingPathComponent("META-INF/container.xml")
-        guard FileManager.default.fileExists(atPath: containerPath.path) else {
+        let packageFolder = opfURL.deletingLastPathComponent()
+        var chapters: [String] = []
+
+        for item in spineItems {
+            guard let itemURL = resolvePath(item.href, relativeTo: packageFolder, within: root),
+                  FileManager.default.fileExists(atPath: itemURL.path)
+            else {
+                continue
+            }
+            let chapterText = try extractTextFromMarkupFile(at: itemURL)
+            if !chapterText.isEmpty {
+                chapters.append(chapterText)
+            }
+        }
+
+        let joined = chapters.joined(separator: "\n\n\n").trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !joined.isEmpty else {
+            throw ExtractionError.noReadableContent
+        }
+
+        return joined
+    }
+
+    private static func unzipEPUB(at sourceURL: URL) throws -> URL {
+        let destination = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString, isDirectory: true)
+        try FileManager.default.createDirectory(at: destination, withIntermediateDirectories: true)
+
+        guard let archive = Archive(url: sourceURL, accessMode: .read) else {
             throw ExtractionError.invalidFormat
         }
 
-        let opfPath = try parseContainerXML(at: containerPath, basePath: tempDir)
-        
-        // Parse content.opf to find spine and manifest
-        let contentItems = try parseOPF(at: opfPath)
-        
-        // Extract text from spine items in order
-        var fullText = ""
-        for item in contentItems {
-            let itemPath = opfPath.deletingLastPathComponent().appendingPathComponent(item.href)
-            if FileManager.default.fileExists(atPath: itemPath.path) {
-                let itemText = try extractXHTML(from: itemPath)
-                if !itemText.isEmpty {
-                    fullText += itemText + "\n\n"
-                }
+        do {
+            for entry in archive {
+                let entryURL = destination.appendingPathComponent(entry.path)
+                let parent = entryURL.deletingLastPathComponent()
+                try FileManager.default.createDirectory(at: parent, withIntermediateDirectories: true)
+                _ = try archive.extract(entry, to: entryURL)
             }
-        }
-
-        let cleaned = fullText
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        guard !cleaned.isEmpty else {
-            throw ExtractionError.noContent
-        }
-        
-        return cleaned
-    }
-
-    // MARK: - Private Helpers
-
-    private static func extractZIP(from url: URL, to destination: URL) throws {
-        // Manual ZIP extraction using Foundation's Data and standard zip handling
-        let data = try Data(contentsOf: url)
-        
-        // For a production app, use SSZipArchive or similar.
-        // For now, we'll attempt basic ZIP extraction using shell or third-party.
-        // This is a simplified version that assumes unzip availability.
-        let process = Process()
-        process.executableURL = URL(fileURLWithPath: "/usr/bin/unzip")
-        process.arguments = ["-q", url.path, "-d", destination.path]
-        try process.run()
-        process.waitUntilExit()
-        
-        guard process.terminationStatus == 0 else {
-            throw EPUBTextExtractor.ExtractionError.corruptedArchive
+            return destination
+        } catch {
+            throw ExtractionError.corruptedArchive
         }
     }
 
-    private static func parseContainerXML(at url: URL, basePath: URL) throws -> URL {
-        let data = try Data(contentsOf: url)
-        let parser = ContainerXMLParser()
-        
-        guard XMLParser(data: data).delegate as? ContainerXMLParser != nil else {
-            throw ExtractionError.xmlParseError
+    static func parseContainerXML(data: Data) throws -> String {
+        let parserDelegate = ContainerParser()
+        let parser = XMLParser(data: data)
+        parser.delegate = parserDelegate
+
+        guard parser.parse() else {
+            throw ExtractionError.malformedContainerXML
         }
-        
-        // For simplicity, assume standard EPUB structure
-        // Typically content.opf is at {basePath}/OEBPS/content.opf
-        let opfPath = basePath.appendingPathComponent("OEBPS/content.opf")
-        if FileManager.default.fileExists(atPath: opfPath.path) {
-            return opfPath
+
+        guard let path = parserDelegate.rootFilePath?.trimmingCharacters(in: .whitespacesAndNewlines), !path.isEmpty else {
+            throw ExtractionError.missingPackageDocument
         }
-        
-        // Fallback: search for content.opf recursively
-        if let found = try findFile(named: "content.opf", in: basePath) {
-            return found
-        }
-        
-        throw ExtractionError.invalidFormat
+
+        return path
     }
 
-    private static func parseOPF(at url: URL) throws -> [ContentItem] {
-        let data = try Data(contentsOf: url)
-        let parser = OPFParser()
-        
-        guard let xmlParser = XMLParser(data: data) else {
-            throw ExtractionError.xmlParseError
+    static func parseOPF(data: Data) throws -> [SpineItem] {
+        let parserDelegate = OPFParser()
+        let parser = XMLParser(data: data)
+        parser.delegate = parserDelegate
+
+        guard parser.parse() else {
+            throw ExtractionError.malformedPackageDocument
         }
-        
-        xmlParser.delegate = parser
-        guard xmlParser.parse() else {
-            throw ExtractionError.xmlParseError
-        }
-        
-        return parser.spine
+
+        return parserDelegate.spineItems
     }
 
-    private static func extractXHTML(from url: URL) throws -> String {
-        let data = try Data(contentsOf: url)
-        guard let html = String(data: data, encoding: .utf8) else {
-            return ""
-        }
-        
-        // Strip HTML tags and decode entities
-        return stripHTML(html)
-    }
-
-    private static func stripHTML(_ html: String) -> String {
-        var result = html
-        
-        // Remove script and style tags
-        result = result.replacingOccurrences(
-            of: "<(script|style)[^>]*>.*?</\\1>",
-            with: "",
-            options: [.regularExpression, .caseInsensitive]
-        )
-        
-        // Remove all HTML tags
-        result = result.replacingOccurrences(
-            of: "<[^>]+>",
-            with: "",
-            options: .regularExpression
-        )
-        
-        // Decode common HTML entities
-        result = result.replacingOccurrences(of: "&nbsp;", with: " ")
-        result = result.replacingOccurrences(of: "&lt;", with: "<")
-        result = result.replacingOccurrences(of: "&gt;", with: ">")
-        result = result.replacingOccurrences(of: "&amp;", with: "&")
-        result = result.replacingOccurrences(of: "&quot;", with: "\"")
-        result = result.replacingOccurrences(of: "&apos;", with: "'")
-        
-        // Normalize whitespace
-        result = result.replacingOccurrences(
-            of: "[ \\t]+",
-            with: " ",
-            options: .regularExpression
-        )
-        result = result.replacingOccurrences(
-            of: "\\n{3,}",
-            with: "\n\n",
-            options: .regularExpression
-        )
-        
-        return result.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    private static func findFile(named name: String, in directory: URL) throws -> URL? {
-        let fileManager = FileManager.default
-        guard let enumerator = fileManager.enumerator(at: directory, includingPropertiesForKeys: nil) else {
+    static func resolvePath(_ path: String, relativeTo baseURL: URL, within rootURL: URL) -> URL? {
+        let decodedPath = path.removingPercentEncoding ?? path
+        let resolved = URL(fileURLWithPath: decodedPath, relativeTo: baseURL).standardizedFileURL
+        let root = rootURL.standardizedFileURL.path
+        guard resolved.path.hasPrefix(root) else {
             return nil
         }
-        
-        for case let url as URL in enumerator {
-            if url.lastPathComponent == name {
-                return url
+        return resolved
+    }
+
+    private static func extractTextFromMarkupFile(at url: URL) throws -> String {
+        let data = try Data(contentsOf: url)
+        let text = String(data: data, encoding: .utf8)
+            ?? String(data: data, encoding: .utf16)
+            ?? String(data: data, encoding: .isoLatin1)
+            ?? ""
+        return cleanMarkup(text)
+    }
+
+    static func cleanMarkup(_ markup: String) -> String {
+        guard !markup.isEmpty else { return "" }
+
+        var text = markup
+        text = text.replacingOccurrences(of: "\r\n", with: "\n")
+        text = text.replacingOccurrences(of: "\r", with: "\n")
+        text = text.replacingOccurrences(of: "<(script|style)[^>]*>.*?</\\1>", with: "", options: [.regularExpression, .caseInsensitive])
+        text = text.replacingOccurrences(of: "<br\\s*/?>", with: "\n", options: [.regularExpression, .caseInsensitive])
+        text = text.replacingOccurrences(of: "</(p|div|section|article|li|h[1-6]|tr|blockquote)>", with: "\n\n", options: [.regularExpression, .caseInsensitive])
+        text = text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
+        text = decodeHTMLEntities(in: text)
+        text = text.replacingOccurrences(of: "[\\t ]+", with: " ", options: .regularExpression)
+        text = text.replacingOccurrences(of: "[ ]*\\n[ ]*", with: "\n", options: .regularExpression)
+        text = text.replacingOccurrences(of: "\\n{3,}", with: "\n\n", options: .regularExpression)
+
+        return text.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private static func decodeHTMLEntities(in text: String) -> String {
+        var decoded = text
+        let entities: [String: String] = [
+            "&nbsp;": " ",
+            "&amp;": "&",
+            "&lt;": "<",
+            "&gt;": ">",
+            "&quot;": "\"",
+            "&apos;": "'",
+            "&mdash;": "—",
+            "&ndash;": "–"
+        ]
+
+        for (entity, replacement) in entities {
+            decoded = decoded.replacingOccurrences(of: entity, with: replacement)
+        }
+
+        let pattern = "&#(x?[0-9A-Fa-f]+);"
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        let range = NSRange(decoded.startIndex..<decoded.endIndex, in: decoded)
+        let matches = regex?.matches(in: decoded, options: [], range: range) ?? []
+        for match in matches.reversed() {
+            guard let matchRange = Range(match.range, in: decoded),
+                  let rawRange = Range(match.range(at: 1), in: decoded) else { continue }
+            let raw = String(decoded[rawRange])
+            let scalarValue: UInt32?
+            if raw.hasPrefix("x") || raw.hasPrefix("X") {
+                scalarValue = UInt32(raw.dropFirst(), radix: 16)
+            } else {
+                scalarValue = UInt32(raw, radix: 10)
             }
+            guard let value = scalarValue, let scalar = UnicodeScalar(value) else { continue }
+            decoded.replaceSubrange(matchRange, with: String(Character(scalar)))
         }
-        
-        return nil
+
+        return decoded
     }
 }
 
-// MARK: - XML Parsing Helpers
+private final class ContainerParser: NSObject, XMLParserDelegate {
+    var rootFilePath: String?
 
-class ContainerXMLParser: NSObject, XMLParserDelegate {
-    var opfPath: String?
-    
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        if elementName == "rootfile" {
-            opfPath = attributeDict["full-path"]
+        let name = elementName.lowercased()
+        if name == "rootfile" {
+            rootFilePath = attributeDict["full-path"]
         }
     }
 }
 
-struct ContentItem {
-    let id: String
-    let href: String
-    let mediaType: String
-}
+private final class OPFParser: NSObject, XMLParserDelegate {
+    private struct ManifestEntry {
+        let href: String
+        let mediaType: String
+    }
 
-class OPFParser: NSObject, XMLParserDelegate {
-    var manifest: [String: ContentItem] = [:]
-    var spine: [ContentItem] = []
-    var currentElementName: String = ""
-    var inSpine = false
-    
+    private var manifest: [String: ManifestEntry] = [:]
+    private var spineIdRefs: [String] = []
+    private var inSpine = false
+
+    var spineItems: [EPUBTextExtractor.SpineItem] {
+        spineIdRefs.compactMap { idRef in
+            guard let entry = manifest[idRef] else { return nil }
+            return EPUBTextExtractor.SpineItem(id: idRef, href: entry.href, mediaType: entry.mediaType)
+        }
+    }
+
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        currentElementName = elementName
-        
-        if elementName == "item" {
-            let id = attributeDict["id"] ?? ""
-            let href = attributeDict["href"] ?? ""
-            let mediaType = attributeDict["media-type"] ?? ""
-            let item = ContentItem(id: id, href: href, mediaType: mediaType)
-            manifest[id] = item
-        } else if elementName == "spine" {
+        let name = elementName.lowercased()
+        if name == "item" {
+            guard let id = attributeDict["id"],
+                  let href = attributeDict["href"],
+                  let mediaType = attributeDict["media-type"]
+            else {
+                return
+            }
+            guard mediaType.contains("html") || mediaType.contains("xhtml") else {
+                return
+            }
+            manifest[id] = ManifestEntry(href: href, mediaType: mediaType)
+        } else if name == "spine" {
             inSpine = true
-        } else if elementName == "itemref", inSpine {
-            if let idref = attributeDict["idref"], let item = manifest[idref] {
-                spine.append(item)
+        } else if inSpine, name == "itemref", let idRef = attributeDict["idref"] {
+            if attributeDict["linear"]?.lowercased() == "no" {
+                return
             }
+            spineIdRefs.append(idRef)
         }
     }
-    
+
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "spine" {
+        if elementName.lowercased() == "spine" {
             inSpine = false
         }
     }
