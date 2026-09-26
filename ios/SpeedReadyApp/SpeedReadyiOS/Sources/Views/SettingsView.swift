@@ -134,8 +134,8 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
-            .onChange(of: settings) { _, newSettings in
-                onSave(newSettings)
+            .onDisappear {
+                onSave(settings)
             }
         }
     }
