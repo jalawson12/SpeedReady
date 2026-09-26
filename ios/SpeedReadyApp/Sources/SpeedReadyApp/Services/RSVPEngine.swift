@@ -159,7 +159,12 @@ final class RSVPEngine: ObservableObject {
         scheduledTask = nil
 
         let maxIndex = max(0, tokens.count - 1)
-        let currentIndex = min(state.wordIndex, maxIndex)
+        let isAtCompletedEnd = didCompleteSession && state.wordIndex >= tokens.count
+        if isAtCompletedEnd && offset > 0 {
+            return
+        }
+
+        let currentIndex = isAtCompletedEnd ? maxIndex : min(state.wordIndex, maxIndex)
         let targetIndex = min(max(0, currentIndex + offset), maxIndex)
 
         state.wordIndex = targetIndex
