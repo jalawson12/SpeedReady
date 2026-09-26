@@ -3,6 +3,7 @@ import UIKit
 
 struct SettingsView: View {
     @Binding var settings: ReaderSettings
+    @State private var pendingSaveTask: Task<Void, Never>?
     let onSave: (ReaderSettings) -> Void
 
     var body: some View {
@@ -134,8 +135,16 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .onChange(of: settings) { _, newSettings in
+                pendingSaveTask?.cancel()
+                pendingSaveTask = Task {
+                    try? await Task.sleep(for: .milliseconds(400))
+                    guard !Task.isCancelled else { return }
+                    onSave(newSettings)
+                }
+            }
             .onDisappear {
-                onSave(settings)
+                pendingSaveTask?.cancel()
             }
         }
     }

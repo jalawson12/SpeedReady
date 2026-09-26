@@ -330,7 +330,8 @@ struct ReaderView: View {
     private func estimatedTimeRemaining() -> String {
         let remainingWords = max(engine.state.totalWords - engine.state.wordIndex, 0)
         guard remainingWords > 0 else { return "0:00" }
-        let wordsPerMinute = max(Double(engine.state.currentWpm), 1)
+        let runtimeWpm = Double(engine.state.currentWpm)
+        let wordsPerMinute = max(runtimeWpm > 0 ? runtimeWpm : settings.wpm, 1)
         let totalSeconds = Int((Double(remainingWords) / wordsPerMinute) * 60)
         let minutes = totalSeconds / 60
         let seconds = totalSeconds % 60
