@@ -276,6 +276,8 @@ final class SpeedReadyAppState: ObservableObject {
         UserDefaults.standard.set(currentDocument?.id.uuidString, forKey: currentDocumentKey)
         if let data = try? JSONEncoder().encode(readingLocations) {
             UserDefaults.standard.set(data, forKey: readingLocationsKey)
+        } else {
+            UserDefaults.standard.removeObject(forKey: readingLocationsKey)
         }
     }
 
