@@ -73,7 +73,7 @@ struct ReaderView: View {
             }
             .onChange(of: engine.state.wordIndex) { _, _ in
                 let summary = engine.sessionSummary()
-                guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return                 }
+                guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return }
                 recordSessionIfNeeded(for: activeDocument, completedOverride: true)
             }
         }

@@ -154,15 +154,14 @@ final class RSVPEngine: ObservableObject {
 
     private func skip(by offset: Int) {
         guard !tokens.isEmpty else { return }
-
-        scheduledTask?.cancel()
-        scheduledTask = nil
-
         let maxIndex = max(0, tokens.count - 1)
         let isAtCompletedEnd = didCompleteSession && state.wordIndex >= tokens.count
         if isAtCompletedEnd && offset > 0 {
             return
         }
+
+        scheduledTask?.cancel()
+        scheduledTask = nil
 
         let currentIndex = isAtCompletedEnd ? maxIndex : min(state.wordIndex, maxIndex)
         let targetIndex = min(max(0, currentIndex + offset), maxIndex)
