@@ -9,6 +9,9 @@ struct LibraryView: View {
     }
 
     @ObservedObject var appState: SpeedReadyAppState
+    let settings: ReaderSettings
+    let onSelectDocument: () -> Void
+    @Environment(\.colorScheme) private var colorScheme
     @State private var activeSheet: ActiveSheet?
     @State private var customText = ""
     @State private var customTitle = ""
@@ -16,30 +19,56 @@ struct LibraryView: View {
     @State private var editingDocument: ReadingDocument?
     @State private var editedTitle = ""
 
+    private var palette: AppPalette {
+        AppPalette(settings: settings, colorScheme: colorScheme)
+    }
+
     var body: some View {
         NavigationStack {
-            List(appState.documents) { document in
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(document.title)
-                        .font(.headline)
-                    Text("\(document.wordCount) words")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
-                    Text(document.createdAt.formatted(date: .abbreviated, time: .shortened))
-                        .font(.caption)
-                        .foregroundStyle(.tertiary)
-                }
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    appState.setCurrentDocument(document)
-                }
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                    Button("Rename") {
-                        editingDocument = document
-                        editedTitle = document.title
+            ZStack {
+                palette.background.ignoresSafeArea()
+
+                List(appState.documents) { document in
+                    Button {
+                        appState.setCurrentDocument(document)
+                        onSelectDocument()
+                    } label: {
+                        HStack(spacing: 12) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(document.title)
+                                    .font(.headline)
+                                    .foregroundStyle(palette.text)
+                                Text("\(document.wordCount) words")
+                                    .font(.subheadline)
+                                    .foregroundStyle(palette.mutedText)
+                                Text(document.createdAt.formatted(date: .abbreviated, time: .shortened))
+                                    .font(.caption)
+                                    .foregroundStyle(palette.mutedText.opacity(0.8))
+                            }
+
+                            Spacer()
+
+                            if appState.currentDocument?.id == document.id {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.title3)
+                                    .foregroundStyle(palette.accent)
+                                    .accessibilityLabel("Currently selected")
+                            }
+                        }
                     }
-                    .tint(.blue)
+                    .buttonStyle(.plain)
+                    .accessibilityHint("Selects this document and opens it in the Reader tab")
+                    .padding(.vertical, 8)
+                    .listRowBackground(appState.currentDocument?.id == document.id ? palette.selectedSurface : palette.surface)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button("Rename") {
+                            editingDocument = document
+                            editedTitle = document.title
+                        }
+                        .tint(palette.accent)
+                    }
                 }
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Library")
             .toolbar {
@@ -55,6 +84,7 @@ struct LibraryView: View {
                     } label: {
                         Image(systemName: "plus.circle.fill")
                             .font(.title3)
+                            .foregroundStyle(palette.accent)
                     }
                     .accessibilityLabel("Add reading material")
                 }
@@ -118,7 +148,7 @@ struct LibraryView: View {
 }
 
 #Preview {
-    LibraryView(appState: SpeedReadyAppState())
+    LibraryView(appState: SpeedReadyAppState(), settings: ReaderSettings()) { }
 }
 
 private struct DocumentImportSheet: View {

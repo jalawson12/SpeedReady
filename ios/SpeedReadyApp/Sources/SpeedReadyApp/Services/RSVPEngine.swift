@@ -133,6 +133,27 @@ final class RSVPEngine: ObservableObject {
         pausedAt = nil
     }
 
+    func restorePosition(wordIndex: Int, completed: Bool = false) {
+        guard !tokens.isEmpty else { return }
+
+        let wasPlaying = state.isPlaying
+        pause()
+
+        let clampedIndex = min(max(0, wordIndex), tokens.count)
+        state.wordIndex = clampedIndex
+        didCompleteSession = completed && clampedIndex >= tokens.count
+
+        if clampedIndex >= tokens.count {
+            updateCurrentDisplay(index: max(0, tokens.count - 1))
+        } else {
+            updateCurrentDisplay(index: clampedIndex)
+        }
+
+        if wasPlaying {
+            play()
+        }
+    }
+
     func skipForward(by count: Int = 5) {
         skip(by: max(1, count))
     }

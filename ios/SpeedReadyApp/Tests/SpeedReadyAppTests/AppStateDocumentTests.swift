@@ -59,9 +59,206 @@ final class AppStateDocumentTests: XCTestCase {
         XCTAssertTrue(appState.documents.contains(where: { $0.title == "Manual Title" }))
     }
 
+    func testSelectingExistingDocumentPersistsAcrossReload() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "First", text: "one two")
+        appState.addDocument(title: "Second", text: "three four")
+
+        guard let first = appState.documents.first(where: { $0.title == "First" }) else {
+            XCTFail("Expected first document")
+            return
+        }
+
+        appState.setCurrentDocument(first)
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.currentDocument?.id, first.id)
+        XCTAssertEqual(reloaded.currentDocument?.title, "First")
+    }
+
+    func testReadingLocationPersistsPerDocumentAcrossReload() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "First", text: "one two three four")
+        appState.addDocument(title: "Second", text: "alpha beta gamma delta")
+
+        guard let first = appState.documents.first(where: { $0.title == "First" }),
+              let second = appState.documents.first(where: { $0.title == "Second" }) else {
+            XCTFail("Expected test documents")
+            return
+        }
+
+        appState.updateReadingLocation(for: first.id, wordIndex: 3, totalWords: 4, isCompleted: false)
+        appState.updateReadingLocation(for: second.id, wordIndex: 4, totalWords: 4, isCompleted: true)
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.readingLocation(for: first)?.wordIndex, 3)
+        XCTAssertEqual(reloaded.readingLocation(for: first)?.isCompleted, false)
+        XCTAssertEqual(reloaded.readingLocation(for: second)?.wordIndex, 4)
+        XCTAssertEqual(reloaded.readingLocation(for: second)?.isCompleted, true)
+    }
+
+    func testReadingLocationClampsToProvidedMaximum() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Clamped", text: "one two three")
+
+        guard let document = appState.documents.first(where: { $0.title == "Clamped" }) else {
+            XCTFail("Expected clamped document")
+            return
+        }
+
+        appState.updateReadingLocation(for: document.id, wordIndex: 99, totalWords: 3, isCompleted: true)
+
+        XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 3)
+    }
+
+    func testIncompleteReadingLocationClampsBeforeCompletedBoundary() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Boundary", text: "one two three")
+
+        guard let document = appState.documents.first(where: { $0.title == "Boundary" }) else {
+            XCTFail("Expected boundary document")
+            return
+        }
+
+        appState.updateReadingLocation(for: document.id, wordIndex: 3, totalWords: 3, isCompleted: false)
+
+        XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 2)
+        XCTAssertEqual(appState.readingLocation(for: document)?.isCompleted, false)
+    }
+
+    func testCompletedReadingLocationRequiresStoredEndPosition() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Complete Boundary", text: "one two three")
+
+        guard let document = appState.documents.first(where: { $0.title == "Complete Boundary" }) else {
+            XCTFail("Expected complete boundary document")
+            return
+        }
+
+        appState.updateReadingLocation(for: document.id, wordIndex: -1, totalWords: 3, isCompleted: true)
+
+        XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 0)
+        XCTAssertEqual(appState.readingLocation(for: document)?.isCompleted, false)
+    }
+
+    func testPausedSessionLocationPersistsAndRestores() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Resume", text: "one two three four")
+
+        guard let document = appState.documents.first(where: { $0.title == "Resume" }) else {
+            XCTFail("Expected resume document")
+            return
+        }
+
+        let scheduler = AppStateTestScheduler()
+        let engine = RSVPEngine(scheduler: scheduler)
+        engine.load(text: document.text)
+        engine.play()
+        scheduler.fireNext()
+        engine.pause()
+
+        let summary = engine.sessionSummary()
+        appState.updateReadingLocation(
+            for: document.id,
+            wordIndex: engine.state.wordIndex,
+            totalWords: engine.state.totalWords,
+            isCompleted: summary.completed
+        )
+
+        let reloaded = SpeedReadyAppState()
+        guard let savedLocation = reloaded.readingLocation(for: document) else {
+            XCTFail("Expected saved location")
+            return
+        }
+
+        let resumedEngine = RSVPEngine()
+        resumedEngine.load(text: document.text)
+        resumedEngine.restorePosition(wordIndex: savedLocation.wordIndex, completed: savedLocation.isCompleted)
+
+        XCTAssertEqual(savedLocation.wordIndex, 1)
+        XCTAssertEqual(resumedEngine.state.wordIndex, 1)
+        XCTAssertEqual(resumedEngine.state.currentWord, "two")
+        XCTAssertFalse(resumedEngine.sessionSummary().completed)
+    }
+
+    func testNonPersistedReadingLocationLeavesSavedProgressUntouched() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Transient", text: "one two three four")
+
+        guard let document = appState.documents.first(where: { $0.title == "Transient" }) else {
+            XCTFail("Expected transient document")
+            return
+        }
+
+        appState.updateReadingLocation(for: document.id, wordIndex: 1, totalWords: 4, isCompleted: false)
+        appState.updateReadingLocation(for: document.id, wordIndex: 2, totalWords: 4, isCompleted: false, persist: false)
+
+        XCTAssertEqual(appState.readingLocation(for: document)?.wordIndex, 1)
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.readingLocation(for: document)?.wordIndex, 1)
+    }
+
+    func testReloadPrunesOrphanedSelectionAndProgress() throws {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "First", text: "one two three")
+        appState.addDocument(title: "Second", text: "alpha beta gamma")
+
+        guard let first = appState.documents.first(where: { $0.title == "First" }),
+              let second = appState.documents.first(where: { $0.title == "Second" }) else {
+            XCTFail("Expected test documents")
+            return
+        }
+
+        appState.setCurrentDocument(first)
+        appState.updateReadingLocation(for: first.id, wordIndex: 2, totalWords: 3, isCompleted: false)
+        appState.updateReadingLocation(for: second.id, wordIndex: 1, totalWords: 3, isCompleted: false)
+
+        let replacement = ReadingDocument(title: "Replacement", text: "delta epsilon", wordCount: 2)
+        let replacementData = try XCTUnwrap(try? JSONEncoder().encode([replacement]))
+        UserDefaults.standard.set(replacementData, forKey: "speedready.documents.v1")
+        UserDefaults.standard.set(first.id.uuidString, forKey: "speedready.currentDocument.v1")
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.currentDocument?.id, replacement.id)
+        XCTAssertNil(reloaded.readingLocation(for: first))
+        XCTAssertNil(reloaded.readingLocation(for: second))
+    }
+
     private func clearPersistedState() {
         UserDefaults.standard.removeObject(forKey: "speedready.documents.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.sessions.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.readerSettings.v1")
+        UserDefaults.standard.removeObject(forKey: "speedready.currentDocument.v1")
+        UserDefaults.standard.removeObject(forKey: "speedready.readingLocations.v1")
+    }
+}
+
+private final class AppStateTestTask: RSVPTask {
+    private let onCancel: () -> Void
+
+    init(onCancel: @escaping () -> Void) {
+        self.onCancel = onCancel
+    }
+
+    func cancel() {
+        onCancel()
+    }
+}
+
+private final class AppStateTestScheduler: RSVPScheduler {
+    private var queue: [() -> Void] = []
+
+    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask {
+        queue.append(action)
+        return AppStateTestTask { [weak self] in
+            self?.queue.removeAll()
+        }
+    }
+
+    func fireNext() {
+        guard !queue.isEmpty else { return }
+        let action = queue.removeFirst()
+        action()
     }
 }

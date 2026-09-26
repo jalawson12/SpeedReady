@@ -114,6 +114,11 @@ struct ReadingSession: Identifiable, Equatable, Codable {
     }
 }
 
+struct ReadingLocation: Equatable, Codable {
+    var wordIndex: Int
+    var isCompleted: Bool
+}
+
 struct ORPResult: Equatable {
     let before: String
     let pivot: String
@@ -151,25 +156,40 @@ final class SpeedReadyAppState: ObservableObject {
 
     private let documentsKey = "speedready.documents.v1"
     private let sessionsKey = "speedready.sessions.v1"
+    private let currentDocumentKey = "speedready.currentDocument.v1"
+    private let readingLocationsKey = "speedready.readingLocations.v1"
+    private var readingLocations: [String: ReadingLocation] = [:]
 
     init() {
         self.documents = Self.loadDocuments()
         self.sessions = Self.loadSessions()
-        self.currentDocument = self.documents.first ?? ReadingDocument.sample()
-        if self.currentDocument == nil {
+        self.readingLocations = Self.loadReadingLocations()
+
+        if self.documents.isEmpty {
             let sample = ReadingDocument.sample()
             self.documents = [sample]
-            self.currentDocument = sample
             saveDocuments()
         }
+
+        if let persistedDocumentID = Self.loadCurrentDocumentID(),
+           let persistedDocument = documents.first(where: { $0.id == persistedDocumentID }) {
+            self.currentDocument = persistedDocument
+        } else {
+            self.currentDocument = self.documents.first
+        }
+
+        saveReadingState()
     }
 
     func setCurrentDocument(_ document: ReadingDocument) {
-        currentDocument = document
-        if !documents.contains(document) {
+        if let existingDocument = documents.first(where: { $0.id == document.id }) {
+            currentDocument = existingDocument
+        } else {
             documents.insert(document, at: 0)
+            currentDocument = document
             saveDocuments()
         }
+        saveReadingState()
     }
 
     func addDocument(_ document: ReadingDocument) {
@@ -210,6 +230,24 @@ final class SpeedReadyAppState: ObservableObject {
         }
 
         saveDocuments()
+        saveReadingState()
+    }
+
+    func readingLocation(for document: ReadingDocument) -> ReadingLocation? {
+        readingLocations[document.id.uuidString]
+    }
+
+    func updateReadingLocation(for documentID: UUID, wordIndex: Int, totalWords: Int, isCompleted: Bool, persist: Bool = true) {
+        guard persist else { return }
+        guard documents.contains(where: { $0.id == documentID }) else { return }
+        let upperBound = isCompleted ? max(0, totalWords) : max(0, totalWords - 1)
+        let clampedIndex = min(max(0, wordIndex), upperBound)
+        let location = ReadingLocation(
+            wordIndex: clampedIndex,
+            isCompleted: isCompleted && clampedIndex >= max(0, totalWords)
+        )
+        readingLocations[documentID.uuidString] = location
+        saveReadingState()
     }
 
     func recordSession(documentTitle: String, wordsRead: Int, durationSeconds: Double, completed: Bool) {
@@ -237,6 +275,21 @@ final class SpeedReadyAppState: ObservableObject {
         }
     }
 
+    private func saveReadingState() {
+        let validDocumentIDs = Set(documents.map(\.id.uuidString))
+        readingLocations = readingLocations.filter { validDocumentIDs.contains($0.key) }
+        if let currentDocument, !validDocumentIDs.contains(currentDocument.id.uuidString) {
+            self.currentDocument = documents.first
+        }
+
+        UserDefaults.standard.set(currentDocument?.id.uuidString, forKey: currentDocumentKey)
+        if let data = try? JSONEncoder().encode(readingLocations) {
+            UserDefaults.standard.set(data, forKey: readingLocationsKey)
+        } else {
+            UserDefaults.standard.removeObject(forKey: readingLocationsKey)
+        }
+    }
+
     private static func loadDocuments() -> [ReadingDocument] {
         guard let data = UserDefaults.standard.data(forKey: "speedready.documents.v1"),
               let decoded = try? JSONDecoder().decode([ReadingDocument].self, from: data)
@@ -251,6 +304,22 @@ final class SpeedReadyAppState: ObservableObject {
               let decoded = try? JSONDecoder().decode([ReadingSession].self, from: data)
         else {
             return []
+        }
+        return decoded
+    }
+
+    private static func loadCurrentDocumentID() -> UUID? {
+        guard let rawValue = UserDefaults.standard.string(forKey: "speedready.currentDocument.v1") else {
+            return nil
+        }
+        return UUID(uuidString: rawValue)
+    }
+
+    private static func loadReadingLocations() -> [String: ReadingLocation] {
+        guard let data = UserDefaults.standard.data(forKey: "speedready.readingLocations.v1"),
+              let decoded = try? JSONDecoder().decode([String: ReadingLocation].self, from: data)
+        else {
+            return [:]
         }
         return decoded
     }

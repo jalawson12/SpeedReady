@@ -24,8 +24,8 @@ struct ReaderView: View {
         min(max(engine.state.wordIndex, 0), max(0, engine.state.totalWords - 1))
     }
 
-    private var palette: ReaderPalette {
-        ReaderPalette(settings: settings, colorScheme: colorScheme)
+    private var palette: AppPalette {
+        AppPalette(settings: settings, colorScheme: colorScheme)
     }
 
     private var preferredColorScheme: ColorScheme? {
@@ -38,16 +38,18 @@ struct ReaderView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 18) {
-                headerView
-                wordDisplayView
-                controlsView
-                progressView
-                actionsView
-                Spacer()
+            GeometryReader { proxy in
+                VStack(spacing: 18) {
+                    headerView
+                    wordDisplayView(height: readerDisplayHeight(for: proxy.size.height))
+                    controlsView
+                    progressView
+                    actionsView
+                    Spacer(minLength: 0)
+                }
+                .padding()
+                .background(palette.background.ignoresSafeArea())
             }
-            .padding()
-            .background(palette.background.ignoresSafeArea())
             .onAppear {
                 if let currentDocument = appState.currentDocument {
                     loadDocument(currentDocument)
@@ -56,7 +58,8 @@ struct ReaderView: View {
                 }
             }
             .onChange(of: appState.currentDocument) { previousDocument, nextDocument in
-                recordSessionIfNeeded(for: previousDocument ?? activeDocument)
+                saveCurrentLocation(for: previousDocument, persist: true)
+                recordSessionIfNeeded(for: previousDocument)
                 guard let nextDocument else {
                     loadFallbackSample()
                     return
@@ -65,11 +68,23 @@ struct ReaderView: View {
             }
             .onChange(of: engine.state.wordIndex) { _, _ in
                 let summary = engine.sessionSummary()
+                let shouldPersistLocation = !engine.state.isPlaying || (summary.completed && engine.state.wordIndex >= engine.state.totalWords)
+                if shouldPersistLocation {
+                    saveCurrentLocation(for: activeDocument, persist: true)
+                }
                 guard summary.completed, engine.state.wordIndex >= engine.state.totalWords else { return }
                 recordSessionIfNeeded(for: activeDocument, completedOverride: true)
             }
+            .onChange(of: engine.state.isPlaying) { _, isPlaying in
+                if !isPlaying {
+                    saveCurrentLocation(for: activeDocument, persist: true)
+                }
+            }
             .onChange(of: settings) { _, newSettings in
                 engine.setSettings(newSettings)
+            }
+            .onDisappear {
+                saveCurrentLocation(for: activeDocument, persist: true)
             }
         }
         .preferredColorScheme(preferredColorScheme)
@@ -85,7 +100,7 @@ struct ReaderView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var wordDisplayView: some View {
+    private func wordDisplayView(height: CGFloat) -> some View {
         GeometryReader { proxy in
             VStack(spacing: 8) {
                 if settings.peripheralContext, let previous = previousPeripheralWords(), !previous.isEmpty {
@@ -110,17 +125,17 @@ struct ReaderView: View {
                         VStack(spacing: 3) {
                             if settings.showOrpGuides {
                                 Rectangle()
-                                    .fill(palette.pivot.opacity(0.35))
+                                    .fill(palette.accent.opacity(0.35))
                                     .frame(width: 2, height: max(6, displayFontSize * 0.22))
                             }
                             Text(engine.state.pivot)
                                 .font(.system(size: displayPivotFontSize, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default))
-                                .foregroundStyle(palette.pivot)
+                                .foregroundStyle(palette.accent)
                                 .kerning(kerningValue(for: displayPivotFontSize))
                                 .accessibilityLabel("Current word: \(engine.state.pivot)")
                             if settings.showOrpGuides {
                                 Rectangle()
-                                    .fill(palette.pivot.opacity(0.35))
+                                    .fill(palette.accent.opacity(0.35))
                                     .frame(width: 2, height: max(6, displayFontSize * 0.22))
                             }
                         }
@@ -144,12 +159,12 @@ struct ReaderView: View {
                         .lineLimit(1)
                 }
             }
-            .frame(maxWidth: .infinity, minHeight: settings.focusMode ? 170 : 190, alignment: .center)
+            .frame(maxWidth: .infinity, minHeight: max(height - 42, settings.focusMode ? 250 : 300), alignment: .center)
             .padding()
             .background(palette.surface)
             .clipShape(RoundedRectangle(cornerRadius: 24))
         }
-        .frame(height: settings.focusMode ? 240 : 260)
+        .frame(height: height)
     }
 
     private var pausedContentView: some View {
@@ -177,7 +192,7 @@ struct ReaderView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .textSelection(.enabled)
         }
-        .frame(maxHeight: settings.pauseView == .fulltext ? 180 : 110)
+        .frame(maxHeight: settings.pauseView == .fulltext ? .infinity : 180, alignment: .top)
     }
 
     private var controlsView: some View {
@@ -218,7 +233,7 @@ struct ReaderView: View {
                 total: Double(max(engine.state.totalWords, 1))
             )
             .progressViewStyle(.linear)
-            .tint(palette.pivot)
+            .tint(palette.accent)
             .accessibilityLabel("Reading progress")
 
             HStack {
@@ -242,11 +257,12 @@ struct ReaderView: View {
                 Button {
                     recordSessionIfNeeded(for: activeDocument)
                     engine.restart()
+                    saveCurrentLocation(for: activeDocument, persist: true)
                 } label: {
                     Image(systemName: "arrow.counterclockwise")
                         .font(.system(size: 20, weight: .semibold))
                         .frame(width: 54, height: 54)
-                        .background(.thinMaterial, in: Circle())
+                        .background(palette.secondarySurface, in: Circle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Restart reading from beginning")
@@ -257,7 +273,7 @@ struct ReaderView: View {
                     Image(systemName: "gobackward.5")
                         .font(.system(size: 22, weight: .semibold))
                         .frame(width: 60, height: 60)
-                        .background(.thinMaterial, in: Circle())
+                        .background(palette.secondarySurface, in: Circle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Skip backward 5 words")
@@ -274,7 +290,7 @@ struct ReaderView: View {
                         .font(.system(size: 28, weight: .bold))
                         .frame(width: 78, height: 78)
                         .foregroundStyle(.white)
-                        .background(palette.pivot.gradient, in: Circle())
+                        .background(palette.accent.gradient, in: Circle())
                         .contentTransition(.symbolEffect(.replace))
                 }
                 .buttonStyle(.plain)
@@ -286,7 +302,7 @@ struct ReaderView: View {
                     Image(systemName: "goforward.5")
                         .font(.system(size: 22, weight: .semibold))
                         .frame(width: 60, height: 60)
-                        .background(.thinMaterial, in: Circle())
+                        .background(palette.secondarySurface, in: Circle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Skip forward 5 words")
@@ -302,12 +318,28 @@ struct ReaderView: View {
         activeDocument = document
         lastRecordedSessionID = nil
         engine.load(text: document.text, settings: settings)
+        if let savedLocation = appState.readingLocation(for: document) {
+            engine.restorePosition(wordIndex: savedLocation.wordIndex, completed: savedLocation.isCompleted)
+        }
     }
 
     private func loadFallbackSample() {
         activeDocument = ReadingDocument.sample()
         lastRecordedSessionID = nil
         engine.load(text: activeDocument?.text ?? "", settings: settings)
+    }
+
+    private func saveCurrentLocation(for document: ReadingDocument?, persist: Bool) {
+        guard let document,
+              appState.documents.contains(where: { $0.id == document.id }) else { return }
+        let summary = engine.sessionSummary()
+        appState.updateReadingLocation(
+            for: document.id,
+            wordIndex: engine.state.wordIndex,
+            totalWords: engine.state.totalWords,
+            isCompleted: summary.completed && engine.state.wordIndex >= engine.state.totalWords,
+            persist: persist
+        )
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
@@ -382,10 +414,10 @@ struct ReaderView: View {
 
     private func contextTextColor() -> Color {
         if settings.colorizeQuotes && engine.state.inQuotes {
-            return colorFromHex(settings.quoteHighlightColor) ?? palette.mutedText
+            return Color(hex: settings.quoteHighlightColor) ?? palette.mutedText
         }
         if settings.colorizeParens && (engine.state.inParens || engine.state.inBrackets) {
-            return colorFromHex(settings.parenHighlightColor) ?? palette.mutedText
+            return Color(hex: settings.parenHighlightColor) ?? palette.mutedText
         }
         return palette.mutedText
     }
@@ -431,7 +463,7 @@ struct ReaderView: View {
         for index in lower...upper {
             var token = AttributedString(maybeHideTrailingPunctuation(tokens[index].text) + " ")
             if index == currentTokenIndex {
-                token.foregroundColor = palette.pivot
+                token.foregroundColor = palette.accent
                 token.font = .system(size: displayFontSize * 0.52, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default)
             } else {
                 token.foregroundColor = pausedTokenColor(for: tokens[index])
@@ -449,77 +481,19 @@ struct ReaderView: View {
 
     private func pausedTokenColor(for token: WordToken) -> Color {
         if settings.colorizeQuotes && token.inQuotes {
-            return colorFromHex(settings.quoteHighlightColor) ?? palette.mutedText
+            return Color(hex: settings.quoteHighlightColor) ?? palette.mutedText
         }
         if settings.colorizeParens && (token.inParens || token.inBrackets) {
-            return colorFromHex(settings.parenHighlightColor) ?? palette.mutedText
+            return Color(hex: settings.parenHighlightColor) ?? palette.mutedText
         }
         return palette.mutedText
     }
-}
 
-private struct ReaderPalette {
-    let background: Color
-    let surface: Color
-    let secondarySurface: Color
-    let text: Color
-    let mutedText: Color
-    let pivot: Color
-
-    init(settings: ReaderSettings, colorScheme: ColorScheme) {
-        let isDark: Bool
-        switch settings.theme {
-        case .dark:
-            isDark = true
-        case .light:
-            isDark = false
-        case .system:
-            isDark = colorScheme == .dark
-        }
-        if isDark {
-            background = colorFromHex("#2C303C") ?? Color.black
-            surface = colorFromHex("#232733") ?? Color.black.opacity(0.8)
-            secondarySurface = colorFromHex("#1D2130") ?? Color.black.opacity(0.7)
-            text = colorFromHex("#EEF0F5") ?? .white
-            mutedText = colorFromHex("#B8C0D4") ?? .gray
-        } else {
-            background = colorFromHex("#FFFFFF") ?? .white
-            surface = colorFromHex("#F8F7FB") ?? Color(uiColor: .secondarySystemBackground)
-            secondarySurface = colorFromHex("#F0EEF7") ?? Color(uiColor: .secondarySystemBackground)
-            text = colorFromHex("#16161D") ?? .black
-            mutedText = colorFromHex("#5A5A66") ?? .gray
-        }
-
-        pivot = colorFromHex(settings.highlightColor) ?? colorFromHex("#E63946") ?? .red
+    private func readerDisplayHeight(for availableHeight: CGFloat) -> CGFloat {
+        let proposedHeight = availableHeight * (settings.focusMode ? 0.48 : 0.54)
+        let minimumHeight = max(availableHeight * 0.38, settings.focusMode ? 220 : 250)
+        return max(minimumHeight, min(proposedHeight, 520))
     }
-}
-
-private func colorFromHex(_ hex: String) -> Color? {
-    let sanitized = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-    guard sanitized.count == 6 || sanitized.count == 8,
-          let value = UInt64(sanitized, radix: 16)
-    else { return nil }
-
-    let red, green, blue, alpha: UInt64
-    if sanitized.count == 8 {
-        red = (value >> 24) & 0xFF
-        green = (value >> 16) & 0xFF
-        blue = (value >> 8) & 0xFF
-        alpha = value & 0xFF
-    } else {
-        red = (value >> 16) & 0xFF
-        green = (value >> 8) & 0xFF
-        blue = value & 0xFF
-        alpha = 0xFF
-    }
-
-    return Color(
-        .sRGB,
-        red: Double(red) / 255,
-        green: Double(green) / 255,
-        blue: Double(blue) / 255,
-        opacity: Double(alpha) / 255
-    )
 }
 
 #Preview {

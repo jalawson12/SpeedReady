@@ -102,6 +102,43 @@ final class RSVPEngineTests: XCTestCase {
         XCTAssertNotNil(secondDelay)
         XCTAssertLessThan(secondDelay ?? 0, firstDelay ?? 0)
     }
+
+    func testRestorePositionMovesBackToSavedWord() {
+        let engine = RSVPEngine()
+        engine.load(text: "One two three four")
+
+        engine.restorePosition(wordIndex: 2)
+
+        XCTAssertEqual(engine.state.wordIndex, 2)
+        XCTAssertEqual(engine.state.currentWord, "three")
+        XCTAssertFalse(engine.sessionSummary().completed)
+    }
+
+    func testRestorePositionCanReturnToCompletedEnd() {
+        let engine = RSVPEngine()
+        engine.load(text: "One two three")
+
+        engine.restorePosition(wordIndex: 3, completed: true)
+
+        XCTAssertEqual(engine.state.wordIndex, 3)
+        XCTAssertEqual(engine.state.currentWord, "three")
+        XCTAssertTrue(engine.sessionSummary().completed)
+    }
+
+    func testRestorePositionWhilePlayingRestartsTimingFromRestoredWord() {
+        let scheduler = RecordingScheduler()
+        let engine = RSVPEngine(scheduler: scheduler)
+        engine.load(text: "one two three")
+        engine.play()
+        let firstDelayCount = scheduler.recordedDelays.count
+
+        engine.restorePosition(wordIndex: 1)
+
+        XCTAssertTrue(engine.state.isPlaying)
+        XCTAssertEqual(engine.state.wordIndex, 1)
+        XCTAssertEqual(engine.state.currentWord, "two")
+        XCTAssertEqual(scheduler.recordedDelays.count, firstDelayCount + 1)
+    }
 }
 
 private final class RecordingScheduler: RSVPScheduler {
