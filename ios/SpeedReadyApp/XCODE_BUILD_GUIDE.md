@@ -3,9 +3,10 @@
 Before opening in Xcode, verify the following:
 
 ## File Structure
-- [x] All Swift files in `Sources/SpeedReadyApp/`
+- [x] Shared Swift files in `Sources/SpeedReadyApp/`
+- [x] App target Swift files in `SpeedReadyiOS/Sources/`
 - [x] Models, Views, Services organized by folder
-- [x] Main app entry point: `App/SpeedReadyApp.swift`
+- [x] Main app entry point: `SpeedReadyiOS/Sources/App/SpeedReadyApp.swift`
 - [x] Package.swift at root
 
 ## Import Dependencies
@@ -43,8 +44,8 @@ Before opening in Xcode, verify the following:
 
 ## First Build Checklist
 
-1. [ ] Open `ios/SpeedReadyApp` in Xcode
-2. [ ] Select SpeedReadyApp target
+1. [ ] Open `ios/SpeedReadyApp/SpeedReadyiOS.xcworkspace` in Xcode
+2. [ ] Select `SpeedReadyiOS` target
 3. [ ] Select iPhone simulator or device
 4. [ ] Clean build folder (⇧⌘K)
 5. [ ] Build (⌘B) — should complete in ~20 seconds
@@ -88,4 +89,4 @@ If build fails:
 
 ---
 
-**Package scope note:** This repository currently ships a Swift package implementation; final app-target setup (signing/bundle ID/icons/simulator validation) remains an Xcode-only step.
+**Repository note:** This repository now ships both a Swift package for shared logic/tests and a checked-in Xcode iOS app target. Signing and simulator/device validation remain Xcode-only steps.

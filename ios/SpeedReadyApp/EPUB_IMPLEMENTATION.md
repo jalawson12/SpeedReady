@@ -54,8 +54,9 @@ Before feeding to the RSVP engine:
 ```
 ios/SpeedReadyApp/
 ├── Sources/SpeedReadyApp/Services/
-│   ├── EPUBTextExtractor.swift    # EPUB parsing logic
-│   ├── PDFTextExtractor.swift     # PDF extraction
+│   ├── EPUBTextExtractor.swift      # EPUB parsing logic
+│   └── PDFTextExtractor.swift       # PDF extraction
+├── SpeedReadyiOS/Sources/Services/
 │   └── DocumentImportService.swift  # Unified import service
 ├── Tests/SpeedReadyAppTests/
 │   └── EPUBTextExtractorTests.swift # HTML stripping & entity tests
@@ -138,7 +139,7 @@ To test with a real EPUB:
 The EPUB extractor is transparent to the rest of the app:
 
 ```swift
-// In DocumentImportService.swift
+// In SpeedReadyiOS/Sources/Services/DocumentImportService.swift
 private func extractTextFromURL(_ url: URL) -> String {
     let ext = url.pathExtension.lowercased()
     

@@ -38,13 +38,17 @@ Native SwiftUI port of SpeedReady, a speed-reading app that uses RSVP (Rapid Ser
 ```
 ios/SpeedReadyApp/
 ├── Sources/SpeedReadyApp/
-│   ├── App/
-│   │   └── SpeedReadyApp.swift           # App entry point
 │   ├── Models/
 │   │   └── ReaderModels.swift            # Data models & app state
 │   ├── Services/
-│   │   ├── RSVPEngine.swift              # Core reading engine
-│   │   └── DocumentImportService.swift   # File & PDF import
+│   │   ├── EPUBTextExtractor.swift       # EPUB parsing
+│   │   ├── PDFTextExtractor.swift        # PDF extraction
+│   │   └── RSVPEngine.swift              # Core reading engine
+├── SpeedReadyiOS/Sources/
+│   ├── App/
+│   │   └── SpeedReadyApp.swift           # iOS app entry point
+│   ├── Services/
+│   │   └── DocumentImportService.swift   # File & PDF import UI bridge
 │   └── Views/
 │       ├── ContentView.swift             # Tab navigation
 │       ├── ReaderView.swift              # Main reader screen
@@ -52,7 +56,9 @@ ios/SpeedReadyApp/
 │       ├── LibraryView.swift             # Document library
 │       ├── StatsView.swift               # Reading statistics
 │       └── SessionHistoryView.swift      # Session details
-└── Package.swift                         # Swift Package manifest
+├── SpeedReadyiOS.xcodeproj              # Xcode iOS application project
+├── SpeedReadyiOS.xcworkspace            # Xcode workspace
+└── Package.swift                        # Swift Package manifest for shared logic/tests
 ```
 
 ## Building in Xcode
@@ -62,7 +68,7 @@ ios/SpeedReadyApp/
    open ios/SpeedReadyApp
    ```
 
-2. **Select target:** `SpeedReadyApp` for iOS 17.0 (from `Package.swift`)
+2. **Select target:** `SpeedReadyiOS` for iOS 17.0
 
 3. **Build:** ⌘B or Product → Build
 
@@ -134,11 +140,11 @@ UIViewControllerRepresentable for:
 - **ZIPFoundation**: EPUB archive extraction
 - **Foundation**: Core data structures and persistence
 
-## Xcode-only Remaining Steps
+## Xcode Notes
 
-- Create and configure an `.xcodeproj` app target if needed.
-- Configure signing, bundle identifier, and app icon assets in Xcode.
-- Run simulator/device validation in Xcode (not done in this package-only repository workflow).
+- Open `ios/SpeedReadyApp/SpeedReadyiOS.xcworkspace` (or `.xcodeproj`) in Xcode 15+.
+- The checked-in iOS target includes app sources and asset catalog scaffolding.
+- Configure signing in Xcode before installing to a physical device.
 
 ## Next Steps for Production
 

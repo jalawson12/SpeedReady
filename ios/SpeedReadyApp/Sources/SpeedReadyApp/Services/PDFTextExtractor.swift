@@ -1,7 +1,14 @@
 import Foundation
+#if canImport(CoreGraphics)
 import CoreGraphics
+#else
+typealias CGFloat = Double
+#endif
+
+#if canImport(PDFKit) && canImport(Vision)
 import PDFKit
 import Vision
+#endif
 
 struct PDFTextExtractor {
     enum ExtractionError: LocalizedError, Equatable {
@@ -56,10 +63,18 @@ struct PDFTextExtractor {
     }
 
     static func extract(from url: URL, options: Options = Options()) throws -> String {
+#if canImport(PDFKit) && canImport(Vision)
         try extractWithMetadata(from: url, options: options).text
+#else
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            throw ExtractionError.unreadable
+        }
+        throw ExtractionError.noExtractableText
+#endif
     }
 
     static func extractWithMetadata(from url: URL, options: Options = Options()) throws -> ExtractionResult {
+#if canImport(PDFKit) && canImport(Vision)
         guard let pdf = PDFDocument(url: url) else {
             throw ExtractionError.unreadable
         }
@@ -120,8 +135,15 @@ struct PDFTextExtractor {
         )
 
         return ExtractionResult(text: fullText, metadata: metadata, statistics: stats)
+#else
+        guard FileManager.default.fileExists(atPath: url.path) else {
+            throw ExtractionError.unreadable
+        }
+        throw ExtractionError.noExtractableText
+#endif
     }
 
+#if canImport(PDFKit) && canImport(Vision)
     private static func extractMetadata(from pdf: PDFDocument, sourceURL: URL) -> PDFMetadata {
         let attrs = pdf.documentAttributes ?? [:]
         let title = (attrs[PDFDocumentAttribute.titleAttribute] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -209,6 +231,7 @@ struct PDFTextExtractor {
         let confidence = observationCount > 0 ? Double(totalConfidence) / Double(observationCount) : 0
         return OCRPageResult(text: normalizeExtractedText(collectedText.joined(separator: "\n")), confidence: confidence)
     }
+#endif
 
     static func normalizeExtractedText(_ text: String) -> String {
         guard !text.isEmpty else { return "" }
@@ -226,7 +249,9 @@ struct PDFTextExtractor {
     }
 }
 
+#if canImport(PDFKit) && canImport(Vision)
 private struct OCRPageResult {
     let text: String
     let confidence: Double
 }
+#endif

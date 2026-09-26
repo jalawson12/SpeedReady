@@ -11,12 +11,12 @@ The iOS SpeedReady app is now prepared for Xcode import with:
 
 ## Next Steps
 
-1. Open `ios/SpeedReadyApp` in Xcode (Xcode 15+)
-2. Build the package (⌘B)
-3. Run tests to validate the RSVP engine and PDF handling
+1. Open `ios/SpeedReadyApp/SpeedReadyiOS.xcworkspace` in Xcode (Xcode 15+)
+2. Build the `SpeedReadyiOS` target (⌘B)
+3. Run tests to validate the RSVP engine and document handling
 4. Launch the app on an iOS 17+ simulator or device
-5. Test with the sample article, imported PDFs, and pasted text
-6. For App Store release, create a dedicated iOS application target with signing and provisioning
+5. Test with the sample article, imported PDFs/EPUBs, and pasted text
+6. Configure signing/provisioning in Xcode for device or App Store distribution
 
 ## Key Features to Test
 

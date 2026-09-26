@@ -1,6 +1,10 @@
 import XCTest
 import ZIPFoundation
+#if canImport(SpeedReadyApp)
 @testable import SpeedReadyApp
+#elseif canImport(SpeedReadyiOS)
+@testable import SpeedReadyiOS
+#endif
 
 final class EPUBTextExtractorTests: XCTestCase {
     func testParseContainerXMLReadsRootFilePath() throws {
@@ -82,10 +86,7 @@ final class EPUBTextExtractorTests: XCTestCase {
         try "<p>Second</p>".write(to: sourceRoot.appendingPathComponent("OPS/Text/b.xhtml"), atomically: true, encoding: .utf8)
 
         let epubURL = tempDir.appendingPathComponent("book.epub")
-        guard let archive = Archive(url: epubURL, accessMode: .create) else {
-            XCTFail("Unable to create archive")
-            return
-        }
+        let archive = try Archive(url: epubURL, accessMode: .create)
 
         for path in [
             "META-INF/container.xml",
