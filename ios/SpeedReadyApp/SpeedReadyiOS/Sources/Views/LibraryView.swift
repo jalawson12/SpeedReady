@@ -62,13 +62,18 @@ struct LibraryView: View {
                     }
                 case .textInput:
                     TextImportSheet(text: $customText) { trimmed in
-                        appState.addDocument(title: "Custom text", text: trimmed)
+                        appState.addDocument(title: pastedDocumentTitle(), text: trimmed)
                     }
                 }
             }
             .onChange(of: activeSheet?.id) { _, nextValue in
                 if nextValue != ActiveSheet.textInput.id {
                     customText = ""
+                }
+
+                private func pastedDocumentTitle() -> String {
+                    let timestamp = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .medium)
+                    return "Pasted text \(timestamp)"
                 }
             }
             .alert("Import failed", isPresented: Binding(get: {
