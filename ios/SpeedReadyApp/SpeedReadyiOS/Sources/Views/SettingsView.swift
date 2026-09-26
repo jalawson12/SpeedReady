@@ -5,6 +5,7 @@ struct SettingsView: View {
     @Binding var settings: ReaderSettings
     @State private var pendingSaveTask: Task<Void, Never>?
     @State private var saveGeneration: UInt = 0
+    @State private var hasPendingChanges = false
     let onSave: (ReaderSettings) -> Void
 
     var body: some View {
@@ -137,6 +138,7 @@ struct SettingsView: View {
             }
             .navigationTitle("Settings")
             .onChange(of: settings) { _, newSettings in
+                hasPendingChanges = true
                 saveGeneration &+= 1
                 let generation = saveGeneration
                 pendingSaveTask?.cancel()
@@ -144,13 +146,17 @@ struct SettingsView: View {
                     try? await Task.sleep(for: .milliseconds(400))
                     guard !Task.isCancelled, generation == saveGeneration else { return }
                     onSave(newSettings)
+                    hasPendingChanges = false
                 }
             }
             .onDisappear {
                 saveGeneration &+= 1
                 pendingSaveTask?.cancel()
                 pendingSaveTask = nil
-                onSave(settings)
+                if hasPendingChanges {
+                    onSave(settings)
+                    hasPendingChanges = false
+                }
             }
         }
     }
@@ -177,7 +183,7 @@ struct SettingsView: View {
     }
 }
 
-private extension Color {
+extension Color {
     init?(hex: String) {
         let sanitized = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         guard sanitized.count == 6 || sanitized.count == 8,
