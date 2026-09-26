@@ -35,6 +35,20 @@ final class RSVPEngineTests: XCTestCase {
         XCTAssertLessThan(engine.state.totalWords, 9)
     }
 
+    func testSetSettingsRetokenizesWhenRemoveCitationsChanges() {
+        let text = "Research shows strong gains (Smith et al., 2020) and repeatability [1]."
+        let engine = RSVPEngine()
+        engine.load(text: text, settings: ReaderSettings())
+        let unfilteredTotal = engine.state.totalWords
+
+        var updated = ReaderSettings()
+        updated.removeCitations = true
+        engine.setSettings(updated)
+
+        XCTAssertLessThan(engine.state.totalWords, unfilteredTotal)
+        XCTAssertFalse(engine.state.currentWord.contains("("))
+    }
+
     func testSpeedRampRaisesCurrentWpmNearTarget() {
         var settings = ReaderSettings()
         settings.smartSpeed = false

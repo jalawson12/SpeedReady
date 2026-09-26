@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ReaderView: View {
     @ObservedObject var appState: SpeedReadyAppState
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var engine = RSVPEngine()
     @State private var settings = ReaderSettings.loadPersisted()
     @State private var activeDocument: ReadingDocument?
@@ -25,7 +26,7 @@ struct ReaderView: View {
     }
 
     private var palette: ReaderPalette {
-        ReaderPalette(settings: settings)
+        ReaderPalette(settings: settings, colorScheme: colorScheme)
     }
 
     private var preferredColorScheme: ColorScheme? {
@@ -477,8 +478,16 @@ private struct ReaderPalette {
     let mutedText: Color
     let pivot: Color
 
-    init(settings: ReaderSettings) {
-        let isDark = settings.theme == .dark
+    init(settings: ReaderSettings, colorScheme: ColorScheme) {
+        let isDark: Bool
+        switch settings.theme {
+        case .dark:
+            isDark = true
+        case .light:
+            isDark = false
+        case .system:
+            isDark = colorScheme == .dark
+        }
         if isDark {
             background = colorFromHex("#2C303C") ?? Color.black
             surface = colorFromHex("#232733") ?? Color.black.opacity(0.8)

@@ -328,7 +328,8 @@ final class RSVPEngine: ObservableObject {
                         inBrackets: tokenInBrackets
                     )
                 )
-                for character in word {
+                let characters = Array(word)
+                for (characterIndex, character) in characters.enumerated() {
                     switch character {
                     case "\"", "“", "”", "„", "«", "»":
                         inDoubleQuote.toggle()
@@ -341,7 +342,9 @@ final class RSVPEngine: ObservableObject {
                     case "]":
                         bracketDepth = max(0, bracketDepth - 1)
                     case "'":
-                        inSingleQuote.toggle()
+                        if shouldToggleSingleQuote(in: characters, at: characterIndex) {
+                            inSingleQuote.toggle()
+                        }
                     default:
                         break
                     }
@@ -458,6 +461,20 @@ final class RSVPEngine: ObservableObject {
             index += 1
         }
         return 0
+    }
+
+    private func shouldToggleSingleQuote(in characters: [Character], at index: Int) -> Bool {
+        let previous = index > 0 ? characters[index - 1] : nil
+        let next = index + 1 < characters.count ? characters[index + 1] : nil
+
+        let prevIsWord = previous?.isLetter == true || previous?.isNumber == true
+        let nextIsWord = next?.isLetter == true || next?.isNumber == true
+
+        if prevIsWord && nextIsWord {
+            return false
+        }
+
+        return true
     }
 
     private func speedRampWpm(for index: Int) -> Double {
