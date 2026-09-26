@@ -46,6 +46,8 @@ final class AppStateDocumentTests: XCTestCase {
 
         let reloaded = SpeedReadyAppState()
         XCTAssertTrue(reloaded.documents.contains(where: { $0.id == selected.id && $0.title == "Selected Renamed" }))
+        XCTAssertEqual(reloaded.currentDocument?.id, selected.id)
+        XCTAssertEqual(reloaded.currentDocument?.title, "Selected Renamed")
     }
 
     private func clearPersistedState() {

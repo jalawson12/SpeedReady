@@ -22,6 +22,7 @@ struct ContentView: View {
                 }
 
             SettingsView(settings: $settings) { newSettings in
+                settings = newSettings
                 newSettings.persist()
             }
                 .tabItem {
