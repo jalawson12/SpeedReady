@@ -48,6 +48,7 @@ struct ReaderView: View {
                         showingSettings = true
                     } label: {
                         Image(systemName: "slider.horizontal.3")
+                            .accessibilityLabel("Settings")
                     }
                 }
             }
@@ -111,9 +112,11 @@ struct ReaderView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(currentDocument.title)
                 .font(.title2.bold())
+                .accessibilityLabel("Document title: \(currentDocument.title)")
             Text("\(engine.state.totalWords) words")
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
+                .accessibilityLabel("Total word count: \(engine.state.totalWords)")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -130,6 +133,7 @@ struct ReaderView: View {
                     .foregroundStyle(.primary)
                     .padding(.horizontal, 4)
                     .tracking(settings.dyslexiaMode ? 0.4 : 0)
+                    .accessibilityLabel("Current word: \(engine.state.pivot)")
                 Text(engine.state.after)
                     .font(.system(size: displayFontSize, weight: .regular, design: settings.dyslexiaMode ? .rounded : .default))
                     .foregroundStyle(.secondary)
@@ -149,6 +153,7 @@ struct ReaderView: View {
                 engine.decreaseWpm()
             } label: {
                 Image(systemName: "minus.circle")
+                    .accessibilityLabel("Decrease words per minute")
             }
             .buttonStyle(.bordered)
 
@@ -156,6 +161,7 @@ struct ReaderView: View {
 
             Text("\(engine.state.currentWpm) WPM")
                 .font(.title2.bold())
+                .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
 
             Spacer()
 
@@ -163,6 +169,7 @@ struct ReaderView: View {
                 engine.increaseWpm()
             } label: {
                 Image(systemName: "plus.circle")
+                    .accessibilityLabel("Increase words per minute")
             }
             .buttonStyle(.bordered)
         }
@@ -187,10 +194,12 @@ struct ReaderView: View {
                 total: Double(max(engine.state.totalWords, 1))
             )
             .progressViewStyle(.linear)
+            .accessibilityLabel("Reading progress")
 
             Text("\(engine.state.wordIndex)/\(engine.state.totalWords) words")
                 .font(.caption)
                 .foregroundStyle(.secondary)
+                .accessibilityLabel("Progress: \(engine.state.wordIndex) of \(engine.state.totalWords) words read")
         }
         .opacity(settings.focusMode ? 0.7 : 1)
     }
@@ -205,21 +214,25 @@ struct ReaderView: View {
                 }
             }
             .buttonStyle(.borderedProminent)
+            .accessibilityLabel(engine.state.isPlaying ? "Pause reading" : "Start reading")
 
             Button("Load Doc") {
                 showingDocumentPicker = true
             }
             .buttonStyle(.bordered)
+            .accessibilityLabel("Load document from file")
 
             Button("Paste Text") {
                 showingTextInput = true
             }
             .buttonStyle(.bordered)
+            .accessibilityLabel("Paste text from clipboard")
 
             Button("Restart") {
                 engine.restart()
             }
             .buttonStyle(.bordered)
+            .accessibilityLabel("Restart reading from beginning")
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.top, 4)
