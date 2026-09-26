@@ -4,12 +4,33 @@ struct ReaderSettings: Equatable, Codable {
     var wpm: Double = 300
     var smartSpeed: Bool = true
     var chunkSize: Int = 1
-    var paragraphPauseMultiplier: Double = 1.5
+    var sentencePauseMultiplier: Double = 2.0
+    var paragraphPauseMultiplier: Double = 1.8
     var contextPauseOnClose: Bool = true
     var bionicFocusPosition: BionicFocusPosition = .balanced
     var dyslexiaMode: Bool = false
     var focusMode: Bool = false
+    var theme: AppTheme = .system
+    var fontSize: Double = 48
     var fontScale: Double = 1.0
+    var letterSpacing: Double = 0
+    var pivotOffset: Double = -20
+    var speedRampEnabled: Bool = false
+    var speedRampTarget: Double = 500
+    var fontWeight: Int = 400
+    var highlightColor: String = "#e63946"
+    var quoteHighlightColor: String = "#a8dadc"
+    var parenHighlightColor: String = "#457b9d"
+    var colorizeQuotes: Bool = true
+    var colorizeParens: Bool = true
+    var pauseView: PauseViewMode = .focus
+    var showOrpGuides: Bool = true
+    var hidePunctuationInDisplay: Bool = false
+    var removeCitations: Bool = false
+    var peripheralContext: Bool = true
+    var peripheralContextCount: Int = 1
+    var bionicMode: Bool = false
+    var commaAsPause: Bool = false
     var punctuationPause: Bool = true
 
     private static let defaultsKey = "speedready.readerSettings.v1"
@@ -27,6 +48,18 @@ struct ReaderSettings: Equatable, Codable {
         guard let data = try? JSONEncoder().encode(self) else { return }
         UserDefaults.standard.set(data, forKey: Self.defaultsKey)
     }
+}
+
+enum AppTheme: String, CaseIterable, Codable {
+    case system
+    case light
+    case dark
+}
+
+enum PauseViewMode: String, CaseIterable, Codable {
+    case focus
+    case context
+    case fulltext
 }
 
 enum BionicFocusPosition: String, CaseIterable, Codable {
@@ -92,6 +125,9 @@ struct WordToken: Equatable {
     let pauseMultiplier: Double
     let paragraphStart: Bool
     let closesAside: Bool
+    let inQuotes: Bool
+    let inParens: Bool
+    let inBrackets: Bool
 }
 
 struct ReaderState: Equatable {
@@ -103,6 +139,9 @@ struct ReaderState: Equatable {
     var pivot: String = ""
     var after: String = ""
     var currentWpm: Int = 300
+    var inQuotes: Bool = false
+    var inParens: Bool = false
+    var inBrackets: Bool = false
 }
 
 final class SpeedReadyAppState: ObservableObject {

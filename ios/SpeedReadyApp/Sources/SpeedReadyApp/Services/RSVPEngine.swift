@@ -31,6 +31,7 @@ final class RSVPEngine: ObservableObject {
     @Published private(set) var state = ReaderState()
 
     private var tokens: [WordToken] = []
+    private var rawText: String = ""
     private var settings = ReaderSettings()
     private var scheduledTask: RSVPTask?
     private var sessionStartedAt: Date?
@@ -47,10 +48,13 @@ final class RSVPEngine: ObservableObject {
         self.scheduler = scheduler
     }
 
+    var allTokens: [WordToken] { tokens }
+
     func load(text: String, settings: ReaderSettings = ReaderSettings()) {
         pause()
         self.settings = settings
-        self.tokens = tokenize(text)
+        self.rawText = text
+        self.tokens = tokenize(preparedText(from: text))
         self.sessionID = UUID()
         self.state = ReaderState(
             isPlaying: false,
@@ -98,8 +102,20 @@ final class RSVPEngine: ObservableObject {
     }
 
     func setSettings(_ newSettings: ReaderSettings) {
+        let oldSettings = settings
         settings = newSettings
         state.currentWpm = Int(settings.wpm)
+
+        let needsRetokenize =
+            oldSettings.chunkSize != newSettings.chunkSize ||
+            oldSettings.removeCitations != newSettings.removeCitations ||
+            oldSettings.commaAsPause != newSettings.commaAsPause
+        if needsRetokenize {
+            retokenizePreservingPosition()
+        } else {
+            updateCurrentDisplay(index: min(state.wordIndex, max(0, tokens.count - 1)))
+        }
+
         if state.isPlaying {
             scheduleNext()
         }
@@ -181,6 +197,9 @@ final class RSVPEngine: ObservableObject {
             state.before = ""
             state.pivot = ""
             state.after = ""
+            state.inQuotes = false
+            state.inParens = false
+            state.inBrackets = false
             return
         }
 
@@ -190,6 +209,9 @@ final class RSVPEngine: ObservableObject {
         state.before = orp.before
         state.pivot = orp.pivot
         state.after = orp.after
+        state.inQuotes = token.inQuotes
+        state.inParens = token.inParens
+        state.inBrackets = token.inBrackets
         state.currentWpm = Int(currentWpmForWord(token.text))
     }
 
@@ -205,7 +227,7 @@ final class RSVPEngine: ObservableObject {
         }
 
         let token = tokens[state.wordIndex]
-        let delayMs = computeDelay(for: token)
+        let delayMs = computeDelay(for: token, index: state.wordIndex)
         updateCurrentDisplay(index: state.wordIndex)
 
         scheduledTask?.cancel()
@@ -231,11 +253,19 @@ final class RSVPEngine: ObservableObject {
         }
     }
 
-    private func computeDelay(for token: WordToken) -> TimeInterval {
-        let baseMs = 60000.0 / settings.wpm
+    private func computeDelay(for token: WordToken, index: Int) -> TimeInterval {
+        let baseWpm = speedRampWpm(for: index)
+        let baseMs = 60000.0 / baseWpm
         let smartMultiplier = settings.smartSpeed ? self.smartMultiplier(for: token.text) : 1.0
         let adjusted = max(150.0, baseMs * smartMultiplier)
-        let punctuationBoost = settings.punctuationPause && (token.pauseMultiplier > 1.0) ? adjusted * (token.pauseMultiplier - 1.0) : 0
+        let punctuationBoost: TimeInterval
+        if settings.punctuationPause && token.pauseMultiplier > 1.0 {
+            let sentenceMultiplier = max(1.0, settings.sentencePauseMultiplier)
+            let punctuationMultiplier = max(token.pauseMultiplier, sentenceMultiplier)
+            punctuationBoost = adjusted * (punctuationMultiplier - 1.0)
+        } else {
+            punctuationBoost = 0
+        }
         let paragraphBoost = token.paragraphStart ? adjusted * (settings.paragraphPauseMultiplier - 1.0) : 0
         let asideBoost = token.closesAside && settings.contextPauseOnClose ? adjusted * 0.2 : 0
         return adjusted + punctuationBoost + paragraphBoost + asideBoost
@@ -251,7 +281,7 @@ final class RSVPEngine: ObservableObject {
     }
 
     private func currentWpmForWord(_ word: String) -> Double {
-        var candidate = settings.wpm
+        var candidate = speedRampWpm(for: state.wordIndex)
         if settings.smartSpeed {
             let clean = word.filter { $0.isLetter || $0.isNumber }
             let length = clean.count
@@ -277,9 +307,18 @@ final class RSVPEngine: ObservableObject {
         guard !paragraphs.isEmpty else { return [] }
 
         var words: [WordToken] = []
+        var inDoubleQuote = false
+        var inSingleQuote = false
+        var parenDepth = 0
+        var bracketDepth = 0
+
         for (paragraphIndex, paragraph) in paragraphs.enumerated() {
             let tokens = paragraph.split(whereSeparator: { $0.isWhitespace }).map(String.init)
             for (wordIndex, word) in tokens.enumerated() {
+                let tokenInQuotes = inDoubleQuote || inSingleQuote
+                let tokenInParens = parenDepth > 0
+                let tokenInBrackets = bracketDepth > 0
+
                 let pauseMultiplier = punctuationPauseMultiplier(for: word)
                 let closesAside = closesContext(for: word)
                 words.append(
@@ -287,9 +326,33 @@ final class RSVPEngine: ObservableObject {
                         text: word,
                         pauseMultiplier: pauseMultiplier,
                         paragraphStart: paragraphIndex > 0 && wordIndex == 0,
-                        closesAside: closesAside
+                        closesAside: closesAside,
+                        inQuotes: tokenInQuotes,
+                        inParens: tokenInParens,
+                        inBrackets: tokenInBrackets
                     )
                 )
+                let characters = Array(word)
+                for (characterIndex, character) in characters.enumerated() {
+                    switch character {
+                    case "\"", "“", "”", "„", "«", "»":
+                        inDoubleQuote.toggle()
+                    case "(":
+                        parenDepth += 1
+                    case ")":
+                        parenDepth = max(0, parenDepth - 1)
+                    case "[":
+                        bracketDepth += 1
+                    case "]":
+                        bracketDepth = max(0, bracketDepth - 1)
+                    case "'":
+                        if shouldToggleSingleQuote(in: characters, at: characterIndex) {
+                            inSingleQuote.toggle()
+                        }
+                    default:
+                        break
+                    }
+                }
             }
         }
 
@@ -314,7 +377,10 @@ final class RSVPEngine: ObservableObject {
                     text: chunk.map(\.text).joined(separator: " "),
                     pauseMultiplier: chunk.map(\.pauseMultiplier).max() ?? 1.0,
                     paragraphStart: first.paragraphStart,
-                    closesAside: last.closesAside
+                    closesAside: last.closesAside,
+                    inQuotes: chunk.contains(where: { $0.inQuotes }),
+                    inParens: chunk.contains(where: { $0.inParens }),
+                    inBrackets: chunk.contains(where: { $0.inBrackets })
                 )
             )
             index += chunkSize
@@ -330,7 +396,9 @@ final class RSVPEngine: ObservableObject {
         }
         guard let last = scalars.last else { return 1.0 }
         if ".!?".unicodeScalars.contains(last) { return 2.0 }
-        if ",;:".unicodeScalars.contains(last) { return 1.4 }
+        if ",".unicodeScalars.contains(last) { return settings.commaAsPause ? 2.0 : 1.4 }
+        if ";".unicodeScalars.contains(last) { return 1.4 }
+        if ":".unicodeScalars.contains(last) { return 1.4 }
         return 1.0
     }
 
@@ -398,5 +466,84 @@ final class RSVPEngine: ObservableObject {
             index += 1
         }
         return 0
+    }
+
+    private func shouldToggleSingleQuote(in characters: [Character], at index: Int) -> Bool {
+        let previous = index > 0 ? characters[index - 1] : nil
+        let next = index + 1 < characters.count ? characters[index + 1] : nil
+
+        let prevIsWord = previous?.isLetter == true || previous?.isNumber == true
+        let nextIsWord = next?.isLetter == true || next?.isNumber == true
+
+        if prevIsWord && nextIsWord {
+            return false
+        }
+
+        return true
+    }
+
+    private func speedRampWpm(for index: Int) -> Double {
+        guard settings.speedRampEnabled else { return settings.wpm }
+        let rampWords = 30.0
+        let current = Double(index)
+        if current >= rampWords {
+            return settings.speedRampTarget
+        }
+        let progress = current / rampWords
+        return settings.wpm + (settings.speedRampTarget - settings.wpm) * progress
+    }
+
+    private func preparedText(from text: String) -> String {
+        settings.removeCitations ? stripCitations(text) : text
+    }
+
+    private func stripCitations(_ text: String) -> String {
+        let numericPattern = #"\[\s*\d[\d,;\s\u{2013}-]*\]"#
+        let authorYearPattern = #"\(\s*[\p{Lu}][\p{L}'’.&\s]+(?:et\s+al\.?)?,?\s*\d{4}[a-z]?(?:\s*[;,]\s*[\p{Lu}][\p{L}'’.&\s]+(?:et\s+al\.?)?,?\s*\d{4}[a-z]?)*\s*\)"#
+
+        return text
+            .replacingOccurrences(of: numericPattern, with: "", options: .regularExpression)
+            .replacingOccurrences(of: authorYearPattern, with: "", options: .regularExpression)
+            .replacingOccurrences(of: #" {2,}"#, with: " ", options: .regularExpression)
+            .replacingOccurrences(of: #"\n{3,}"#, with: "\n\n", options: .regularExpression)
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private func retokenizePreservingPosition() {
+        let previousIndex = min(state.wordIndex, max(0, tokens.count - 1))
+        let currentTokenText = tokens.isEmpty ? "" : tokens[previousIndex].text
+        let previousTokenText = previousIndex > 0 ? tokens[previousIndex - 1].text : nil
+        let nextTokenText = previousIndex + 1 < tokens.count ? tokens[previousIndex + 1].text : nil
+        tokens = tokenize(preparedText(from: rawText))
+        state.totalWords = tokens.count
+
+        if currentTokenText.isEmpty || tokens.isEmpty {
+            state.wordIndex = min(previousIndex, max(0, tokens.count - 1))
+            updateCurrentDisplay(index: state.wordIndex)
+            return
+        }
+
+        let matchingIndices = tokens.enumerated()
+            .filter { $0.element.text == currentTokenText }
+            .map(\.offset)
+
+        if let bestMatch = matchingIndices.max(by: { candidateScore(index: $0, previousText: previousTokenText, nextText: nextTokenText, previousIndex: previousIndex) < candidateScore(index: $1, previousText: previousTokenText, nextText: nextTokenText, previousIndex: previousIndex) }) {
+            state.wordIndex = bestMatch
+        } else {
+            state.wordIndex = min(previousIndex, max(0, tokens.count - 1))
+        }
+        updateCurrentDisplay(index: state.wordIndex)
+    }
+
+    private func candidateScore(index: Int, previousText: String?, nextText: String?, previousIndex: Int) -> Int {
+        var score = 0
+        if let previousText, index > 0, tokens[index - 1].text == previousText {
+            score += 20
+        }
+        if let nextText, index + 1 < tokens.count, tokens[index + 1].text == nextText {
+            score += 20
+        }
+        score -= abs(index - previousIndex)
+        return score
     }
 }

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ReaderView: View {
     @ObservedObject var appState: SpeedReadyAppState
+    @Environment(\.colorScheme) private var colorScheme
     @StateObject private var engine = RSVPEngine()
     @State private var settings = ReaderSettings.loadPersisted()
     @State private var activeDocument: ReadingDocument?
@@ -13,30 +14,38 @@ struct ReaderView: View {
     }
 
     private var displayFontSize: CGFloat {
-        let base: CGFloat = settings.dyslexiaMode ? 54 : 48
-        return base * CGFloat(settings.fontScale)
+        max(16, CGFloat(settings.fontSize) * CGFloat(settings.fontScale))
     }
 
     private var displayPivotFontSize: CGFloat {
-        let base: CGFloat = settings.dyslexiaMode ? 58 : 52
-        return base * CGFloat(settings.fontScale)
+        displayFontSize + 4
+    }
+
+    private var currentTokenIndex: Int {
+        min(max(engine.state.wordIndex, 0), max(0, engine.state.totalWords - 1))
+    }
+
+    private var palette: ReaderPalette {
+        ReaderPalette(settings: settings, colorScheme: colorScheme)
+    }
+
+    private var preferredColorScheme: ColorScheme? {
+        switch settings.theme {
+        case .system: nil
+        case .light: .light
+        case .dark: .dark
+        }
     }
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 18) {
                 headerView
-
                 wordDisplayView
-
                 controlsView
-
                 sessionStatsView
-
                 progressView
-
                 actionsView
-
                 Spacer()
             }
             .padding()
@@ -55,7 +64,9 @@ struct ReaderView: View {
                 SettingsView(settings: $settings, isPresented: $showingSettings) { newSettings in
                     applySettings(newSettings)
                 }
+                .preferredColorScheme(preferredColorScheme)
             }
+            .background(palette.background.ignoresSafeArea())
             .onAppear {
                 if let currentDocument = appState.currentDocument {
                     loadDocument(currentDocument)
@@ -77,45 +88,116 @@ struct ReaderView: View {
                 recordSessionIfNeeded(for: activeDocument, completedOverride: true)
             }
         }
+        .preferredColorScheme(preferredColorScheme)
     }
 
     private var headerView: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(currentDocument.title)
                 .font(.title2.bold())
+                .foregroundStyle(palette.text)
                 .accessibilityLabel("Document title: \(currentDocument.title)")
             Text("\(engine.state.totalWords) words")
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(palette.mutedText)
                 .accessibilityLabel("Total word count: \(engine.state.totalWords)")
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var wordDisplayView: some View {
-        VStack {
-            HStack(alignment: .firstTextBaseline, spacing: 0) {
-                Text(engine.state.before)
-                    .font(.system(size: displayFontSize, weight: .regular, design: settings.dyslexiaMode ? .rounded : .default))
-                    .foregroundStyle(.secondary)
-                    .tracking(settings.dyslexiaMode ? 0.5 : 0)
-                Text(engine.state.pivot)
-                    .font(.system(size: displayPivotFontSize, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default))
-                    .foregroundStyle(.primary)
-                    .padding(.horizontal, 4)
-                    .tracking(settings.dyslexiaMode ? 0.4 : 0)
-                    .accessibilityLabel("Current word: \(engine.state.pivot)")
-                Text(engine.state.after)
-                    .font(.system(size: displayFontSize, weight: .regular, design: settings.dyslexiaMode ? .rounded : .default))
-                    .foregroundStyle(.secondary)
-                    .tracking(settings.dyslexiaMode ? 0.5 : 0)
+        GeometryReader { proxy in
+            VStack(spacing: 8) {
+                if settings.peripheralContext, let previous = previousPeripheralWords(), !previous.isEmpty {
+                    Text(previous)
+                        .font(.system(size: displayFontSize * 0.38, weight: .regular, design: .monospaced))
+                        .foregroundStyle(palette.mutedText.opacity(0.35))
+                        .lineLimit(1)
+                }
+
+                if !engine.state.isPlaying && settings.pauseView != .focus {
+                    pausedContentView
+                        .frame(maxWidth: .infinity)
+                } else {
+                    HStack(alignment: .center, spacing: 0) {
+                        Text(displayBeforeText())
+                            .font(.system(size: displayFontSize, weight: fontWeightValue(), design: settings.dyslexiaMode ? .rounded : .default))
+                            .foregroundStyle(contextTextColor())
+                            .kerning(kerningValue(for: displayFontSize))
+                            .lineLimit(1)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+
+                        VStack(spacing: 3) {
+                            if settings.showOrpGuides {
+                                Rectangle()
+                                    .fill(palette.pivot.opacity(0.35))
+                                    .frame(width: 2, height: max(6, displayFontSize * 0.22))
+                            }
+                            Text(engine.state.pivot)
+                                .font(.system(size: displayPivotFontSize, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default))
+                                .foregroundStyle(palette.pivot)
+                                .kerning(kerningValue(for: displayPivotFontSize))
+                                .accessibilityLabel("Current word: \(engine.state.pivot)")
+                            if settings.showOrpGuides {
+                                Rectangle()
+                                    .fill(palette.pivot.opacity(0.35))
+                                    .frame(width: 2, height: max(6, displayFontSize * 0.22))
+                            }
+                        }
+                        .frame(minWidth: displayPivotFontSize * 0.9)
+
+                        Text(displayAfterText())
+                            .font(.system(size: displayFontSize, weight: fontWeightValue(), design: settings.dyslexiaMode ? .rounded : .default))
+                            .foregroundStyle(contextTextColor())
+                            .kerning(kerningValue(for: displayFontSize))
+                            .lineLimit(1)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .offset(x: pivotOffsetX(for: proxy.size.width))
+                }
+
+                if settings.peripheralContext, let next = nextPeripheralWords(), !next.isEmpty {
+                    Text(next)
+                        .font(.system(size: displayFontSize * 0.38, weight: .regular, design: .monospaced))
+                        .foregroundStyle(palette.mutedText.opacity(0.35))
+                        .lineLimit(1)
+                }
             }
-            .frame(maxWidth: .infinity, minHeight: settings.focusMode ? 160 : 180, alignment: .center)
+            .frame(maxWidth: .infinity, minHeight: settings.focusMode ? 170 : 190, alignment: .center)
             .padding()
-            .background(settings.focusMode ? Color.black.opacity(0.9) : Color(uiColor: .secondarySystemBackground))
-            .foregroundStyle(settings.focusMode ? .white : .primary)
+            .background(palette.surface)
             .clipShape(RoundedRectangle(cornerRadius: 24))
         }
+        .frame(height: settings.focusMode ? 240 : 260)
+    }
+
+    private var pausedContentView: some View {
+        let tokens = engine.allTokens
+        let range: ClosedRange<Int>
+        switch settings.pauseView {
+        case .context:
+            let low = max(0, currentTokenIndex - 25)
+            let high = min(max(0, tokens.count - 1), currentTokenIndex + 25)
+            range = low...high
+        case .fulltext:
+            if tokens.isEmpty {
+                range = 0...0
+            } else {
+                range = 0...max(0, tokens.count - 1)
+            }
+        case .focus:
+            range = currentTokenIndex...currentTokenIndex
+        }
+
+        return ScrollView {
+            Text(renderedPausedText(from: tokens, range: range))
+                .font(.system(size: displayFontSize * 0.52, weight: fontWeightValue(), design: settings.dyslexiaMode ? .rounded : .default))
+                .foregroundStyle(palette.mutedText)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .textSelection(.enabled)
+        }
+        .frame(maxHeight: settings.pauseView == .fulltext ? 180 : 110)
     }
 
     private var controlsView: some View {
@@ -132,6 +214,7 @@ struct ReaderView: View {
 
             Text("\(engine.state.currentWpm) WPM")
                 .font(.title2.bold())
+                .foregroundStyle(palette.text)
                 .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
 
             Spacer()
@@ -165,11 +248,12 @@ struct ReaderView: View {
                 total: Double(max(engine.state.totalWords, 1))
             )
             .progressViewStyle(.linear)
+            .tint(palette.pivot)
             .accessibilityLabel("Reading progress")
 
             Text("\(engine.state.wordIndex)/\(engine.state.totalWords) words")
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(palette.mutedText)
                 .accessibilityLabel("Progress: \(engine.state.wordIndex) of \(engine.state.totalWords) words read")
         }
         .opacity(settings.focusMode ? 0.7 : 1)
@@ -213,7 +297,7 @@ struct ReaderView: View {
                         .font(.system(size: 28, weight: .bold))
                         .frame(width: 78, height: 78)
                         .foregroundStyle(.white)
-                        .background(Color.accentColor.gradient, in: Circle())
+                        .background(palette.pivot.gradient, in: Circle())
                         .contentTransition(.symbolEffect(.replace))
                 }
                 .buttonStyle(.plain)
@@ -231,7 +315,7 @@ struct ReaderView: View {
                 .accessibilityLabel("Skip forward 5 words")
                 .accessibilityHint("Moves the current reading position forward by 5 words")
             }
-            .foregroundStyle(settings.focusMode ? .white : .primary)
+            .foregroundStyle(settings.focusMode ? .white : palette.text)
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.top, 4)
@@ -283,15 +367,176 @@ struct ReaderView: View {
         VStack(spacing: 4) {
             Text(title)
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(palette.mutedText)
             Text(value)
                 .font(.headline)
+                .foregroundStyle(palette.text)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 8)
-        .background(Color(uiColor: .secondarySystemBackground))
+        .background(palette.secondarySurface)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
+
+    private func kerningValue(for fontSize: CGFloat) -> CGFloat {
+        let base = CGFloat(settings.letterSpacing) * fontSize
+        if settings.dyslexiaMode {
+            return max(base + (0.08 * fontSize), 0.08 * fontSize)
+        }
+        return base
+    }
+
+    private func fontWeightValue() -> Font.Weight {
+        switch settings.fontWeight {
+        case 300: return .light
+        case 500: return .medium
+        case 600: return .semibold
+        case 700: return .bold
+        case 800: return .heavy
+        default: return .regular
+        }
+    }
+
+    private func contextTextColor() -> Color {
+        if settings.colorizeQuotes && engine.state.inQuotes {
+            return colorFromHex(settings.quoteHighlightColor) ?? palette.mutedText
+        }
+        if settings.colorizeParens && (engine.state.inParens || engine.state.inBrackets) {
+            return colorFromHex(settings.parenHighlightColor) ?? palette.mutedText
+        }
+        return palette.mutedText
+    }
+
+    private func displayBeforeText() -> String {
+        engine.state.before
+    }
+
+    private func displayAfterText() -> String {
+        maybeHideTrailingPunctuation(engine.state.after)
+    }
+
+    private func maybeHideTrailingPunctuation(_ input: String) -> String {
+        guard settings.hidePunctuationInDisplay else { return input }
+        return input.replacingOccurrences(of: #"[\.,;:!\?"\)\]]+$"#, with: "", options: .regularExpression)
+    }
+
+    private func previousPeripheralWords() -> String? {
+        guard settings.peripheralContext else { return nil }
+        let count = min(max(settings.peripheralContextCount, 1), 3)
+        let lower = max(0, currentTokenIndex - count)
+        let slice = engine.allTokens[lower..<currentTokenIndex]
+        let words = slice.map { maybeHideTrailingPunctuation($0.text) }.filter { !$0.isEmpty }
+        return words.isEmpty ? nil : words.joined(separator: " ")
+    }
+
+    private func nextPeripheralWords() -> String? {
+        guard settings.peripheralContext else { return nil }
+        let count = min(max(settings.peripheralContextCount, 1), 3)
+        let upper = min(engine.allTokens.count, currentTokenIndex + 1 + count)
+        guard currentTokenIndex + 1 <= upper, currentTokenIndex + 1 < engine.allTokens.count else { return nil }
+        let slice = engine.allTokens[(currentTokenIndex + 1)..<upper]
+        let words = slice.map { maybeHideTrailingPunctuation($0.text) }.filter { !$0.isEmpty }
+        return words.isEmpty ? nil : words.joined(separator: " ")
+    }
+
+    private func renderedPausedText(from tokens: [WordToken], range: ClosedRange<Int>) -> AttributedString {
+        var attributed = AttributedString("")
+        guard !tokens.isEmpty else { return attributed }
+        let lower = max(0, range.lowerBound)
+        let upper = min(tokens.count - 1, range.upperBound)
+
+        for index in lower...upper {
+            var token = AttributedString(maybeHideTrailingPunctuation(tokens[index].text) + " ")
+            if index == currentTokenIndex {
+                token.foregroundColor = palette.pivot
+                token.font = .system(size: displayFontSize * 0.52, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default)
+            } else {
+                token.foregroundColor = pausedTokenColor(for: tokens[index])
+            }
+            attributed.append(token)
+        }
+
+        return attributed
+    }
+
+    private func pivotOffsetX(for width: CGFloat) -> CGFloat {
+        let clamped = max(-30, min(30, settings.pivotOffset))
+        return (width / 2) * CGFloat(clamped / 100.0)
+    }
+
+    private func pausedTokenColor(for token: WordToken) -> Color {
+        if settings.colorizeQuotes && token.inQuotes {
+            return colorFromHex(settings.quoteHighlightColor) ?? palette.mutedText
+        }
+        if settings.colorizeParens && (token.inParens || token.inBrackets) {
+            return colorFromHex(settings.parenHighlightColor) ?? palette.mutedText
+        }
+        return palette.mutedText
+    }
+}
+
+private struct ReaderPalette {
+    let background: Color
+    let surface: Color
+    let secondarySurface: Color
+    let text: Color
+    let mutedText: Color
+    let pivot: Color
+
+    init(settings: ReaderSettings, colorScheme: ColorScheme) {
+        let isDark: Bool
+        switch settings.theme {
+        case .dark:
+            isDark = true
+        case .light:
+            isDark = false
+        case .system:
+            isDark = colorScheme == .dark
+        }
+        if isDark {
+            background = colorFromHex("#2C303C") ?? Color.black
+            surface = colorFromHex("#232733") ?? Color.black.opacity(0.8)
+            secondarySurface = colorFromHex("#1D2130") ?? Color.black.opacity(0.7)
+            text = colorFromHex("#EEF0F5") ?? .white
+            mutedText = colorFromHex("#B8C0D4") ?? .gray
+        } else {
+            background = colorFromHex("#FFFFFF") ?? .white
+            surface = colorFromHex("#F8F7FB") ?? Color(uiColor: .secondarySystemBackground)
+            secondarySurface = colorFromHex("#F0EEF7") ?? Color(uiColor: .secondarySystemBackground)
+            text = colorFromHex("#16161D") ?? .black
+            mutedText = colorFromHex("#5A5A66") ?? .gray
+        }
+
+        pivot = colorFromHex(settings.highlightColor) ?? colorFromHex("#E63946") ?? .red
+    }
+}
+
+private func colorFromHex(_ hex: String) -> Color? {
+    let sanitized = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+    guard sanitized.count == 6 || sanitized.count == 8,
+          let value = UInt64(sanitized, radix: 16)
+    else { return nil }
+
+    let red, green, blue, alpha: UInt64
+    if sanitized.count == 8 {
+        red = (value >> 24) & 0xFF
+        green = (value >> 16) & 0xFF
+        blue = (value >> 8) & 0xFF
+        alpha = value & 0xFF
+    } else {
+        red = (value >> 16) & 0xFF
+        green = (value >> 8) & 0xFF
+        blue = value & 0xFF
+        alpha = 0xFF
+    }
+
+    return Color(
+        .sRGB,
+        red: Double(red) / 255,
+        green: Double(green) / 255,
+        blue: Double(blue) / 255,
+        opacity: Double(alpha) / 255
+    )
 }
 
 #Preview {
