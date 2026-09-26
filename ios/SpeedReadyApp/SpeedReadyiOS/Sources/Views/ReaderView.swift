@@ -105,12 +105,16 @@ struct ReaderView: View {
                 }
             }
             .onAppear {
-                loadDocument(currentDocument)
+                if let currentDocument = appState.currentDocument {
+                    loadDocument(currentDocument)
+                } else {
+                    loadFallbackSample()
+                }
             }
             .onChange(of: appState.currentDocument) { previousDocument, nextDocument in
                 recordSessionIfNeeded(for: previousDocument ?? activeDocument)
                 guard let nextDocument else {
-                    clearActiveSession()
+                    loadFallbackSample()
                     return
                 }
                 loadDocument(nextDocument)
@@ -229,35 +233,43 @@ struct ReaderView: View {
     }
 
     private var actionsView: some View {
-        HStack {
-            Button(engine.state.isPlaying ? "Pause" : "Play") {
-                if engine.state.isPlaying {
-                    engine.pause()
-                } else {
-                    engine.play()
+        VStack(spacing: 12) {
+            HStack(spacing: 12) {
+                Button(engine.state.isPlaying ? "Pause" : "Play") {
+                    if engine.state.isPlaying {
+                        engine.pause()
+                    } else {
+                        engine.play()
+                    }
                 }
-            }
-            .buttonStyle(.borderedProminent)
-            .accessibilityLabel(engine.state.isPlaying ? "Pause reading" : "Start reading")
+                .buttonStyle(.borderedProminent)
+                .accessibilityLabel(engine.state.isPlaying ? "Pause reading" : "Start reading")
+                .frame(maxWidth: .infinity)
 
-            Button("Load Doc") {
-                showingDocumentPicker = true
+                Button("Restart") {
+                    recordSessionIfNeeded(for: activeDocument)
+                    engine.restart()
+                }
+                .buttonStyle(.bordered)
+                .accessibilityLabel("Restart reading from beginning")
+                .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.bordered)
-            .accessibilityLabel("Load document from file")
 
-            Button("Paste Text") {
-                showingTextInput = true
-            }
-            .buttonStyle(.bordered)
-            .accessibilityLabel("Paste text from clipboard")
+            HStack(spacing: 12) {
+                Button("Load Doc") {
+                    showingDocumentPicker = true
+                }
+                .buttonStyle(.bordered)
+                .accessibilityLabel("Load document from file")
+                .frame(maxWidth: .infinity)
 
-            Button("Restart") {
-                recordSessionIfNeeded(for: activeDocument)
-                engine.restart()
+                Button("Paste Text") {
+                    showingTextInput = true
+                }
+                .buttonStyle(.bordered)
+                .accessibilityLabel("Paste text from clipboard")
+                .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.bordered)
-            .accessibilityLabel("Restart reading from beginning")
         }
         .frame(maxWidth: .infinity, alignment: .center)
         .padding(.top, 4)
@@ -269,10 +281,10 @@ struct ReaderView: View {
         engine.load(text: document.text, settings: settings)
     }
 
-    private func clearActiveSession() {
+    private func loadFallbackSample() {
         activeDocument = nil
         lastRecordedSessionID = nil
-        engine.load(text: "", settings: settings)
+        engine.load(text: ReadingDocument.sample().text, settings: settings)
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
