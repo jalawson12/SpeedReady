@@ -29,35 +29,36 @@ struct LibraryView: View {
                 palette.background.ignoresSafeArea()
 
                 List(appState.documents) { document in
-                    HStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(document.title)
-                                .font(.headline)
-                                .foregroundStyle(palette.text)
-                            Text("\(document.wordCount) words")
-                                .font(.subheadline)
-                                .foregroundStyle(palette.mutedText)
-                            Text(document.createdAt.formatted(date: .abbreviated, time: .shortened))
-                                .font(.caption)
-                                .foregroundStyle(palette.mutedText.opacity(0.8))
-                        }
-
-                        Spacer()
-
-                        if appState.currentDocument?.id == document.id {
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(.title3)
-                                .foregroundStyle(palette.accent)
-                                .accessibilityLabel("Currently selected")
-                        }
-                    }
-                    .padding(.vertical, 8)
-                    .contentShape(Rectangle())
-                    .listRowBackground(appState.currentDocument?.id == document.id ? palette.selectedSurface : palette.surface)
-                    .onTapGesture {
+                    Button {
                         appState.setCurrentDocument(document)
                         onSelectDocument()
+                    } label: {
+                        HStack(spacing: 12) {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(document.title)
+                                    .font(.headline)
+                                    .foregroundStyle(palette.text)
+                                Text("\(document.wordCount) words")
+                                    .font(.subheadline)
+                                    .foregroundStyle(palette.mutedText)
+                                Text(document.createdAt.formatted(date: .abbreviated, time: .shortened))
+                                    .font(.caption)
+                                    .foregroundStyle(palette.mutedText.opacity(0.8))
+                            }
+
+                            Spacer()
+
+                            if appState.currentDocument?.id == document.id {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.title3)
+                                    .foregroundStyle(palette.accent)
+                                    .accessibilityLabel("Currently selected")
+                            }
+                        }
                     }
+                    .buttonStyle(.plain)
+                    .padding(.vertical, 8)
+                    .listRowBackground(appState.currentDocument?.id == document.id ? palette.selectedSurface : palette.surface)
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         Button("Rename") {
                             editingDocument = document

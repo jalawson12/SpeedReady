@@ -136,8 +136,8 @@ final class RSVPEngine: ObservableObject {
     func restorePosition(wordIndex: Int, completed: Bool = false) {
         guard !tokens.isEmpty else { return }
 
-        scheduledTask?.cancel()
-        scheduledTask = nil
+        let wasPlaying = state.isPlaying
+        pause()
 
         let clampedIndex = min(max(0, wordIndex), tokens.count)
         state.wordIndex = clampedIndex
@@ -149,8 +149,8 @@ final class RSVPEngine: ObservableObject {
             updateCurrentDisplay(index: clampedIndex)
         }
 
-        if state.isPlaying {
-            scheduleNext()
+        if wasPlaying {
+            play()
         }
     }
 

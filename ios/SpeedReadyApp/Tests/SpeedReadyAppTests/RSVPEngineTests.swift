@@ -124,6 +124,21 @@ final class RSVPEngineTests: XCTestCase {
         XCTAssertEqual(engine.state.currentWord, "three")
         XCTAssertTrue(engine.sessionSummary().completed)
     }
+
+    func testRestorePositionWhilePlayingRestartsTimingFromRestoredWord() {
+        let scheduler = RecordingScheduler()
+        let engine = RSVPEngine(scheduler: scheduler)
+        engine.load(text: "one two three")
+        engine.play()
+        let firstDelayCount = scheduler.recordedDelays.count
+
+        engine.restorePosition(wordIndex: 1)
+
+        XCTAssertTrue(engine.state.isPlaying)
+        XCTAssertEqual(engine.state.wordIndex, 1)
+        XCTAssertEqual(engine.state.currentWord, "two")
+        XCTAssertEqual(scheduler.recordedDelays.count, firstDelayCount + 1)
+    }
 }
 
 private final class RecordingScheduler: RSVPScheduler {
