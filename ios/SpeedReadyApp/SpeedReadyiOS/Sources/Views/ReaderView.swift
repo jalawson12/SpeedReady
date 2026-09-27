@@ -372,6 +372,7 @@ struct ReaderView: View {
             return
         }
 
+        pendingEngineSettingsGeneration &+= 1
         let generation = pendingEngineSettingsGeneration
         let scheduledDocumentID = activeDocument?.id
         let scheduledContentVersion = engineContentVersion
