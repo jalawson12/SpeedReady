@@ -1,6 +1,8 @@
 import CoreText
 import Foundation
 
+private final class ReaderFontBundleToken {}
+
 enum ReaderFontRegistry {
     private static let bundledFonts = [
         "JetBrainsMono.ttf",
@@ -18,10 +20,11 @@ enum ReaderFontRegistry {
         defer { lock.unlock() }
         guard !didRegister else { return }
 
+        let bundle = Bundle(for: ReaderFontBundleToken.self)
         for filename in bundledFonts {
             let resourceName = (filename as NSString).deletingPathExtension
             let resourceExtension = (filename as NSString).pathExtension
-            guard let url = Bundle.main.url(forResource: resourceName, withExtension: resourceExtension, subdirectory: "Fonts") else {
+            guard let url = bundle.url(forResource: resourceName, withExtension: resourceExtension, subdirectory: "Fonts") else {
                 continue
             }
 

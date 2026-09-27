@@ -146,8 +146,8 @@ struct ReaderView: View {
                                     .frame(width: 2, height: max(6, displayFontSize * 0.22))
                             }
                         }
-                        .fixedSize(horizontal: true, vertical: false)
-                        kernedText(displayAfterText(), kerning: wordKerningValue(for: displayFontSize))
+                        .frame(width: pivotColumnWidth)
+
                         kernedText(displayAfterText(), kerning: wordKerningValue(for: displayFontSize))
                             .font(readerFont(size: displayFontSize, weight: uiFontWeightValue()))
                             .foregroundStyle(contextTextColor())
@@ -444,16 +444,33 @@ struct ReaderView: View {
         return base
     }
 
+    private var pivotColumnWidth: CGFloat {
+        let font = readerUIFont(size: displayPivotFontSize, weight: .bold)
+        let samples = ["W", "M", "m", "w", "0"]
+        let measuredWidth = samples
+            .map { ($0 as NSString).size(withAttributes: [.font: font]).width }
+            .max() ?? font.pointSize * 0.6
+        return ceil(measuredWidth)
+    }
+
     private func readerFont(size: CGFloat, weight: UIFont.Weight = .regular) -> Font {
+        Font(readerUIFont(size: size, weight: weight))
+    }
+
+    private func readerUIFont(size: CGFloat, weight: UIFont.Weight = .regular) -> UIFont {
         if settings.dyslexiaMode {
-            return .system(size: size, weight: swiftUIFontWeight(from: weight), design: .rounded)
+            let fallback = UIFont.systemFont(ofSize: size, weight: weight)
+            if let roundedDescriptor = fallback.fontDescriptor.withDesign(.rounded) {
+                return UIFont(descriptor: roundedDescriptor, size: size)
+            }
+            return fallback
         }
 
         if let customFont = customUIFont(size: size, weight: weight) {
-            return Font(customFont)
+            return customFont
         }
 
-        return .system(size: size, weight: swiftUIFontWeight(from: weight), design: .monospaced)
+        return .monospacedSystemFont(ofSize: size, weight: weight)
     }
 
     private func customUIFont(size: CGFloat, weight: UIFont.Weight) -> UIFont? {
@@ -490,23 +507,6 @@ struct ReaderView: View {
         case 700: return .bold
         case 800: return .heavy
         default: return .regular
-        }
-    }
-
-    private func swiftUIFontWeight(from weight: UIFont.Weight) -> Font.Weight {
-        switch weight {
-        case ..<UIFont.Weight.regular:
-            return .light
-        case ..<UIFont.Weight.medium:
-            return .regular
-        case ..<UIFont.Weight.semibold:
-            return .medium
-        case ..<UIFont.Weight.bold:
-            return .semibold
-        case ..<UIFont.Weight.heavy:
-            return .bold
-        default:
-            return .heavy
         }
     }
 
