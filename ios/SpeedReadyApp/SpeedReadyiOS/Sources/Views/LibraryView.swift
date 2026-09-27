@@ -161,11 +161,8 @@ struct LibraryView: View {
                 Button("Delete", role: .destructive) {
                     guard let document = documentPendingDeletion else { return }
                     appState.deleteDocument(id: document.id)
-                    documentPendingDeletion = nil
                 }
-                Button("Cancel", role: .cancel) {
-                    documentPendingDeletion = nil
-                }
+                Button("Cancel", role: .cancel) { }
             } message: {
                 if let document = documentPendingDeletion {
                     Text("Delete “\(document.title)” from your library? This cannot be undone.")
