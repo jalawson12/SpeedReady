@@ -350,13 +350,14 @@ struct ReaderView: View {
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
+        let previousSettings = settings
         pendingEngineSettingsTask?.cancel()
         pendingEngineSettingsTask = nil
         settings = newSettings
         if persist {
             settings.persist()
         }
-        engine.setSettings(newSettings)
+        applySettingsToEngineIfNeeded(newSettings, previousSettings: previousSettings)
     }
 
     private func applySettingsToEngineIfNeeded(_ newSettings: ReaderSettings, previousSettings: ReaderSettings) {
