@@ -1,7 +1,10 @@
 import SwiftUI
 import UIKit
+import os.log
 
 struct ReaderView: View {
+    private static let logger = Logger(subsystem: "com.jalawson12.speedready", category: "fonts")
+
     private enum JetBrainsMono {
         static let light = "JetBrainsMono-Light"
         static let regular = "JetBrainsMono-Regular"
@@ -63,7 +66,7 @@ struct ReaderView: View {
         }
         let fontName = jetBrainsMonoName(for: weight)
         guard UIFont(name: fontName, size: size) != nil else {
-            assertionFailure("Missing bundled font: \(fontName)")
+            Self.logger.error("Missing bundled font: \(fontName, privacy: .public)")
             return .system(size: size, weight: weight, design: .monospaced)
         }
         return Font.custom(fontName, size: size)
