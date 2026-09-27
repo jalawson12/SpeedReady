@@ -120,7 +120,7 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             guard let url = urls.first else { return }
-            Task.detached(priority: .userInitiated) { [parent] in
+            Task(priority: .userInitiated) { [parent] in
                 let didAccessSecurityScopedResource = url.startAccessingSecurityScopedResource()
                 defer {
                     if didAccessSecurityScopedResource {
