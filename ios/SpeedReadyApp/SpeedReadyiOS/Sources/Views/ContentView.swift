@@ -7,6 +7,11 @@ enum AppTab: Hashable {
     case settings
 }
 
+/// The app's fixed brand accent color, matching the web app's purple.
+/// This is intentionally independent of `settings.highlightColor`,
+/// which only controls the ORP pivot letter and guide marks.
+private let brandAccentColor = Color(hex: "#605DF6") ?? Color.purple
+
 struct ContentView: View {
     @ObservedObject var appState: SpeedReadyAppState
     @Environment(\.colorScheme) private var colorScheme
@@ -22,7 +27,7 @@ struct ContentView: View {
     }
 
     private var appTint: Color {
-        Color(hex: settings.highlightColor) ?? Color(hex: "#605DF6") ?? Color.red
+        brandAccentColor
     }
 
     private var tabBarBackground: Color {
@@ -109,7 +114,7 @@ struct AppPalette {
             mutedText = Color(hex: "#5A5A66") ?? .gray
         }
 
-        accent = Color(hex: settings.highlightColor) ?? Color(hex: "#605DF6") ?? .red
+        accent = brandAccentColor
         success = Color(hex: "#2EC27E") ?? .green
         warning = Color(hex: "#FFB454") ?? .orange
     }
