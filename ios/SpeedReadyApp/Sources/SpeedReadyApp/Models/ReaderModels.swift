@@ -163,18 +163,49 @@ enum ReaderFontFamily: String, CaseIterable, Codable {
     case inconsolata = "Inconsolata"
     case ibmPlexMono = "IBM Plex Mono"
 
-    var postScriptName: String {
+    func postScriptName(for fontWeight: Int) -> String {
         switch self {
         case .jetBrainsMono:
-            return "JetBrainsMono-Regular"
+            switch fontWeight {
+            case ..<400: return "JetBrainsMono-Light"
+            case 400: return "JetBrainsMono-Regular"
+            case 500: return "JetBrainsMono-Medium"
+            case 600: return "JetBrainsMono-SemiBold"
+            case 700: return "JetBrainsMono-Bold"
+            default: return "JetBrainsMono-ExtraBold"
+            }
         case .firaMono:
-            return "FiraMono-Regular"
+            switch fontWeight {
+            case 500: return "FiraMono-Medium"
+            case 600...: return "FiraMono-Bold"
+            default: return "FiraMono-Regular"
+            }
         case .sourceCodePro:
-            return "SourceCodePro-Regular"
+            switch fontWeight {
+            case ..<400: return "SourceCodePro-Light"
+            case 400: return "SourceCodePro-Regular"
+            case 500: return "SourceCodePro-Medium"
+            case 600: return "SourceCodePro-Semibold"
+            case 700: return "SourceCodePro-Bold"
+            default: return "SourceCodePro-Black"
+            }
         case .inconsolata:
-            return "Inconsolata-Regular"
+            switch fontWeight {
+            case ..<400: return "Inconsolata-Light"
+            case 400: return "Inconsolata-Regular"
+            case 500: return "Inconsolata-Medium"
+            case 600: return "Inconsolata-SemiBold"
+            case 700: return "Inconsolata-Bold"
+            default: return "Inconsolata-ExtraBold"
+            }
         case .ibmPlexMono:
-            return "IBMPlexMono-Regular"
+            switch fontWeight {
+            case ..<400: return "IBMPlexMono-Light"
+            case 400: return "IBMPlexMono-Regular"
+            case 500: return "IBMPlexMono-Medium"
+            case 600: return "IBMPlexMono-SemiBold"
+            default: return "IBMPlexMono-Bold"
+            }
         }
     }
 }
@@ -185,6 +216,10 @@ struct KernedGlyph: Equatable {
 }
 
 enum ReaderDisplaySpacing {
+    /// Representative graphemes used to keep the pivot column wide enough for the
+    /// bold reader fonts and multi-scalar characters that can appear at the ORP.
+    static let pivotWidthSamples = ["W", "M", "m", "w", "0", "é", "👨🏾‍💻"]
+
     static func kernedGlyphs(for input: String, kerning: Double) -> [KernedGlyph] {
         var iterator = input.makeIterator()
         guard var current = iterator.next() else { return [] }

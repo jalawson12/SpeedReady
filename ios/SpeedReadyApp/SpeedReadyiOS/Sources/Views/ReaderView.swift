@@ -446,8 +446,7 @@ struct ReaderView: View {
 
     private var pivotColumnWidth: CGFloat {
         let font = readerUIFont(size: displayPivotFontSize, weight: .bold)
-        let sampleStrings = ["W", "M", "m", "w", "0", "é", "👨🏾‍💻"]
-        let measuredWidth = sampleStrings
+        let measuredWidth = ReaderDisplaySpacing.pivotWidthSamples
             .map { measuredKernedWidth(of: $0, font: font, kerning: wordKerningValue(for: displayPivotFontSize)) }
             .max() ?? font.pointSize * 0.6
         return ceil(measuredWidth)
@@ -474,16 +473,7 @@ struct ReaderView: View {
     }
 
     private func customUIFont(size: CGFloat, weight: UIFont.Weight) -> UIFont? {
-        guard let baseFont = UIFont(name: settings.fontFamily.postScriptName, size: size) else {
-            return nil
-        }
-
-        let descriptor = baseFont.fontDescriptor.addingAttributes([
-            UIFontDescriptor.AttributeName.traits: [
-                UIFontDescriptor.TraitKey.weight: weight
-            ]
-        ])
-        return UIFont(descriptor: descriptor, size: size)
+        UIFont(name: settings.fontFamily.postScriptName(for: fontWeightCode(for: weight)), size: size)
     }
 
     private func kernedText(_ input: String, kerning: CGFloat) -> Text {
@@ -514,6 +504,23 @@ struct ReaderView: View {
         case 700: return .bold
         case 800: return .heavy
         default: return .regular
+        }
+    }
+
+    private func fontWeightCode(for weight: UIFont.Weight) -> Int {
+        switch weight {
+        case ..<UIFont.Weight.regular:
+            return 300
+        case ..<UIFont.Weight.medium:
+            return 400
+        case ..<UIFont.Weight.semibold:
+            return 500
+        case ..<UIFont.Weight.bold:
+            return 600
+        case ..<UIFont.Weight.heavy:
+            return 700
+        default:
+            return 800
         }
     }
 
