@@ -8,6 +8,7 @@ struct ReaderView: View {
     @State private var activeDocument: ReadingDocument?
     @State private var lastRecordedSessionID: UUID?
     @State private var pendingEngineSettingsTask: Task<Void, Never>?
+    @State private var pendingEngineSettingsGeneration: UInt = 0
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -89,8 +90,7 @@ struct ReaderView: View {
                 applySettingsToEngineIfNeeded(newSettings, previousSettings: previousSettings)
             }
             .onDisappear {
-                pendingEngineSettingsTask?.cancel()
-                pendingEngineSettingsTask = nil
+                cancelPendingEngineSettingsUpdate()
                 saveCurrentLocation(for: activeDocument, persist: true)
             }
         }
@@ -322,6 +322,7 @@ struct ReaderView: View {
     }
 
     private func loadDocument(_ document: ReadingDocument) {
+        cancelPendingEngineSettingsUpdate()
         activeDocument = document
         lastRecordedSessionID = nil
         engine.load(text: document.text, settings: settings)
@@ -331,6 +332,7 @@ struct ReaderView: View {
     }
 
     private func loadFallbackSample() {
+        cancelPendingEngineSettingsUpdate()
         activeDocument = ReadingDocument.sample()
         lastRecordedSessionID = nil
         engine.load(text: activeDocument?.text ?? "", settings: settings)
@@ -350,8 +352,7 @@ struct ReaderView: View {
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
-        pendingEngineSettingsTask?.cancel()
-        pendingEngineSettingsTask = nil
+        cancelPendingEngineSettingsUpdate()
         settings = newSettings
         if persist {
             settings.persist()
@@ -361,19 +362,25 @@ struct ReaderView: View {
     private func applySettingsToEngineIfNeeded(_ newSettings: ReaderSettings, previousSettings: ReaderSettings) {
         guard newSettings.requiresEngineUpdate(comparedTo: previousSettings) else { return }
 
-        pendingEngineSettingsTask?.cancel()
-        pendingEngineSettingsTask = nil
+        cancelPendingEngineSettingsUpdate()
 
         guard newSettings.requiresRetokenization(comparedTo: previousSettings) else {
             engine.setSettings(newSettings)
             return
         }
 
+        let generation = pendingEngineSettingsGeneration
         pendingEngineSettingsTask = Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(150))
-            guard !Task.isCancelled else { return }
-            engine.setSettings(newSettings)
+            guard !Task.isCancelled, generation == pendingEngineSettingsGeneration else { return }
+            engine.setSettings(settings)
         }
+    }
+
+    private func cancelPendingEngineSettingsUpdate() {
+        pendingEngineSettingsGeneration &+= 1
+        pendingEngineSettingsTask?.cancel()
+        pendingEngineSettingsTask = nil
     }
 
     private func adjustWpm(by delta: Double) {
