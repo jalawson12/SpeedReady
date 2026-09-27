@@ -50,6 +50,79 @@ final class AppStateDocumentTests: XCTestCase {
         XCTAssertEqual(reloaded.currentDocument?.title, "Selected Renamed")
     }
 
+    func testDeleteNonSelectedDocumentKeepsCurrentDocument() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "First", text: "one two")
+        appState.addDocument(title: "Second", text: "three four")
+
+        guard let first = appState.documents.first(where: { $0.title == "First" }),
+              let second = appState.documents.first(where: { $0.title == "Second" }) else {
+            XCTFail("Expected test documents to exist")
+            return
+        }
+
+        appState.setCurrentDocument(first)
+        appState.deleteDocument(id: second.id)
+
+        XCTAssertEqual(appState.currentDocument?.id, first.id)
+        XCTAssertFalse(appState.documents.contains(where: { $0.id == second.id }))
+    }
+
+    func testDeleteSelectedDocumentSelectsRemainingDocumentAndPersists() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "First", text: "one two")
+        appState.addDocument(title: "Second", text: "three four")
+
+        guard let first = appState.documents.first(where: { $0.title == "First" }),
+              let second = appState.documents.first(where: { $0.title == "Second" }) else {
+            XCTFail("Expected test documents to exist")
+            return
+        }
+
+        appState.setCurrentDocument(second)
+        appState.deleteDocument(id: second.id)
+
+        XCTAssertEqual(appState.currentDocument?.id, first.id)
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertEqual(reloaded.currentDocument?.id, first.id)
+        XCTAssertFalse(reloaded.documents.contains(where: { $0.id == second.id }))
+    }
+
+    func testDeleteDocumentRemovesPersistedReadingLocation() {
+        let appState = SpeedReadyAppState()
+        appState.addDocument(title: "Keep", text: "one two three four")
+        appState.addDocument(title: "Delete", text: "alpha beta gamma delta")
+
+        guard let keep = appState.documents.first(where: { $0.title == "Keep" }),
+              let delete = appState.documents.first(where: { $0.title == "Delete" }) else {
+            XCTFail("Expected test documents to exist")
+            return
+        }
+
+        appState.updateReadingLocation(for: keep.id, wordIndex: 1, totalWords: 4, isCompleted: false)
+        appState.updateReadingLocation(for: delete.id, wordIndex: 2, totalWords: 4, isCompleted: false)
+        appState.deleteDocument(id: delete.id)
+
+        let reloaded = SpeedReadyAppState()
+        XCTAssertNotNil(reloaded.readingLocation(for: keep))
+        XCTAssertNil(reloaded.readingLocation(for: delete))
+    }
+
+    func testDeleteLastDocumentCreatesUsableCurrentSample() {
+        let appState = SpeedReadyAppState()
+        guard let original = appState.currentDocument else {
+            XCTFail("Expected initial current document")
+            return
+        }
+
+        appState.deleteDocument(id: original.id)
+
+        XCTAssertEqual(appState.documents.count, 1)
+        XCTAssertNotNil(appState.currentDocument)
+        XCTAssertNotEqual(appState.currentDocument?.id, original.id)
+    }
+
     func testAddDocumentUsesProvidedTitle() {
         let appState = SpeedReadyAppState()
 

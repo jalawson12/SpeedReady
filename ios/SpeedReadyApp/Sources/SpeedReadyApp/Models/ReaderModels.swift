@@ -233,6 +233,30 @@ final class SpeedReadyAppState: ObservableObject {
         saveReadingState()
     }
 
+    func deleteDocument(id: UUID) {
+        guard let index = documents.firstIndex(where: { $0.id == id }) else { return }
+
+        documents.remove(at: index)
+        readingLocations.removeValue(forKey: id.uuidString)
+
+        if documents.isEmpty {
+            let sample = ReadingDocument.sample()
+            documents = [sample]
+            currentDocument = sample
+        } else if currentDocument?.id == id {
+            let nextIndex = min(index, documents.count - 1)
+            currentDocument = documents[nextIndex]
+        } else if let currentID = currentDocument?.id,
+                  let existingCurrent = documents.first(where: { $0.id == currentID }) {
+            currentDocument = existingCurrent
+        } else {
+            currentDocument = documents.first
+        }
+
+        saveDocuments()
+        saveReadingState()
+    }
+
     func readingLocation(for document: ReadingDocument) -> ReadingLocation? {
         readingLocations[document.id.uuidString]
     }

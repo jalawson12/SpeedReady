@@ -118,7 +118,7 @@ struct ReaderView: View {
                         Text(displayBeforeText())
                             .font(.system(size: displayFontSize, weight: fontWeightValue(), design: settings.dyslexiaMode ? .rounded : .default))
                             .foregroundStyle(contextTextColor())
-                            .kerning(kerningValue(for: displayFontSize))
+                            .kerning(wordKerningValue)
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .trailing)
 
@@ -131,7 +131,7 @@ struct ReaderView: View {
                             Text(engine.state.pivot)
                                 .font(.system(size: displayPivotFontSize, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default))
                                 .foregroundStyle(palette.accent)
-                                .kerning(kerningValue(for: displayPivotFontSize))
+                                .kerning(wordKerningValue)
                                 .accessibilityLabel("Current word: \(engine.state.pivot)")
                             if settings.showOrpGuides {
                                 Rectangle()
@@ -144,7 +144,7 @@ struct ReaderView: View {
                         Text(displayAfterText())
                             .font(.system(size: displayFontSize, weight: fontWeightValue(), design: settings.dyslexiaMode ? .rounded : .default))
                             .foregroundStyle(contextTextColor())
-                            .kerning(kerningValue(for: displayFontSize))
+                            .kerning(wordKerningValue)
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
@@ -393,10 +393,10 @@ struct ReaderView: View {
         return (totalSeconds / 60, totalSeconds % 60)
     }
 
-    private func kerningValue(for fontSize: CGFloat) -> CGFloat {
-        let base = CGFloat(settings.letterSpacing) * fontSize
+    private var wordKerningValue: CGFloat {
+        let base = CGFloat(settings.letterSpacing) * displayFontSize
         if settings.dyslexiaMode {
-            return max(base + (0.08 * fontSize), 0.08 * fontSize)
+            return max(base + (0.08 * displayFontSize), 0.08 * displayFontSize)
         }
         return base
     }

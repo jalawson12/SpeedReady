@@ -18,6 +18,7 @@ struct LibraryView: View {
     @State private var importErrorMessage: String?
     @State private var editingDocument: ReadingDocument?
     @State private var editedTitle = ""
+    @State private var documentPendingDeletion: ReadingDocument?
 
     private var palette: AppPalette {
         AppPalette(settings: settings, colorScheme: colorScheme)
@@ -60,12 +61,18 @@ struct LibraryView: View {
                     .accessibilityHint("Selects this document and opens it in the Reader tab")
                     .padding(.vertical, 8)
                     .listRowBackground(appState.currentDocument?.id == document.id ? palette.selectedSurface : palette.surface)
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
                         Button("Rename") {
                             editingDocument = document
                             editedTitle = document.title
                         }
                         .tint(palette.accent)
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button("Delete", role: .destructive) {
+                            documentPendingDeletion = document
+                        }
+                        .tint(.red)
                     }
                 }
                 .scrollContentBackground(.hidden)
@@ -141,6 +148,28 @@ struct LibraryView: View {
                 Button("OK", role: .cancel) { importErrorMessage = nil }
             } message: {
                 Text(importErrorMessage ?? "Unknown error.")
+            }
+            .confirmationDialog(
+                "Delete document?",
+                isPresented: Binding(get: {
+                    documentPendingDeletion != nil
+                }, set: { newValue in
+                    if !newValue { documentPendingDeletion = nil }
+                }),
+                titleVisibility: .visible
+            ) {
+                Button("Delete", role: .destructive) {
+                    guard let document = documentPendingDeletion else { return }
+                    appState.deleteDocument(id: document.id)
+                    documentPendingDeletion = nil
+                }
+                Button("Cancel", role: .cancel) {
+                    documentPendingDeletion = nil
+                }
+            } message: {
+                if let document = documentPendingDeletion {
+                    Text("Delete “\(document.title)” from your library? This cannot be undone.")
+                }
             }
         }
     }
