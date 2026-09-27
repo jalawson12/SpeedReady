@@ -1,6 +1,16 @@
 import SwiftUI
+import UIKit
 
 struct ReaderView: View {
+    private enum JetBrainsMono {
+        static let light = "JetBrainsMono-Light"
+        static let regular = "JetBrainsMono-Regular"
+        static let medium = "JetBrainsMono-Medium"
+        static let semibold = "JetBrainsMono-SemiBold"
+        static let bold = "JetBrainsMono-Bold"
+        static let extraBold = "JetBrainsMono-ExtraBold"
+    }
+
     @ObservedObject var appState: SpeedReadyAppState
     @Binding var settings: ReaderSettings
     @Environment(\.colorScheme) private var colorScheme
@@ -20,7 +30,11 @@ struct ReaderView: View {
     }
 
     private var displayPivotFontSize: CGFloat {
-        displayFontSize + 4
+        displayFontSize
+    }
+
+    private var pivotGuideSpacing: CGFloat {
+        displayFontSize * 0.18
     }
 
     private var currentTokenIndex: Int {
@@ -40,6 +54,37 @@ struct ReaderView: View {
         case .system: nil
         case .light: .light
         case .dark: .dark
+        }
+    }
+
+    private func readerFont(size: CGFloat, weight: Font.Weight) -> Font {
+        if settings.dyslexiaMode {
+            return .system(size: size, weight: weight, design: .rounded)
+        }
+        let fontName = jetBrainsMonoName(for: weight)
+        guard UIFont(name: fontName, size: size) != nil else {
+            assertionFailure("Missing bundled font: \(fontName)")
+            return .system(size: size, weight: weight, design: .monospaced)
+        }
+        return Font.custom(fontName, size: size)
+    }
+
+    private func jetBrainsMonoName(for weight: Font.Weight) -> String {
+        switch weight {
+        case .light:
+            JetBrainsMono.light
+        case .medium:
+            JetBrainsMono.medium
+        case .semibold:
+            JetBrainsMono.semibold
+        case .bold:
+            JetBrainsMono.bold
+        case .heavy, .black:
+            JetBrainsMono.extraBold
+        case .regular:
+            JetBrainsMono.regular
+        default:
+            JetBrainsMono.regular
         }
     }
 
@@ -113,7 +158,7 @@ struct ReaderView: View {
             VStack(spacing: 8) {
                 if settings.peripheralContext, let previous = previousPeripheralWords(), !previous.isEmpty {
                     Text(previous)
-                        .font(.system(size: displayFontSize * 0.38, weight: .regular, design: .monospaced))
+                        .font(readerFont(size: displayFontSize * 0.38, weight: .regular))
                         .foregroundStyle(palette.mutedText.opacity(0.35))
                         .lineLimit(1)
                 }
@@ -124,20 +169,20 @@ struct ReaderView: View {
                 } else {
                     HStack(alignment: .center, spacing: 0) {
                         Text(displayBeforeText())
-                            .font(.system(size: displayFontSize, weight: fontWeightValue(), design: settings.dyslexiaMode ? .rounded : .default))
+                            .font(readerFont(size: displayFontSize, weight: fontWeightValue()))
                             .foregroundStyle(contextTextColor())
                             .kerning(wordKerningValue)
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .trailing)
 
-                        VStack(spacing: 3) {
+                        VStack(spacing: pivotGuideSpacing) {
                             if settings.showOrpGuides {
                                 Rectangle()
                                     .fill(highlightColor.opacity(0.35))
                                     .frame(width: 2, height: max(6, displayFontSize * 0.22))
                             }
                             Text(engine.state.pivot)
-                                .font(.system(size: displayPivotFontSize, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default))
+                                .font(readerFont(size: displayPivotFontSize, weight: .bold))
                                 .foregroundStyle(highlightColor)
                                 .kerning(wordKerningValue)
                                 .accessibilityLabel("Current word: \(engine.state.pivot)")
@@ -147,10 +192,9 @@ struct ReaderView: View {
                                     .frame(width: 2, height: max(6, displayFontSize * 0.22))
                             }
                         }
-                        .frame(minWidth: displayPivotFontSize * 0.9)
 
                         Text(displayAfterText())
-                            .font(.system(size: displayFontSize, weight: fontWeightValue(), design: settings.dyslexiaMode ? .rounded : .default))
+                            .font(readerFont(size: displayFontSize, weight: fontWeightValue()))
                             .foregroundStyle(contextTextColor())
                             .kerning(wordKerningValue)
                             .lineLimit(1)
@@ -162,7 +206,7 @@ struct ReaderView: View {
 
                 if settings.peripheralContext, let next = nextPeripheralWords(), !next.isEmpty {
                     Text(next)
-                        .font(.system(size: displayFontSize * 0.38, weight: .regular, design: .monospaced))
+                        .font(readerFont(size: displayFontSize * 0.38, weight: .regular))
                         .foregroundStyle(palette.mutedText.opacity(0.35))
                         .lineLimit(1)
                 }
@@ -195,7 +239,7 @@ struct ReaderView: View {
 
         return ScrollView {
             Text(renderedPausedText(from: tokens, range: range))
-                .font(.system(size: displayFontSize * 0.52, weight: fontWeightValue(), design: settings.dyslexiaMode ? .rounded : .default))
+                .font(readerFont(size: displayFontSize * 0.52, weight: fontWeightValue()))
                 .foregroundStyle(palette.mutedText)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .textSelection(.enabled)
@@ -507,9 +551,12 @@ struct ReaderView: View {
 
         for index in lower...upper {
             var token = AttributedString(maybeHideTrailingPunctuation(tokens[index].text) + " ")
+            token.font = readerFont(
+                size: displayFontSize * 0.52,
+                weight: index == currentTokenIndex ? .bold : fontWeightValue()
+            )
             if index == currentTokenIndex {
                 token.foregroundColor = palette.accent
-                token.font = .system(size: displayFontSize * 0.52, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default)
             } else {
                 token.foregroundColor = pausedTokenColor(for: tokens[index])
             }

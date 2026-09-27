@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		067F996B7E91131B660336B2 /* EPUBTextExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15AF007A6E253BDD717599C1 /* EPUBTextExtractor.swift */; };
 		09509B937CBC67455159DBD2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FF787ED33EA941D3CBB8FB4 /* Assets.xcassets */; };
+		0B2D94D19E7F46C5A1D83F11 /* JetBrainsMono-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A7E3B5F91C248D2AF107C44 /* JetBrainsMono-Light.ttf */; };
+		0B2D94D19E7F46C5A1D83F12 /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A7E3B5F91C248D2AF107C45 /* JetBrainsMono-Regular.ttf */; };
+		0B2D94D19E7F46C5A1D83F13 /* JetBrainsMono-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A7E3B5F91C248D2AF107C46 /* JetBrainsMono-Medium.ttf */; };
+		0B2D94D19E7F46C5A1D83F14 /* JetBrainsMono-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A7E3B5F91C248D2AF107C47 /* JetBrainsMono-SemiBold.ttf */; };
+		0B2D94D19E7F46C5A1D83F15 /* JetBrainsMono-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A7E3B5F91C248D2AF107C48 /* JetBrainsMono-Bold.ttf */; };
+		0B2D94D19E7F46C5A1D83F16 /* JetBrainsMono-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6A7E3B5F91C248D2AF107C49 /* JetBrainsMono-ExtraBold.ttf */; };
 		17CCE1776CDAAA8054C8C8E5 /* PDFTextExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCAD8B004A0DC72D6EB712C /* PDFTextExtractor.swift */; };
 		190A00084EA3F8D349A590D0 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 2FFDB6808A7C93CF5FBEBFE9 /* ZIPFoundation */; };
 		2EBDDB2E8B47D564B8880EA6 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E40163C9EAF5466526D2AA3 /* StatsView.swift */; };
@@ -53,6 +59,12 @@
 		48FEC4D15E42506CD4930D02 /* PDFTextExtractorTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PDFTextExtractorTests.swift; path = SpeedReadyAppTests/PDFTextExtractorTests.swift; sourceTree = "<group>"; };
 		4B5B33E78327951BA6E2A5B6 /* PlaybackTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlaybackTests.swift; path = SpeedReadyAppTests/PlaybackTests.swift; sourceTree = "<group>"; };
 		5F10272B0DBB29842E584E41 /* RSVPEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RSVPEngine.swift; path = Services/RSVPEngine.swift; sourceTree = "<group>"; };
+		6A7E3B5F91C248D2AF107C44 /* JetBrainsMono-Light.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Fonts/JetBrainsMono-Light.ttf; sourceTree = "<group>"; };
+		6A7E3B5F91C248D2AF107C45 /* JetBrainsMono-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Fonts/JetBrainsMono-Regular.ttf; sourceTree = "<group>"; };
+		6A7E3B5F91C248D2AF107C46 /* JetBrainsMono-Medium.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Fonts/JetBrainsMono-Medium.ttf; sourceTree = "<group>"; };
+		6A7E3B5F91C248D2AF107C47 /* JetBrainsMono-SemiBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Fonts/JetBrainsMono-SemiBold.ttf; sourceTree = "<group>"; };
+		6A7E3B5F91C248D2AF107C48 /* JetBrainsMono-Bold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Fonts/JetBrainsMono-Bold.ttf; sourceTree = "<group>"; };
+		6A7E3B5F91C248D2AF107C49 /* JetBrainsMono-ExtraBold.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = Fonts/JetBrainsMono-ExtraBold.ttf; sourceTree = "<group>"; };
 		61BF8CCACB74E4C389D6D6C5 /* SpeedReady.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpeedReady.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		769F20D3B23D6F49C8B2A007 /* RSVPEngineTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RSVPEngineTests.swift; path = SpeedReadyAppTests/RSVPEngineTests.swift; sourceTree = "<group>"; };
 		7967282C42C6D6EDB5DD2DD7 /* ReaderView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReaderView.swift; path = Views/ReaderView.swift; sourceTree = "<group>"; };
@@ -110,6 +122,12 @@
 			isa = PBXGroup;
 			children = (
 				0FF787ED33EA941D3CBB8FB4 /* Assets.xcassets */,
+				6A7E3B5F91C248D2AF107C44 /* JetBrainsMono-Light.ttf */,
+				6A7E3B5F91C248D2AF107C45 /* JetBrainsMono-Regular.ttf */,
+				6A7E3B5F91C248D2AF107C46 /* JetBrainsMono-Medium.ttf */,
+				6A7E3B5F91C248D2AF107C47 /* JetBrainsMono-SemiBold.ttf */,
+				6A7E3B5F91C248D2AF107C48 /* JetBrainsMono-Bold.ttf */,
+				6A7E3B5F91C248D2AF107C49 /* JetBrainsMono-ExtraBold.ttf */,
 			);
 			name = SpeedReadyiOS;
 			path = SpeedReadyiOS;
@@ -279,6 +297,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				09509B937CBC67455159DBD2 /* Assets.xcassets in Resources */,
+				0B2D94D19E7F46C5A1D83F11 /* JetBrainsMono-Light.ttf in Resources */,
+				0B2D94D19E7F46C5A1D83F12 /* JetBrainsMono-Regular.ttf in Resources */,
+				0B2D94D19E7F46C5A1D83F13 /* JetBrainsMono-Medium.ttf in Resources */,
+				0B2D94D19E7F46C5A1D83F14 /* JetBrainsMono-SemiBold.ttf in Resources */,
+				0B2D94D19E7F46C5A1D83F15 /* JetBrainsMono-Bold.ttf in Resources */,
+				0B2D94D19E7F46C5A1D83F16 /* JetBrainsMono-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +368,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SpeedReady;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIAppFonts = (
+					"JetBrainsMono-Light.ttf",
+					"JetBrainsMono-Regular.ttf",
+					"JetBrainsMono-Medium.ttf",
+					"JetBrainsMono-SemiBold.ttf",
+					"JetBrainsMono-Bold.ttf",
+					"JetBrainsMono-ExtraBold.ttf",
+				);
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -392,6 +424,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = SpeedReady;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UIAppFonts = (
+					"JetBrainsMono-Light.ttf",
+					"JetBrainsMono-Regular.ttf",
+					"JetBrainsMono-Medium.ttf",
+					"JetBrainsMono-SemiBold.ttf",
+					"JetBrainsMono-Bold.ttf",
+					"JetBrainsMono-ExtraBold.ttf",
+				);
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
