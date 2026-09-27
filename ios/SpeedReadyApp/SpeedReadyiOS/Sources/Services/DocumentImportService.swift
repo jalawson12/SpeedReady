@@ -120,13 +120,28 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             guard let url = urls.first else { return }
-            do {
-                let document = try DocumentImportPipeline.importDocument(from: url)
-                parent.onPick(.success(document))
-            } catch let error as DocumentImportError {
-                parent.onPick(.failure(error))
-            } catch {
-                parent.onPick(.failure(.emptyDocument))
+            let didAccessSecurityScopedResource = url.startAccessingSecurityScopedResource()
+
+            Task.detached(priority: .userInitiated) { [parent] in
+                defer {
+                    if didAccessSecurityScopedResource {
+                        url.stopAccessingSecurityScopedResource()
+                    }
+                }
+
+                let result: Result<ReadingDocument, DocumentImportError>
+                do {
+                    let document = try DocumentImportPipeline.importDocument(from: url)
+                    result = .success(document)
+                } catch let error as DocumentImportError {
+                    result = .failure(error)
+                } catch {
+                    result = .failure(.emptyDocument)
+                }
+
+                await MainActor.run {
+                    parent.onPick(result)
+                }
             }
         }
     }

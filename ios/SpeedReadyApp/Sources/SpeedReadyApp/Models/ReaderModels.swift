@@ -48,6 +48,27 @@ struct ReaderSettings: Equatable, Codable {
         guard let data = try? JSONEncoder().encode(self) else { return }
         UserDefaults.standard.set(data, forKey: Self.defaultsKey)
     }
+
+    func requiresEngineUpdate(comparedTo previous: ReaderSettings) -> Bool {
+        wpm != previous.wpm ||
+        smartSpeed != previous.smartSpeed ||
+        chunkSize != previous.chunkSize ||
+        sentencePauseMultiplier != previous.sentencePauseMultiplier ||
+        paragraphPauseMultiplier != previous.paragraphPauseMultiplier ||
+        contextPauseOnClose != previous.contextPauseOnClose ||
+        bionicFocusPosition != previous.bionicFocusPosition ||
+        speedRampEnabled != previous.speedRampEnabled ||
+        speedRampTarget != previous.speedRampTarget ||
+        removeCitations != previous.removeCitations ||
+        commaAsPause != previous.commaAsPause ||
+        punctuationPause != previous.punctuationPause
+    }
+
+    func requiresRetokenization(comparedTo previous: ReaderSettings) -> Bool {
+        chunkSize != previous.chunkSize ||
+        removeCitations != previous.removeCitations ||
+        commaAsPause != previous.commaAsPause
+    }
 }
 
 enum AppTheme: String, CaseIterable, Codable {

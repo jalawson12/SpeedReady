@@ -7,6 +7,7 @@ struct ReaderView: View {
     @StateObject private var engine = RSVPEngine()
     @State private var activeDocument: ReadingDocument?
     @State private var lastRecordedSessionID: UUID?
+    @State private var pendingEngineSettingsTask: Task<Void, Never>?
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -84,10 +85,12 @@ struct ReaderView: View {
                     saveCurrentLocation(for: activeDocument, persist: true)
                 }
             }
-            .onChange(of: settings) { _, newSettings in
-                engine.setSettings(newSettings)
+            .onChange(of: settings) { previousSettings, newSettings in
+                applySettingsToEngineIfNeeded(newSettings, previousSettings: previousSettings)
             }
             .onDisappear {
+                pendingEngineSettingsTask?.cancel()
+                pendingEngineSettingsTask = nil
                 saveCurrentLocation(for: activeDocument, persist: true)
             }
         }
@@ -347,11 +350,32 @@ struct ReaderView: View {
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
+        pendingEngineSettingsTask?.cancel()
+        pendingEngineSettingsTask = nil
         settings = newSettings
         if persist {
             settings.persist()
         }
         engine.setSettings(newSettings)
+    }
+
+    private func applySettingsToEngineIfNeeded(_ newSettings: ReaderSettings, previousSettings: ReaderSettings) {
+        guard newSettings.requiresEngineUpdate(comparedTo: previousSettings) else { return }
+
+        pendingEngineSettingsTask?.cancel()
+        pendingEngineSettingsTask = nil
+
+        guard newSettings.requiresRetokenization(comparedTo: previousSettings) else {
+            engine.setSettings(newSettings)
+            return
+        }
+
+        pendingEngineSettingsTask = Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(150))
+            guard !Task.isCancelled else { return }
+            engine.setSettings(newSettings)
+            pendingEngineSettingsTask = nil
+        }
     }
 
     private func adjustWpm(by delta: Double) {
