@@ -28,6 +28,10 @@ struct ReaderView: View {
         AppPalette(settings: settings, colorScheme: colorScheme)
     }
 
+    private var highlightColor: Color {
+        Color(hex: settings.highlightColor) ?? palette.accent
+    }
+
     private var preferredColorScheme: ColorScheme? {
         switch settings.theme {
         case .system: nil
@@ -125,17 +129,17 @@ struct ReaderView: View {
                         VStack(spacing: 3) {
                             if settings.showOrpGuides {
                                 Rectangle()
-                                    .fill(palette.accent.opacity(0.35))
+                                    .fill(highlightColor.opacity(0.35))
                                     .frame(width: 2, height: max(6, displayFontSize * 0.22))
                             }
                             Text(engine.state.pivot)
                                 .font(.system(size: displayPivotFontSize, weight: .bold, design: settings.dyslexiaMode ? .rounded : .default))
-                                .foregroundStyle(palette.accent)
+                                .foregroundStyle(highlightColor)
                                 .kerning(wordKerningValue)
                                 .accessibilityLabel("Current word: \(engine.state.pivot)")
                             if settings.showOrpGuides {
                                 Rectangle()
-                                    .fill(palette.accent.opacity(0.35))
+                                    .fill(highlightColor.opacity(0.35))
                                     .frame(width: 2, height: max(6, displayFontSize * 0.22))
                             }
                         }
