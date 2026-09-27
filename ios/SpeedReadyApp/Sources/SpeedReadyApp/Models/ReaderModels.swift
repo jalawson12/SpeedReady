@@ -18,7 +18,7 @@ struct ReaderSettings: Equatable, Codable {
     var speedRampEnabled: Bool = false
     var speedRampTarget: Double = 500
     var fontWeight: Int = 400
-    var highlightColor: String = "#e63946"
+    var highlightColor: String = "#605DF6"
     var quoteHighlightColor: String = "#a8dadc"
     var parenHighlightColor: String = "#457b9d"
     var colorizeQuotes: Bool = true

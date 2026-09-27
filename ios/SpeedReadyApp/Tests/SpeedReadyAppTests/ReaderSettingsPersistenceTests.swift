@@ -6,11 +6,16 @@ import XCTest
 #endif
 
 final class ReaderSettingsPersistenceTests: XCTestCase {
+    func testDefaultAccentHighlightMatchesWebPurple() {
+        XCTAssertEqual(ReaderSettings().highlightColor, "#605DF6")
+    }
+
     func testSettingsRoundTripPersistence() {
         var settings = ReaderSettings()
         settings.wpm = 425
         settings.chunkSize = 3
         settings.dyslexiaMode = true
+        settings.highlightColor = "#605DF6"
 
         settings.persist()
         let loaded = ReaderSettings.loadPersisted()
@@ -18,5 +23,6 @@ final class ReaderSettingsPersistenceTests: XCTestCase {
         XCTAssertEqual(loaded.wpm, 425)
         XCTAssertEqual(loaded.chunkSize, 3)
         XCTAssertTrue(loaded.dyslexiaMode)
+        XCTAssertEqual(loaded.highlightColor, "#605DF6")
     }
 }
