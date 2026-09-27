@@ -9,6 +9,7 @@ enum DocumentImportError: LocalizedError, Equatable {
     case unsupportedType
     case unreadableText
     case emptyDocument
+    case accessDenied
     case unavailableOnCurrentPlatform
     case pdf(PDFTextExtractor.ExtractionError)
     case epub(EPUBTextExtractor.ExtractionError)
@@ -21,6 +22,8 @@ enum DocumentImportError: LocalizedError, Equatable {
             return "The selected text file could not be decoded."
         case .emptyDocument:
             return "The selected document does not contain readable text."
+        case .accessDenied:
+            return "SpeedReady couldn't access the selected file. Please try importing it again from a location available to the app."
         case .unavailableOnCurrentPlatform:
             return "Document import is unavailable on this platform."
         case .pdf(let error):
@@ -120,13 +123,33 @@ struct DocumentPickerView: UIViewControllerRepresentable {
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             guard let url = urls.first else { return }
-            do {
-                let document = try DocumentImportPipeline.importDocument(from: url)
-                parent.onPick(.success(document))
-            } catch let error as DocumentImportError {
-                parent.onPick(.failure(error))
-            } catch {
-                parent.onPick(.failure(.emptyDocument))
+            Task(priority: .userInitiated) { [parent] in
+                let didAccessSecurityScopedResource = url.startAccessingSecurityScopedResource()
+                if !didAccessSecurityScopedResource && !FileManager.default.isReadableFile(atPath: url.path) {
+                    await MainActor.run {
+                        parent.onPick(.failure(.accessDenied))
+                    }
+                    return
+                }
+                defer {
+                    if didAccessSecurityScopedResource {
+                        url.stopAccessingSecurityScopedResource()
+                    }
+                }
+
+                let result: Result<ReadingDocument, DocumentImportError>
+                do {
+                    let document = try DocumentImportPipeline.importDocument(from: url)
+                    result = .success(document)
+                } catch let error as DocumentImportError {
+                    result = .failure(error)
+                } catch {
+                    result = .failure(.emptyDocument)
+                }
+
+                await MainActor.run {
+                    parent.onPick(result)
+                }
             }
         }
     }

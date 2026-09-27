@@ -7,6 +7,9 @@ struct ReaderView: View {
     @StateObject private var engine = RSVPEngine()
     @State private var activeDocument: ReadingDocument?
     @State private var lastRecordedSessionID: UUID?
+    @State private var pendingEngineSettingsTask: Task<Void, Never>?
+    @State private var pendingEngineSettingsGeneration: UInt = 0
+    @State private var engineContentVersion: UInt = 0
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -84,10 +87,11 @@ struct ReaderView: View {
                     saveCurrentLocation(for: activeDocument, persist: true)
                 }
             }
-            .onChange(of: settings) { _, newSettings in
-                engine.setSettings(newSettings)
+            .onChange(of: settings) { previousSettings, newSettings in
+                applySettingsToEngineIfNeeded(newSettings, previousSettings: previousSettings)
             }
             .onDisappear {
+                cancelPendingEngineSettingsUpdate()
                 saveCurrentLocation(for: activeDocument, persist: true)
             }
         }
@@ -319,6 +323,8 @@ struct ReaderView: View {
     }
 
     private func loadDocument(_ document: ReadingDocument) {
+        cancelPendingEngineSettingsUpdate()
+        engineContentVersion &+= 1
         activeDocument = document
         lastRecordedSessionID = nil
         engine.load(text: document.text, settings: settings)
@@ -328,6 +334,8 @@ struct ReaderView: View {
     }
 
     private func loadFallbackSample() {
+        cancelPendingEngineSettingsUpdate()
+        engineContentVersion &+= 1
         activeDocument = ReadingDocument.sample()
         lastRecordedSessionID = nil
         engine.load(text: activeDocument?.text ?? "", settings: settings)
@@ -347,11 +355,44 @@ struct ReaderView: View {
     }
 
     private func applySettings(_ newSettings: ReaderSettings, persist: Bool = true) {
+        cancelPendingEngineSettingsUpdate()
         settings = newSettings
         if persist {
             settings.persist()
         }
-        engine.setSettings(newSettings)
+    }
+
+    private func applySettingsToEngineIfNeeded(_ newSettings: ReaderSettings, previousSettings: ReaderSettings) {
+        guard newSettings.requiresEngineUpdate(comparedTo: previousSettings) else { return }
+
+        cancelPendingEngineSettingsUpdate()
+
+        guard newSettings.requiresRetokenization(comparedTo: previousSettings) else {
+            engine.setSettings(newSettings)
+            return
+        }
+
+        pendingEngineSettingsGeneration &+= 1
+        let generation = pendingEngineSettingsGeneration
+        let scheduledDocumentID = activeDocument?.id
+        let scheduledDocumentText = activeDocument?.text
+        let scheduledContentVersion = engineContentVersion
+        pendingEngineSettingsTask = Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(150))
+            guard !Task.isCancelled,
+                  generation == pendingEngineSettingsGeneration,
+                  scheduledDocumentID == activeDocument?.id,
+                  scheduledDocumentText == activeDocument?.text,
+                  scheduledContentVersion == engineContentVersion
+            else { return }
+            engine.setSettings(newSettings)
+        }
+    }
+
+    private func cancelPendingEngineSettingsUpdate() {
+        pendingEngineSettingsGeneration &+= 1
+        pendingEngineSettingsTask?.cancel()
+        pendingEngineSettingsTask = nil
     }
 
     private func adjustWpm(by delta: Double) {
