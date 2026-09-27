@@ -18,7 +18,10 @@ final class RSVPEngineTests: XCTestCase {
     func testWPMIsClampedToSupportedRange() {
         let engine = RSVPEngine()
         engine.load(text: "Test")
-        engine.setSettings(ReaderSettings(wpm: 100, smartSpeed: false))
+        var settings = ReaderSettings()
+        settings.wpm = 100
+        settings.smartSpeed = false
+        engine.setSettings(settings)
         engine.decreaseWpm()
 
         XCTAssertEqual(engine.state.currentWpm, 100)

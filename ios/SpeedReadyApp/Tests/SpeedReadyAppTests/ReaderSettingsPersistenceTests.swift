@@ -15,6 +15,7 @@ final class ReaderSettingsPersistenceTests: XCTestCase {
         settings.wpm = 425
         settings.chunkSize = 3
         settings.dyslexiaMode = true
+        settings.fontFamily = .ibmPlexMono
         settings.highlightColor = "#605DF6"
 
         settings.persist()
@@ -23,6 +24,7 @@ final class ReaderSettingsPersistenceTests: XCTestCase {
         XCTAssertEqual(loaded.wpm, 425)
         XCTAssertEqual(loaded.chunkSize, 3)
         XCTAssertTrue(loaded.dyslexiaMode)
+        XCTAssertEqual(loaded.fontFamily, .ibmPlexMono)
         XCTAssertEqual(loaded.highlightColor, "#605DF6")
     }
 
@@ -30,6 +32,7 @@ final class ReaderSettingsPersistenceTests: XCTestCase {
         let original = ReaderSettings()
         var updated = original
         updated.fontSize = 64
+        updated.fontFamily = .firaMono
         updated.fontScale = 1.2
         updated.letterSpacing = 0.2
         updated.highlightColor = "#FF0000"
@@ -57,5 +60,24 @@ final class ReaderSettingsPersistenceTests: XCTestCase {
 
         XCTAssertTrue(updated.requiresEngineUpdate(comparedTo: original))
         XCTAssertTrue(updated.requiresRetokenization(comparedTo: original))
+    }
+
+    func testLegacySettingsDecodeFallsBackToDefaultFontFamily() throws {
+        let legacyJSON = """
+        {
+          "wpm": 450,
+          "fontSize": 72,
+          "letterSpacing": 0.1,
+          "dyslexiaMode": true
+        }
+        """.data(using: .utf8)!
+
+        let decoded = try JSONDecoder().decode(ReaderSettings.self, from: legacyJSON)
+
+        XCTAssertEqual(decoded.wpm, 450)
+        XCTAssertEqual(decoded.fontSize, 72)
+        XCTAssertEqual(decoded.letterSpacing, 0.1)
+        XCTAssertTrue(decoded.dyslexiaMode)
+        XCTAssertEqual(decoded.fontFamily, .jetBrainsMono)
     }
 }

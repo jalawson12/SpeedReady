@@ -65,6 +65,12 @@ struct SettingsView: View {
                         }
                         Slider(value: $settings.letterSpacing, in: 0...0.5, step: 0.01)
 
+                        Picker("Font family", selection: $settings.fontFamily) {
+                            ForEach(ReaderFontFamily.allCases, id: \.self) { family in
+                                Text(family.rawValue).tag(family)
+                            }
+                        }
+
                         Picker("Font weight", selection: $settings.fontWeight) {
                             Text("Light").tag(300)
                             Text("Regular").tag(400)

@@ -12,6 +12,7 @@ struct ReaderSettings: Equatable, Codable {
     var focusMode: Bool = false
     var theme: AppTheme = .system
     var fontSize: Double = 48
+    var fontFamily: ReaderFontFamily = .jetBrainsMono
     var fontScale: Double = 1.0
     var letterSpacing: Double = 0
     var pivotOffset: Double = -20
@@ -34,6 +35,81 @@ struct ReaderSettings: Equatable, Codable {
     var punctuationPause: Bool = true
 
     private static let defaultsKey = "speedready.readerSettings.v1"
+
+    init() {}
+
+    private enum CodingKeys: String, CodingKey {
+        case wpm
+        case smartSpeed
+        case chunkSize
+        case sentencePauseMultiplier
+        case paragraphPauseMultiplier
+        case contextPauseOnClose
+        case bionicFocusPosition
+        case dyslexiaMode
+        case focusMode
+        case theme
+        case fontSize
+        case fontFamily
+        case fontScale
+        case letterSpacing
+        case pivotOffset
+        case speedRampEnabled
+        case speedRampTarget
+        case fontWeight
+        case highlightColor
+        case quoteHighlightColor
+        case parenHighlightColor
+        case colorizeQuotes
+        case colorizeParens
+        case pauseView
+        case showOrpGuides
+        case hidePunctuationInDisplay
+        case removeCitations
+        case peripheralContext
+        case peripheralContextCount
+        case bionicMode
+        case commaAsPause
+        case punctuationPause
+    }
+
+    init(from decoder: Decoder) throws {
+        let defaults = ReaderSettings()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        wpm = try container.decodeIfPresent(Double.self, forKey: .wpm) ?? defaults.wpm
+        smartSpeed = try container.decodeIfPresent(Bool.self, forKey: .smartSpeed) ?? defaults.smartSpeed
+        chunkSize = try container.decodeIfPresent(Int.self, forKey: .chunkSize) ?? defaults.chunkSize
+        sentencePauseMultiplier = try container.decodeIfPresent(Double.self, forKey: .sentencePauseMultiplier) ?? defaults.sentencePauseMultiplier
+        paragraphPauseMultiplier = try container.decodeIfPresent(Double.self, forKey: .paragraphPauseMultiplier) ?? defaults.paragraphPauseMultiplier
+        contextPauseOnClose = try container.decodeIfPresent(Bool.self, forKey: .contextPauseOnClose) ?? defaults.contextPauseOnClose
+        bionicFocusPosition = try container.decodeIfPresent(BionicFocusPosition.self, forKey: .bionicFocusPosition) ?? defaults.bionicFocusPosition
+        dyslexiaMode = try container.decodeIfPresent(Bool.self, forKey: .dyslexiaMode) ?? defaults.dyslexiaMode
+        focusMode = try container.decodeIfPresent(Bool.self, forKey: .focusMode) ?? defaults.focusMode
+        theme = try container.decodeIfPresent(AppTheme.self, forKey: .theme) ?? defaults.theme
+        fontSize = try container.decodeIfPresent(Double.self, forKey: .fontSize) ?? defaults.fontSize
+        fontFamily = try container.decodeIfPresent(ReaderFontFamily.self, forKey: .fontFamily) ?? defaults.fontFamily
+        fontScale = try container.decodeIfPresent(Double.self, forKey: .fontScale) ?? defaults.fontScale
+        letterSpacing = try container.decodeIfPresent(Double.self, forKey: .letterSpacing) ?? defaults.letterSpacing
+        pivotOffset = try container.decodeIfPresent(Double.self, forKey: .pivotOffset) ?? defaults.pivotOffset
+        speedRampEnabled = try container.decodeIfPresent(Bool.self, forKey: .speedRampEnabled) ?? defaults.speedRampEnabled
+        speedRampTarget = try container.decodeIfPresent(Double.self, forKey: .speedRampTarget) ?? defaults.speedRampTarget
+        fontWeight = try container.decodeIfPresent(Int.self, forKey: .fontWeight) ?? defaults.fontWeight
+        highlightColor = try container.decodeIfPresent(String.self, forKey: .highlightColor) ?? defaults.highlightColor
+        quoteHighlightColor = try container.decodeIfPresent(String.self, forKey: .quoteHighlightColor) ?? defaults.quoteHighlightColor
+        parenHighlightColor = try container.decodeIfPresent(String.self, forKey: .parenHighlightColor) ?? defaults.parenHighlightColor
+        colorizeQuotes = try container.decodeIfPresent(Bool.self, forKey: .colorizeQuotes) ?? defaults.colorizeQuotes
+        colorizeParens = try container.decodeIfPresent(Bool.self, forKey: .colorizeParens) ?? defaults.colorizeParens
+        pauseView = try container.decodeIfPresent(PauseViewMode.self, forKey: .pauseView) ?? defaults.pauseView
+        showOrpGuides = try container.decodeIfPresent(Bool.self, forKey: .showOrpGuides) ?? defaults.showOrpGuides
+        hidePunctuationInDisplay = try container.decodeIfPresent(Bool.self, forKey: .hidePunctuationInDisplay) ?? defaults.hidePunctuationInDisplay
+        removeCitations = try container.decodeIfPresent(Bool.self, forKey: .removeCitations) ?? defaults.removeCitations
+        peripheralContext = try container.decodeIfPresent(Bool.self, forKey: .peripheralContext) ?? defaults.peripheralContext
+        peripheralContextCount = try container.decodeIfPresent(Int.self, forKey: .peripheralContextCount) ?? defaults.peripheralContextCount
+        bionicMode = try container.decodeIfPresent(Bool.self, forKey: .bionicMode) ?? defaults.bionicMode
+        commaAsPause = try container.decodeIfPresent(Bool.self, forKey: .commaAsPause) ?? defaults.commaAsPause
+        punctuationPause = try container.decodeIfPresent(Bool.self, forKey: .punctuationPause) ?? defaults.punctuationPause
+    }
 
     static func loadPersisted() -> ReaderSettings {
         guard let data = UserDefaults.standard.data(forKey: defaultsKey),
@@ -68,6 +144,29 @@ struct ReaderSettings: Equatable, Codable {
         chunkSize != previous.chunkSize ||
         removeCitations != previous.removeCitations ||
         commaAsPause != previous.commaAsPause
+    }
+}
+
+enum ReaderFontFamily: String, CaseIterable, Codable {
+    case jetBrainsMono = "JetBrains Mono"
+    case firaMono = "Fira Mono"
+    case sourceCodePro = "Source Code Pro"
+    case inconsolata = "Inconsolata"
+    case ibmPlexMono = "IBM Plex Mono"
+
+    var postScriptName: String {
+        switch self {
+        case .jetBrainsMono:
+            return "JetBrainsMono-Regular"
+        case .firaMono:
+            return "FiraMono-Regular"
+        case .sourceCodePro:
+            return "SourceCodePro-Regular"
+        case .inconsolata:
+            return "Inconsolata-Regular"
+        case .ibmPlexMono:
+            return "IBMPlexMono-Regular"
+        }
     }
 }
 

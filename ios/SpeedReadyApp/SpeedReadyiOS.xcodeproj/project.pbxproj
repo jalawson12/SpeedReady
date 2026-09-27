@@ -18,6 +18,8 @@
 		566B7B2D9F6FD24334F8618E /* ReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7967282C42C6D6EDB5DD2DD7 /* ReaderView.swift */; };
 		589D16D65561805B97D8B7AE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A65B27F6B104F0A24A2E7C /* ContentView.swift */; };
 		5CF228018716A8B66A744538 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF25E8E466C20271BB4248FE /* SettingsView.swift */; };
+		A12F8A1B4C5D6E7F8090A1B2 /* ReaderFontRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A22F8A1B4C5D6E7F8090A1B2 /* ReaderFontRegistry.swift */; };
+		A32F8A1B4C5D6E7F8090A1B2 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = A42F8A1B4C5D6E7F8090A1B2 /* Fonts */; };
 		63381B47F8F8F86EEA955C9C /* ReaderSettingsPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B9E8DAA8CEFFC2013B3C3D8 /* ReaderSettingsPersistenceTests.swift */; };
 		63E2FF135DB2F77610412A8D /* TokenizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57BCBDCD87A076A86071777 /* TokenizationTests.swift */; };
 		68D9C586B97FC00F83B4EC7E /* SpeedReadyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E883C02A71E32105B716AC3A /* SpeedReadyApp.swift */; };
@@ -67,6 +69,8 @@
 		E883C02A71E32105B716AC3A /* SpeedReadyApp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SpeedReadyApp.swift; path = App/SpeedReadyApp.swift; sourceTree = "<group>"; };
 		F06704E67256F13EB81C816F /* SessionHistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionHistoryView.swift; path = Views/SessionHistoryView.swift; sourceTree = "<group>"; };
 		FEF1BAD84559A124E2B31E90 /* SpeedReadyiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeedReadyiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A22F8A1B4C5D6E7F8090A1B2 /* ReaderFontRegistry.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReaderFontRegistry.swift; path = Support/ReaderFontRegistry.swift; sourceTree = "<group>"; };
+		A42F8A1B4C5D6E7F8090A1B2 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		FF25E8E466C20271BB4248FE /* SettingsView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Views/SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +104,7 @@
 				7967282C42C6D6EDB5DD2DD7 /* ReaderView.swift */,
 				F06704E67256F13EB81C816F /* SessionHistoryView.swift */,
 				FF25E8E466C20271BB4248FE /* SettingsView.swift */,
+				A22F8A1B4C5D6E7F8090A1B2 /* ReaderFontRegistry.swift */,
 				1E40163C9EAF5466526D2AA3 /* StatsView.swift */,
 			);
 			name = "App Sources";
@@ -110,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				0FF787ED33EA941D3CBB8FB4 /* Assets.xcassets */,
+				A42F8A1B4C5D6E7F8090A1B2 /* Fonts */,
 			);
 			name = SpeedReadyiOS;
 			path = SpeedReadyiOS;
@@ -279,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				09509B937CBC67455159DBD2 /* Assets.xcassets in Resources */,
+				A32F8A1B4C5D6E7F8090A1B2 /* Fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +308,7 @@
 				566B7B2D9F6FD24334F8618E /* ReaderView.swift in Sources */,
 				821D9C31FCB60934F2CA9282 /* SessionHistoryView.swift in Sources */,
 				5CF228018716A8B66A744538 /* SettingsView.swift in Sources */,
+				A12F8A1B4C5D6E7F8090A1B2 /* ReaderFontRegistry.swift in Sources */,
 				2EBDDB2E8B47D564B8880EA6 /* StatsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
