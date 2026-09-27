@@ -20,7 +20,10 @@ enum ReaderFontRegistry {
         defer { lock.unlock() }
         guard !didRegister else { return }
 
-        let bundle = Bundle(for: ReaderFontBundleToken.self)
+        let bundle = [Bundle.main, Bundle(for: ReaderFontBundleToken.self)]
+            .first {
+                $0.url(forResource: "JetBrainsMono", withExtension: "ttf", subdirectory: "Fonts") != nil
+            } ?? Bundle.main
         for filename in bundledFonts {
             let resourceName = (filename as NSString).deletingPathExtension
             let resourceExtension = (filename as NSString).pathExtension

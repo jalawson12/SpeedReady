@@ -446,9 +446,9 @@ struct ReaderView: View {
 
     private var pivotColumnWidth: CGFloat {
         let font = readerUIFont(size: displayPivotFontSize, weight: .bold)
-        let samples = ["W", "M", "m", "w", "0"]
-        let measuredWidth = samples
-            .map { ($0 as NSString).size(withAttributes: [.font: font]).width }
+        let sampleStrings = ["W", "M", "m", "w", "0", "é", "👨🏾‍💻"]
+        let measuredWidth = sampleStrings
+            .map { measuredKernedWidth(of: $0, font: font, kerning: wordKerningValue(for: displayPivotFontSize)) }
             .max() ?? font.pointSize * 0.6
         return ceil(measuredWidth)
     }
@@ -497,6 +497,13 @@ struct ReaderView: View {
         ) { partial, glyph in
             partial + Text(verbatim: glyph.text).kerning(glyph.trailingKerning)
         }
+    }
+
+    private func measuredKernedWidth(of input: String, font: UIFont, kerning: CGFloat) -> CGFloat {
+        ReaderDisplaySpacing.kernedGlyphs(for: input, kerning: Double(kerning))
+            .reduce(0) { partial, glyph in
+                partial + (glyph.text as NSString).size(withAttributes: [.font: font]).width + CGFloat(glyph.trailingKerning)
+            }
     }
 
     private func uiFontWeightValue() -> UIFont.Weight {

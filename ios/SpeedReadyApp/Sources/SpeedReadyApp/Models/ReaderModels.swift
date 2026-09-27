@@ -73,42 +73,51 @@ struct ReaderSettings: Equatable, Codable {
         case punctuationPause
     }
 
+    private static func decode<T: Decodable>(
+        _ type: T.Type,
+        from container: KeyedDecodingContainer<CodingKeys>,
+        key: CodingKeys,
+        default defaultValue: T
+    ) throws -> T {
+        try container.decodeIfPresent(type, forKey: key) ?? defaultValue
+    }
+
     init(from decoder: Decoder) throws {
         let defaults = ReaderSettings()
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
-        wpm = try container.decodeIfPresent(Double.self, forKey: .wpm) ?? defaults.wpm
-        smartSpeed = try container.decodeIfPresent(Bool.self, forKey: .smartSpeed) ?? defaults.smartSpeed
-        chunkSize = try container.decodeIfPresent(Int.self, forKey: .chunkSize) ?? defaults.chunkSize
-        sentencePauseMultiplier = try container.decodeIfPresent(Double.self, forKey: .sentencePauseMultiplier) ?? defaults.sentencePauseMultiplier
-        paragraphPauseMultiplier = try container.decodeIfPresent(Double.self, forKey: .paragraphPauseMultiplier) ?? defaults.paragraphPauseMultiplier
-        contextPauseOnClose = try container.decodeIfPresent(Bool.self, forKey: .contextPauseOnClose) ?? defaults.contextPauseOnClose
-        bionicFocusPosition = try container.decodeIfPresent(BionicFocusPosition.self, forKey: .bionicFocusPosition) ?? defaults.bionicFocusPosition
-        dyslexiaMode = try container.decodeIfPresent(Bool.self, forKey: .dyslexiaMode) ?? defaults.dyslexiaMode
-        focusMode = try container.decodeIfPresent(Bool.self, forKey: .focusMode) ?? defaults.focusMode
-        theme = try container.decodeIfPresent(AppTheme.self, forKey: .theme) ?? defaults.theme
-        fontSize = try container.decodeIfPresent(Double.self, forKey: .fontSize) ?? defaults.fontSize
-        fontFamily = try container.decodeIfPresent(ReaderFontFamily.self, forKey: .fontFamily) ?? defaults.fontFamily
-        fontScale = try container.decodeIfPresent(Double.self, forKey: .fontScale) ?? defaults.fontScale
-        letterSpacing = try container.decodeIfPresent(Double.self, forKey: .letterSpacing) ?? defaults.letterSpacing
-        pivotOffset = try container.decodeIfPresent(Double.self, forKey: .pivotOffset) ?? defaults.pivotOffset
-        speedRampEnabled = try container.decodeIfPresent(Bool.self, forKey: .speedRampEnabled) ?? defaults.speedRampEnabled
-        speedRampTarget = try container.decodeIfPresent(Double.self, forKey: .speedRampTarget) ?? defaults.speedRampTarget
-        fontWeight = try container.decodeIfPresent(Int.self, forKey: .fontWeight) ?? defaults.fontWeight
-        highlightColor = try container.decodeIfPresent(String.self, forKey: .highlightColor) ?? defaults.highlightColor
-        quoteHighlightColor = try container.decodeIfPresent(String.self, forKey: .quoteHighlightColor) ?? defaults.quoteHighlightColor
-        parenHighlightColor = try container.decodeIfPresent(String.self, forKey: .parenHighlightColor) ?? defaults.parenHighlightColor
-        colorizeQuotes = try container.decodeIfPresent(Bool.self, forKey: .colorizeQuotes) ?? defaults.colorizeQuotes
-        colorizeParens = try container.decodeIfPresent(Bool.self, forKey: .colorizeParens) ?? defaults.colorizeParens
-        pauseView = try container.decodeIfPresent(PauseViewMode.self, forKey: .pauseView) ?? defaults.pauseView
-        showOrpGuides = try container.decodeIfPresent(Bool.self, forKey: .showOrpGuides) ?? defaults.showOrpGuides
-        hidePunctuationInDisplay = try container.decodeIfPresent(Bool.self, forKey: .hidePunctuationInDisplay) ?? defaults.hidePunctuationInDisplay
-        removeCitations = try container.decodeIfPresent(Bool.self, forKey: .removeCitations) ?? defaults.removeCitations
-        peripheralContext = try container.decodeIfPresent(Bool.self, forKey: .peripheralContext) ?? defaults.peripheralContext
-        peripheralContextCount = try container.decodeIfPresent(Int.self, forKey: .peripheralContextCount) ?? defaults.peripheralContextCount
-        bionicMode = try container.decodeIfPresent(Bool.self, forKey: .bionicMode) ?? defaults.bionicMode
-        commaAsPause = try container.decodeIfPresent(Bool.self, forKey: .commaAsPause) ?? defaults.commaAsPause
-        punctuationPause = try container.decodeIfPresent(Bool.self, forKey: .punctuationPause) ?? defaults.punctuationPause
+        wpm = try Self.decode(Double.self, from: container, key: .wpm, default: defaults.wpm)
+        smartSpeed = try Self.decode(Bool.self, from: container, key: .smartSpeed, default: defaults.smartSpeed)
+        chunkSize = try Self.decode(Int.self, from: container, key: .chunkSize, default: defaults.chunkSize)
+        sentencePauseMultiplier = try Self.decode(Double.self, from: container, key: .sentencePauseMultiplier, default: defaults.sentencePauseMultiplier)
+        paragraphPauseMultiplier = try Self.decode(Double.self, from: container, key: .paragraphPauseMultiplier, default: defaults.paragraphPauseMultiplier)
+        contextPauseOnClose = try Self.decode(Bool.self, from: container, key: .contextPauseOnClose, default: defaults.contextPauseOnClose)
+        bionicFocusPosition = try Self.decode(BionicFocusPosition.self, from: container, key: .bionicFocusPosition, default: defaults.bionicFocusPosition)
+        dyslexiaMode = try Self.decode(Bool.self, from: container, key: .dyslexiaMode, default: defaults.dyslexiaMode)
+        focusMode = try Self.decode(Bool.self, from: container, key: .focusMode, default: defaults.focusMode)
+        theme = try Self.decode(AppTheme.self, from: container, key: .theme, default: defaults.theme)
+        fontSize = try Self.decode(Double.self, from: container, key: .fontSize, default: defaults.fontSize)
+        fontFamily = try Self.decode(ReaderFontFamily.self, from: container, key: .fontFamily, default: defaults.fontFamily)
+        fontScale = try Self.decode(Double.self, from: container, key: .fontScale, default: defaults.fontScale)
+        letterSpacing = try Self.decode(Double.self, from: container, key: .letterSpacing, default: defaults.letterSpacing)
+        pivotOffset = try Self.decode(Double.self, from: container, key: .pivotOffset, default: defaults.pivotOffset)
+        speedRampEnabled = try Self.decode(Bool.self, from: container, key: .speedRampEnabled, default: defaults.speedRampEnabled)
+        speedRampTarget = try Self.decode(Double.self, from: container, key: .speedRampTarget, default: defaults.speedRampTarget)
+        fontWeight = try Self.decode(Int.self, from: container, key: .fontWeight, default: defaults.fontWeight)
+        highlightColor = try Self.decode(String.self, from: container, key: .highlightColor, default: defaults.highlightColor)
+        quoteHighlightColor = try Self.decode(String.self, from: container, key: .quoteHighlightColor, default: defaults.quoteHighlightColor)
+        parenHighlightColor = try Self.decode(String.self, from: container, key: .parenHighlightColor, default: defaults.parenHighlightColor)
+        colorizeQuotes = try Self.decode(Bool.self, from: container, key: .colorizeQuotes, default: defaults.colorizeQuotes)
+        colorizeParens = try Self.decode(Bool.self, from: container, key: .colorizeParens, default: defaults.colorizeParens)
+        pauseView = try Self.decode(PauseViewMode.self, from: container, key: .pauseView, default: defaults.pauseView)
+        showOrpGuides = try Self.decode(Bool.self, from: container, key: .showOrpGuides, default: defaults.showOrpGuides)
+        hidePunctuationInDisplay = try Self.decode(Bool.self, from: container, key: .hidePunctuationInDisplay, default: defaults.hidePunctuationInDisplay)
+        removeCitations = try Self.decode(Bool.self, from: container, key: .removeCitations, default: defaults.removeCitations)
+        peripheralContext = try Self.decode(Bool.self, from: container, key: .peripheralContext, default: defaults.peripheralContext)
+        peripheralContextCount = try Self.decode(Int.self, from: container, key: .peripheralContextCount, default: defaults.peripheralContextCount)
+        bionicMode = try Self.decode(Bool.self, from: container, key: .bionicMode, default: defaults.bionicMode)
+        commaAsPause = try Self.decode(Bool.self, from: container, key: .commaAsPause, default: defaults.commaAsPause)
+        punctuationPause = try Self.decode(Bool.self, from: container, key: .punctuationPause, default: defaults.punctuationPause)
     }
 
     static func loadPersisted() -> ReaderSettings {
