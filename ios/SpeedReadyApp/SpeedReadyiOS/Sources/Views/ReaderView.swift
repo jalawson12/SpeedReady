@@ -9,6 +9,7 @@ struct ReaderView: View {
     @State private var lastRecordedSessionID: UUID?
     @State private var pendingEngineSettingsTask: Task<Void, Never>?
     @State private var pendingEngineSettingsGeneration: UInt = 0
+    @State private var engineContentVersion: UInt = 0
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -323,6 +324,7 @@ struct ReaderView: View {
 
     private func loadDocument(_ document: ReadingDocument) {
         cancelPendingEngineSettingsUpdate()
+        engineContentVersion &+= 1
         activeDocument = document
         lastRecordedSessionID = nil
         engine.load(text: document.text, settings: settings)
@@ -333,6 +335,7 @@ struct ReaderView: View {
 
     private func loadFallbackSample() {
         cancelPendingEngineSettingsUpdate()
+        engineContentVersion &+= 1
         activeDocument = ReadingDocument.sample()
         lastRecordedSessionID = nil
         engine.load(text: activeDocument?.text ?? "", settings: settings)
@@ -371,11 +374,13 @@ struct ReaderView: View {
 
         let generation = pendingEngineSettingsGeneration
         let scheduledDocumentID = activeDocument?.id
+        let scheduledContentVersion = engineContentVersion
         pendingEngineSettingsTask = Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(150))
             guard !Task.isCancelled,
                   generation == pendingEngineSettingsGeneration,
-                  scheduledDocumentID == activeDocument?.id
+                  scheduledDocumentID == activeDocument?.id,
+                  scheduledContentVersion == engineContentVersion
             else { return }
             engine.setSettings(newSettings)
         }
