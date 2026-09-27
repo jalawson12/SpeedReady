@@ -161,6 +161,7 @@ struct LibraryView: View {
                 Button("Delete", role: .destructive) {
                     guard let document = documentPendingDeletion else { return }
                     appState.deleteDocument(id: document.id)
+                    documentPendingDeletion = nil
                 }
                 Button("Cancel", role: .cancel) { }
             } message: {
