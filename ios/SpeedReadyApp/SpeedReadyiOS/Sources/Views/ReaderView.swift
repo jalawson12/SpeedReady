@@ -373,7 +373,7 @@ struct ReaderView: View {
         pendingEngineSettingsTask = Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(150))
             guard !Task.isCancelled, generation == pendingEngineSettingsGeneration else { return }
-            engine.setSettings(settings)
+            engine.setSettings(newSettings)
         }
     }
 
