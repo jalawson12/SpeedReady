@@ -370,9 +370,13 @@ struct ReaderView: View {
         }
 
         let generation = pendingEngineSettingsGeneration
+        let scheduledDocumentID = activeDocument?.id
         pendingEngineSettingsTask = Task { @MainActor in
             try? await Task.sleep(for: .milliseconds(150))
-            guard !Task.isCancelled, generation == pendingEngineSettingsGeneration else { return }
+            guard !Task.isCancelled,
+                  generation == pendingEngineSettingsGeneration,
+                  scheduledDocumentID == activeDocument?.id
+            else { return }
             engine.setSettings(newSettings)
         }
     }
