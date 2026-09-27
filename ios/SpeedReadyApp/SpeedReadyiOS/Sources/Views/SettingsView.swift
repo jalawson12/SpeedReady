@@ -183,7 +183,7 @@ struct SettingsView: View {
 
     private var highlightColorBinding: Binding<Color> {
         Binding(
-            get: { Color(hex: settings.highlightColor) ?? .red },
+            get: { Color(hex: settings.highlightColor) ?? Color(hex: "#605DF6") ?? .red },
             set: { settings.highlightColor = $0.toHex() ?? settings.highlightColor }
         )
     }

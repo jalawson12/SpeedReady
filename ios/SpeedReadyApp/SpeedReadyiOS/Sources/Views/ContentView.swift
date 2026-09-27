@@ -22,7 +22,7 @@ struct ContentView: View {
     }
 
     private var appTint: Color {
-        Color(hex: settings.highlightColor) ?? Color.red
+        Color(hex: settings.highlightColor) ?? Color(hex: "#605DF6") ?? Color.red
     }
 
     private var tabBarBackground: Color {
@@ -109,7 +109,7 @@ struct AppPalette {
             mutedText = Color(hex: "#5A5A66") ?? .gray
         }
 
-        accent = Color(hex: settings.highlightColor) ?? Color(hex: "#E63946") ?? .red
+        accent = Color(hex: settings.highlightColor) ?? Color(hex: "#605DF6") ?? .red
         success = Color(hex: "#2EC27E") ?? .green
         warning = Color(hex: "#FFB454") ?? .orange
     }
