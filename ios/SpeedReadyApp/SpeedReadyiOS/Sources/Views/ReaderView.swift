@@ -373,7 +373,6 @@ struct ReaderView: View {
             try? await Task.sleep(for: .milliseconds(150))
             guard !Task.isCancelled else { return }
             engine.setSettings(newSettings)
-            pendingEngineSettingsTask = nil
         }
     }
 
