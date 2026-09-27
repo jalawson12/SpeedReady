@@ -10,11 +10,13 @@ enum ReaderFontRegistry {
         "IBMPlexMono-Regular.ttf"
     ]
 
+    private static let lock = NSLock()
     private static var didRegister = false
 
     static func registerBundledFonts() {
+        lock.lock()
+        defer { lock.unlock() }
         guard !didRegister else { return }
-        defer { didRegister = true }
 
         for filename in bundledFonts {
             let resourceName = (filename as NSString).deletingPathExtension
@@ -25,5 +27,6 @@ enum ReaderFontRegistry {
 
             CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
         }
+        didRegister = true
     }
 }

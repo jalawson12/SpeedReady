@@ -80,4 +80,11 @@ final class ReaderSettingsPersistenceTests: XCTestCase {
         XCTAssertTrue(decoded.dyslexiaMode)
         XCTAssertEqual(decoded.fontFamily, .jetBrainsMono)
     }
+
+    func testKernedGlyphsOnlyAddSpacingBetweenCharacters() {
+        let glyphs = ReaderDisplaySpacing.kernedGlyphs(for: "a👨🏾‍💻é", kerning: 4)
+
+        XCTAssertEqual(glyphs.map(\.text), ["a", "👨🏾‍💻", "é"])
+        XCTAssertEqual(glyphs.map(\.trailingKerning), [4, 4, 0])
+    }
 }

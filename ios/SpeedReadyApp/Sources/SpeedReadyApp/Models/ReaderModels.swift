@@ -170,6 +170,26 @@ enum ReaderFontFamily: String, CaseIterable, Codable {
     }
 }
 
+struct KernedGlyph: Equatable {
+    let text: String
+    let trailingKerning: Double
+}
+
+enum ReaderDisplaySpacing {
+    static func kernedGlyphs(for input: String, kerning: Double) -> [KernedGlyph] {
+        var iterator = input.makeIterator()
+        guard var current = iterator.next() else { return [] }
+
+        var glyphs: [KernedGlyph] = []
+        while let next = iterator.next() {
+            glyphs.append(KernedGlyph(text: String(current), trailingKerning: kerning))
+            current = next
+        }
+        glyphs.append(KernedGlyph(text: String(current), trailingKerning: 0))
+        return glyphs
+    }
+}
+
 enum AppTheme: String, CaseIterable, Codable {
     case system
     case light

@@ -114,8 +114,7 @@ struct ReaderView: View {
             VStack(spacing: 8) {
                 if settings.peripheralContext, let previous = previousPeripheralWords(), !previous.isEmpty {
                     kernedText(previous, kerning: wordKerningValue(for: displayFontSize * 0.38))
-                        .font(readerFont(size: displayFontSize * 0.38))
-                        .fontWeight(fontWeightValue())
+                        .font(readerFont(size: displayFontSize * 0.38, weight: uiFontWeightValue()))
                         .foregroundStyle(palette.mutedText.opacity(0.35))
                         .lineLimit(1)
                 }
@@ -126,8 +125,7 @@ struct ReaderView: View {
                 } else {
                     HStack(alignment: .center, spacing: 0) {
                         kernedText(displayBeforeText(), kerning: wordKerningValue(for: displayFontSize))
-                            .font(readerFont(size: displayFontSize))
-                            .fontWeight(fontWeightValue())
+                            .font(readerFont(size: displayFontSize, weight: uiFontWeightValue()))
                             .foregroundStyle(contextTextColor())
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .trailing)
@@ -139,8 +137,7 @@ struct ReaderView: View {
                                     .frame(width: 2, height: max(6, displayFontSize * 0.22))
                             }
                             kernedText(engine.state.pivot, kerning: wordKerningValue(for: displayPivotFontSize))
-                                .font(readerFont(size: displayPivotFontSize))
-                                .fontWeight(.bold)
+                                .font(readerFont(size: displayPivotFontSize, weight: .bold))
                                 .foregroundStyle(highlightColor)
                                 .accessibilityLabel("Current word: \(engine.state.pivot)")
                             if settings.showOrpGuides {
@@ -150,10 +147,9 @@ struct ReaderView: View {
                             }
                         }
                         .fixedSize(horizontal: true, vertical: false)
-
                         kernedText(displayAfterText(), kerning: wordKerningValue(for: displayFontSize))
-                            .font(readerFont(size: displayFontSize))
-                            .fontWeight(fontWeightValue())
+                        kernedText(displayAfterText(), kerning: wordKerningValue(for: displayFontSize))
+                            .font(readerFont(size: displayFontSize, weight: uiFontWeightValue()))
                             .foregroundStyle(contextTextColor())
                             .lineLimit(1)
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -164,8 +160,7 @@ struct ReaderView: View {
 
                 if settings.peripheralContext, let next = nextPeripheralWords(), !next.isEmpty {
                     kernedText(next, kerning: wordKerningValue(for: displayFontSize * 0.38))
-                        .font(readerFont(size: displayFontSize * 0.38))
-                        .fontWeight(fontWeightValue())
+                        .font(readerFont(size: displayFontSize * 0.38, weight: uiFontWeightValue()))
                         .foregroundStyle(palette.mutedText.opacity(0.35))
                         .lineLimit(1)
                 }
@@ -198,8 +193,7 @@ struct ReaderView: View {
 
         return ScrollView {
             Text(renderedPausedText(from: tokens, range: range))
-                .font(readerFont(size: displayFontSize * 0.52))
-                .fontWeight(fontWeightValue())
+                .font(readerFont(size: displayFontSize * 0.52, weight: uiFontWeightValue()))
                 .foregroundStyle(palette.mutedText)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .textSelection(.enabled)
@@ -450,34 +444,45 @@ struct ReaderView: View {
         return base
     }
 
-    private func readerFont(size: CGFloat) -> Font {
+    private func readerFont(size: CGFloat, weight: UIFont.Weight = .regular) -> Font {
         if settings.dyslexiaMode {
-            return .system(size: size, design: .rounded)
+            return .system(size: size, weight: swiftUIFontWeight(from: weight), design: .rounded)
         }
 
-        let postScriptName = settings.fontFamily.postScriptName
-        if UIFont(name: postScriptName, size: size) != nil {
-            return .custom(postScriptName, size: size)
+        if let customFont = customUIFont(size: size, weight: weight) {
+            return Font(customFont)
         }
 
-        return .system(size: size, design: .monospaced)
+        return .system(size: size, weight: swiftUIFontWeight(from: weight), design: .monospaced)
+    }
+
+    private func customUIFont(size: CGFloat, weight: UIFont.Weight) -> UIFont? {
+        guard let baseFont = UIFont(name: settings.fontFamily.postScriptName, size: size) else {
+            return nil
+        }
+
+        let descriptor = baseFont.fontDescriptor.addingAttributes([
+            UIFontDescriptor.AttributeName.traits: [
+                UIFontDescriptor.TraitKey.weight: weight
+            ]
+        ])
+        return UIFont(descriptor: descriptor, size: size)
     }
 
     private func kernedText(_ input: String, kerning: CGFloat) -> Text {
-        let characters = Array(input)
-        guard let first = characters.first else {
+        let glyphs = ReaderDisplaySpacing.kernedGlyphs(for: input, kerning: Double(kerning))
+        guard let first = glyphs.first else {
             return Text(verbatim: "")
         }
 
-        return characters.enumerated().dropFirst().reduce(
-            Text(verbatim: String(first)).kerning(characters.count > 1 ? kerning : 0)
-        ) { partial, item in
-            let isLast = item.offset == characters.count - 1
-            return partial + Text(verbatim: String(item.element)).kerning(isLast ? 0 : kerning)
+        return glyphs.dropFirst().reduce(
+            Text(verbatim: first.text).kerning(first.trailingKerning)
+        ) { partial, glyph in
+            partial + Text(verbatim: glyph.text).kerning(glyph.trailingKerning)
         }
     }
 
-    private func fontWeightValue() -> Font.Weight {
+    private func uiFontWeightValue() -> UIFont.Weight {
         switch settings.fontWeight {
         case 300: return .light
         case 500: return .medium
@@ -485,6 +490,23 @@ struct ReaderView: View {
         case 700: return .bold
         case 800: return .heavy
         default: return .regular
+        }
+    }
+
+    private func swiftUIFontWeight(from weight: UIFont.Weight) -> Font.Weight {
+        switch weight {
+        case ..<UIFont.Weight.regular:
+            return .light
+        case ..<UIFont.Weight.medium:
+            return .regular
+        case ..<UIFont.Weight.semibold:
+            return .medium
+        case ..<UIFont.Weight.bold:
+            return .semibold
+        case ..<UIFont.Weight.heavy:
+            return .bold
+        default:
+            return .heavy
         }
     }
 
@@ -540,8 +562,7 @@ struct ReaderView: View {
             var token = AttributedString(maybeHideTrailingPunctuation(tokens[index].text) + " ")
             if index == currentTokenIndex {
                 token.foregroundColor = palette.accent
-                token.font = readerFont(size: displayFontSize * 0.52)
-                token.inlinePresentationIntent = .stronglyEmphasized
+                token.font = readerFont(size: displayFontSize * 0.52, weight: .bold)
             } else {
                 token.foregroundColor = pausedTokenColor(for: tokens[index])
             }
