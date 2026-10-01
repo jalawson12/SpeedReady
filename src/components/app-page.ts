@@ -625,13 +625,13 @@ export class AppPage extends LitElement {
           <div class="text-sm font-medium text-base-content truncate">${doc.title}</div>
           <div class="flex items-center gap-2 mt-0.5">
             ${icon(Clock, "w-3 h-3 text-ui-muted-subtle")}
-            <span class="text-xs text-ui-muted-subtle font-light">${date} · ${doc.wordCount.toLocaleString()} words</span>
+            <span class="text-xs text-ui-muted-subtle">${date} · ${doc.wordCount.toLocaleString()} words</span>
           </div>
           ${
 						pct > 0 && pct < 98
 							? html`
-            <div class="w-full h-0.5 bg-base-300 rounded-full mt-1.5 overflow-hidden">
-              <div class="h-full bg-primary/50 rounded-full" style="width: ${pct}%"></div>
+            <div class="w-full h-0.5 bg-base-200 rounded-full mt-1.5 overflow-hidden">
+              <div class="h-full bg-primary/60 rounded-full" style="width: ${pct}%"></div>
             </div>
           `
 							: ""
@@ -654,7 +654,7 @@ export class AppPage extends LitElement {
             ${icon(Edit2, "w-3.5 h-3.5")}
           </button>
           <button
-            class="btn btn-ghost btn-xs btn-circle opacity-0 group-hover:opacity-100 transition-opacity text-error/60 hover:text-error"
+            class="btn btn-ghost btn-xs btn-circle opacity-0 group-hover:opacity-100 transition-opacity text-error/60 hover:text-error hover:bg-error/10"
             title="Remove"
             aria-label="Remove ${doc.title}"
             @click=${async () => {
