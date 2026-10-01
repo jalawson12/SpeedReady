@@ -429,9 +429,21 @@ struct ReaderView: View {
             Spacer()
 
             Text("\(engine.state.currentWpm) WPM")
-                .font(.headline.bold())
-                .foregroundStyle(palette.text)
+                .font(.headline.weight(.semibold))
+                .foregroundStyle(settings.focusMode ? .white : palette.text.opacity(0.88))
+                .tracking(0.8)
+                .monospacedDigit()
                 .frame(minWidth: 92, minHeight: 54)
+                .padding(.horizontal, 8)
+                .background(
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .fill(palette.surface.opacity(settings.focusMode ? 0.14 : 0.22))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .strokeBorder(palette.text.opacity(settings.focusMode ? 0.10 : 0.08), lineWidth: 1)
+                )
+                .shadow(color: .black.opacity(settings.focusMode ? 0.04 : 0.06), radius: 8, y: 2)
                 .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
 
             Spacer()
