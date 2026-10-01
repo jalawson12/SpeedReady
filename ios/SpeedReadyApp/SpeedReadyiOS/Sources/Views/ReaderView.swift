@@ -411,16 +411,21 @@ struct ReaderView: View {
             Button {
                 adjustWpm(by: -25)
             } label: {
-                Image(systemName: "minus.circle")
+                Image(systemName: "minus")
+                    .font(.system(size: 18, weight: .semibold))
+                    .frame(width: 44, height: 44)
                     .accessibilityLabel("Decrease words per minute")
             }
-            .buttonStyle(.bordered)
+            .buttonStyle(.plain)
+            .glassCircle()
 
             Spacer()
 
             Text("\(engine.state.currentWpm) WPM")
                 .font(.title2.bold())
                 .foregroundStyle(palette.text)
+                .frame(minWidth: 92, minHeight: 54)
+                .glassCapsule()
                 .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
 
             Spacer()
@@ -428,10 +433,13 @@ struct ReaderView: View {
             Button {
                 adjustWpm(by: 25)
             } label: {
-                Image(systemName: "plus.circle")
+                Image(systemName: "plus")
+                    .font(.system(size: 18, weight: .semibold))
+                    .frame(width: 44, height: 44)
                     .accessibilityLabel("Increase words per minute")
             }
-            .buttonStyle(.bordered)
+            .buttonStyle(.plain)
+            .glassCircle()
         }
         .padding(.horizontal)
         .opacity(settings.focusMode ? 0.85 : 1)
@@ -458,32 +466,43 @@ struct ReaderView: View {
         return min(max(0, rawIndex), total)
     }
 
+    private func beginScrubbing() {
+        guard !isScrubbing else { return }
+        scrubProgress = currentProgressFraction
+        wasPlayingBeforeScrub = engine.state.isPlaying
+        isScrubbing = true
+        engine.pause()
+    }
+
+    private func endScrubbing() {
+        guard isScrubbing else { return }
+        engine.seek(toWordIndex: scrubbedWordIndex(for: scrubProgress))
+        isScrubbing = false
+        if wasPlayingBeforeScrub {
+            engine.play()
+        }
+    }
+
     private var progressView: some View {
         VStack(alignment: .leading, spacing: 8) {
             ReaderScrubber(
-                progress: displayedProgressFraction,
-                isActive: isScrubbing,
-                trackColor: palette.mutedText.opacity(0.25),
-                fillColor: palette.accent,
-                onEditingChanged: { fraction in
-                    if !isScrubbing {
-                        isScrubbing = true
-                        wasPlayingBeforeScrub = engine.state.isPlaying
-                        engine.pause()
+                progress: Binding(
+                    get: { displayedProgressFraction },
+                    set: { fraction in
+                        beginScrubbing()
+                        scrubProgress = fraction
+                        engine.seek(toWordIndex: scrubbedWordIndex(for: fraction))
                     }
-                    scrubProgress = fraction
-                    engine.seek(toWordIndex: scrubbedWordIndex(for: fraction))
-                },
-                onEditingEnded: { fraction in
-                    scrubProgress = fraction
-                    engine.seek(toWordIndex: scrubbedWordIndex(for: fraction))
-                    isScrubbing = false
-                    if wasPlayingBeforeScrub {
-                        engine.play()
+                ),
+                fillColor: palette.accent,
+                onEditingChanged: { isEditing in
+                    if isEditing {
+                        beginScrubbing()
+                    } else {
+                        endScrubbing()
                     }
                 }
             )
-            .frame(height: 22)
             .accessibilityLabel("Reading progress")
             .accessibilityValue("\(displayedWordIndex) of \(engine.state.totalWords) words")
             .accessibilityAdjustableAction { direction in
@@ -525,9 +544,9 @@ struct ReaderView: View {
                     Image(systemName: "arrow.counterclockwise")
                         .font(.system(size: 20, weight: .semibold))
                         .frame(width: 54, height: 54)
-                        .background(palette.secondarySurface, in: Circle())
                 }
                 .buttonStyle(.plain)
+                .glassCircle()
                 .accessibilityLabel("Restart reading from beginning")
 
                 Button {
@@ -536,9 +555,9 @@ struct ReaderView: View {
                     Image(systemName: "gobackward.5")
                         .font(.system(size: 22, weight: .semibold))
                         .frame(width: 60, height: 60)
-                        .background(palette.secondarySurface, in: Circle())
                 }
                 .buttonStyle(.plain)
+                .glassCircle()
                 .accessibilityLabel("Skip backward 5 words")
                 .accessibilityHint("Moves the current reading position back by 5 words")
 
@@ -553,10 +572,10 @@ struct ReaderView: View {
                         .font(.system(size: 28, weight: .bold))
                         .frame(width: 78, height: 78)
                         .foregroundStyle(.white)
-                        .background(palette.accent.gradient, in: Circle())
                         .contentTransition(.symbolEffect(.replace))
                 }
                 .buttonStyle(.plain)
+                .glassAccentCircle(palette.accent)
                 .accessibilityLabel(engine.state.isPlaying ? "Pause reading" : "Start reading")
 
                 Button {
@@ -565,9 +584,9 @@ struct ReaderView: View {
                     Image(systemName: "goforward.5")
                         .font(.system(size: 22, weight: .semibold))
                         .frame(width: 60, height: 60)
-                        .background(palette.secondarySurface, in: Circle())
                 }
                 .buttonStyle(.plain)
+                .glassCircle()
                 .accessibilityLabel("Skip forward 5 words")
                 .accessibilityHint("Moves the current reading position forward by 5 words")
             }
@@ -857,61 +876,14 @@ extension View {
     ReaderView(appState: SpeedReadyAppState(), settings: .constant(ReaderSettings()))
 }
 
-/// A reusable drag-to-seek progress scrubber styled after the iOS Music app's playhead.
-/// Reports live progress updates while dragging and a final value when the drag ends,
-/// so callers can seek an underlying engine and preserve playback state.
+/// A native slider wrapper that provides liquid-glass styling from the system.
 struct ReaderScrubber: View {
-    /// Current progress, in the range 0...1.
-    var progress: Double
-    /// Whether the user is actively dragging the playhead.
-    var isActive: Bool
-    var trackColor: Color
+    @Binding var progress: Double
     var fillColor: Color
-    /// Called continuously while the user drags, with the new progress value.
-    let onEditingChanged: (Double) -> Void
-    /// Called once when the drag gesture ends, with the final progress value.
-    let onEditingEnded: (Double) -> Void
-
-    private var trackHeight: CGFloat { isActive ? 10 : 6 }
-    private var thumbDiameter: CGFloat { isActive ? 22 : 14 }
+    let onEditingChanged: (Bool) -> Void
 
     var body: some View {
-        GeometryReader { geo in
-            let width = max(geo.size.width, 1)
-            let clampedProgress = min(max(progress, 0), 1)
-            let fillWidth = width * clampedProgress
-
-            let clampedOffset = min(max(fillWidth - thumbDiameter / 2, 0), max(width - thumbDiameter, 0))
-
-            ZStack(alignment: .leading) {
-                Capsule()
-                    .fill(trackColor)
-                    .frame(height: trackHeight)
-
-                Capsule()
-                    .fill(fillColor)
-                    .frame(width: fillWidth, height: trackHeight)
-
-                Circle()
-                    .fill(fillColor)
-                    .frame(width: thumbDiameter, height: thumbDiameter)
-                    .shadow(color: .black.opacity(isActive ? 0.25 : 0), radius: 4, y: 2)
-                    .offset(x: clampedOffset)
-            }
-            .frame(maxHeight: .infinity, alignment: .center)
-            .contentShape(Rectangle())
-            .animation(.easeOut(duration: 0.15), value: isActive)
-            .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { value in
-                        let fraction = min(max(value.location.x / width, 0), 1)
-                        onEditingChanged(fraction)
-                    }
-                    .onEnded { value in
-                        let fraction = min(max(value.location.x / width, 0), 1)
-                        onEditingEnded(fraction)
-                    }
-            )
-        }
+        Slider(value: $progress, in: 0...1, onEditingChanged: onEditingChanged)
+            .tint(fillColor)
     }
 }
