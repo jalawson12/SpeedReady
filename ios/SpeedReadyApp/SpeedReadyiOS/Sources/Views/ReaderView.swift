@@ -209,7 +209,7 @@ struct ReaderView: View {
     }
 
     /// Vertically stacked words-per-minute controls shown on the left side of the screen
-    /// while in landscape. Styled with the liquid-glass button treatment.
+    /// while in landscape.
     private var landscapeWpmControls: some View {
         VStack(spacing: 14) {
             Button {
@@ -223,16 +223,11 @@ struct ReaderView: View {
             .glassCircle()
             .accessibilityLabel("Increase words per minute")
 
-            VStack(spacing: 2) {
-                Text("\(engine.state.currentWpm)")
-                    .font(.headline.bold())
-                Text("WPM")
-                    .font(.caption2)
-            }
-            .foregroundStyle(palette.text)
-            .frame(width: 70, height: 54)
-            .glassCapsule()
-            .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
+            Text("\(engine.state.currentWpm) WPM")
+                .font(.headline.bold())
+                .foregroundStyle(palette.text)
+                .frame(minWidth: 92, minHeight: 54)
+                .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
 
             Button {
                 adjustWpm(by: -25)
@@ -425,7 +420,6 @@ struct ReaderView: View {
                 .font(.title2.bold())
                 .foregroundStyle(palette.text)
                 .frame(minWidth: 92, minHeight: 54)
-                .glassCapsule()
                 .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
 
             Spacer()
@@ -846,18 +840,6 @@ private struct GlassAccentCircleModifier: ViewModifier {
     }
 }
 
-/// Applies the system "liquid glass" material to a capsule-shaped control (used for the
-/// WPM readout), falling back to an ultra-thin material capsule on earlier OS versions.
-private struct GlassCapsuleModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        if #available(iOS 26.0, *) {
-            content.glassEffect(.regular, in: Capsule())
-        } else {
-            content.background(.ultraThinMaterial, in: Capsule())
-        }
-    }
-}
-
 extension View {
     fileprivate func glassCircle() -> some View {
         modifier(GlassCircleModifier())
@@ -865,10 +847,6 @@ extension View {
 
     fileprivate func glassAccentCircle(_ accent: Color) -> some View {
         modifier(GlassAccentCircleModifier(accent: accent))
-    }
-
-    fileprivate func glassCapsule() -> some View {
-        modifier(GlassCapsuleModifier())
     }
 }
 
