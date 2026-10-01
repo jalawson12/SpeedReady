@@ -46,7 +46,7 @@ private struct InfoTip: View {
                 .imageScale(.small)
                 .foregroundStyle(.secondary)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.borderless)
         .accessibilityLabel("More information")
         .accessibilityHint(text)
         .popover(isPresented: $isPresented, arrowEdge: .bottom) {
