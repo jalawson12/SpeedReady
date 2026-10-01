@@ -14,7 +14,6 @@ private let brandAccentColor = Color(hex: "#605DF6") ?? Color.purple
 
 struct ContentView: View {
     @ObservedObject var appState: SpeedReadyAppState
-    @Environment(\.colorScheme) private var colorScheme
     @State private var settings = ReaderSettings.loadPersisted()
     @State private var selectedTab: AppTab = .reader
 
@@ -28,13 +27,6 @@ struct ContentView: View {
 
     private var appTint: Color {
         brandAccentColor
-    }
-
-    private var tabBarBackground: Color {
-        let isDark = settings.theme == .dark || (settings.theme == .system && colorScheme == .dark)
-        return isDark
-            ? (Color(hex: "#1D2130") ?? Color.black.opacity(0.7))
-            : (Color(hex: "#F0EEF7") ?? Color(uiColor: .secondarySystemBackground))
     }
 
     var body: some View {
@@ -67,8 +59,6 @@ struct ContentView: View {
                 }
         }
         .tint(appTint)
-        .toolbarBackground(tabBarBackground, for: .tabBar)
-        .toolbarBackground(.visible, for: .tabBar)
         .preferredColorScheme(preferredColorScheme)
     }
 }
@@ -115,9 +105,5 @@ struct AppPalette {
         accent = brandAccentColor
         success = Color(hex: "#2EC27E") ?? .green
         warning = Color(hex: "#FFB454") ?? .orange
-    }
-
-    var selectedSurface: Color {
-        accent.opacity(0.14)
     }
 }
