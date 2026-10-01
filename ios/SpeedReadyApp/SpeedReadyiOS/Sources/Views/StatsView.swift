@@ -74,6 +74,8 @@ struct StatsView: View {
                     .listRowBackground(palette.surface)
                 }
                 .scrollContentBackground(.hidden)
+                .frame(maxWidth: 760)
+                .frame(maxWidth: .infinity)
             }
             .navigationTitle("Stats")
             .toolbar {

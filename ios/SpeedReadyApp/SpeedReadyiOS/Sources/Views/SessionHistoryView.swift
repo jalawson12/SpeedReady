@@ -62,6 +62,8 @@ struct SessionHistoryView: View {
                 }
             }
             .scrollContentBackground(.hidden)
+            .frame(maxWidth: 760)
+            .frame(maxWidth: .infinity)
         }
         .navigationTitle("Reading history")
     }

@@ -193,6 +193,8 @@ struct LibraryView: View {
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(palette.background)
+        .frame(maxWidth: 760)
+        .frame(maxWidth: .infinity)
     }
 
     private var emptyState: some View {
@@ -212,6 +214,7 @@ struct LibraryView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
         }
+        .frame(maxWidth: 560)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(24)
     }
