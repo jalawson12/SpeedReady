@@ -161,11 +161,14 @@ struct LibraryView: View {
                             .accessibilityLabel("Currently selected")
                     }
                 }
+                .padding(.vertical, 2)
             }
             .buttonStyle(.plain)
             .accessibilityHint("Selects this document as the current reading item")
             .padding(.vertical, 8)
-            .listRowBackground(palette.surface)
+            .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
             .swipeActions(edge: .leading, allowsFullSwipe: false) {
                 Button("Rename") {
                     editingDocument = document
@@ -180,19 +183,22 @@ struct LibraryView: View {
                 .tint(.red)
             }
         }
-        .listStyle(.insetGrouped)
+        .listStyle(.plain)
         .scrollContentBackground(.hidden)
         .background(palette.background)
     }
 
     private var emptyState: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 14) {
             Image(systemName: "folder.badge.plus")
-                .font(.system(size: 40))
-                .foregroundStyle(palette.mutedText)
+                .font(.system(size: 40, weight: .semibold))
+                .foregroundStyle(palette.accent)
+                .padding(.bottom, 2)
+
             Text("Your library is empty")
-                .font(.headline)
+                .font(.title3.weight(.semibold))
                 .foregroundStyle(palette.text)
+
             Text("Load a document or paste text to get started.")
                 .font(.subheadline)
                 .foregroundStyle(palette.mutedText)
@@ -200,6 +206,7 @@ struct LibraryView: View {
                 .padding(.horizontal, 32)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(24)
     }
 
 }
