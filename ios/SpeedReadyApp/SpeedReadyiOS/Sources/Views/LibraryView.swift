@@ -25,56 +25,51 @@ struct LibraryView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                palette.background.ignoresSafeArea()
-
-                List(appState.documents) { document in
-                    Button {
-                        appState.setCurrentDocument(document)
-                    } label: {
-                        HStack(spacing: 12) {
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(document.title)
-                                    .font(.headline)
-                                    .foregroundStyle(palette.text)
-                                Text("\(document.wordCount) words")
-                                    .font(.subheadline)
-                                    .foregroundStyle(palette.mutedText)
-                                Text(document.createdAt.formatted(date: .abbreviated, time: .shortened))
-                                    .font(.caption)
-                                    .foregroundStyle(palette.mutedText.opacity(0.8))
-                            }
-
-                            Spacer()
-
-                            if appState.currentDocument?.id == document.id {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .font(.title3)
-                                    .foregroundStyle(palette.accent)
-                                    .accessibilityLabel("Currently selected")
-                            }
+            List(appState.documents) { document in
+                Button {
+                    appState.setCurrentDocument(document)
+                } label: {
+                    HStack(spacing: 12) {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(document.title)
+                                .font(.headline)
+                                .foregroundStyle(palette.text)
+                            Text("\(document.wordCount) words")
+                                .font(.subheadline)
+                                .foregroundStyle(palette.mutedText)
+                            Text(document.createdAt.formatted(date: .abbreviated, time: .shortened))
+                                .font(.caption)
+                                .foregroundStyle(palette.mutedText.opacity(0.8))
                         }
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityHint("Selects this document as the current reading item")
-                    .padding(.vertical, 8)
-                    .listRowBackground(appState.currentDocument?.id == document.id ? palette.selectedSurface : palette.surface)
-                    .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                        Button("Rename") {
-                            editingDocument = document
-                            editedTitle = document.title
+
+                        Spacer()
+
+                        if appState.currentDocument?.id == document.id {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.title3)
+                                .foregroundStyle(palette.accent)
+                                .accessibilityLabel("Currently selected")
                         }
-                        .tint(palette.accent)
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button("Delete", role: .destructive) {
-                            documentPendingDeletion = document
-                        }
-                        .tint(.red)
                     }
                 }
-                .scrollContentBackground(.hidden)
+                .buttonStyle(.plain)
+                .accessibilityHint("Selects this document as the current reading item")
+                .padding(.vertical, 8)
+                .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                    Button("Rename") {
+                        editingDocument = document
+                        editedTitle = document.title
+                    }
+                    .tint(palette.accent)
+                }
+                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                    Button("Delete", role: .destructive) {
+                        documentPendingDeletion = document
+                    }
+                    .tint(.red)
+                }
             }
+            .listStyle(.insetGrouped)
             .navigationTitle("Library")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
