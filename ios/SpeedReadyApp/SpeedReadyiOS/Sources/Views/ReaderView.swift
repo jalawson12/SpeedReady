@@ -17,6 +17,7 @@ struct ReaderView: View {
     let appState: SpeedReadyAppState
     @Binding var settings: ReaderSettings
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
     @ScaledMetric(relativeTo: .largeTitle) private var dynamicTypeScale = 1.0
     @StateObject private var engine = RSVPEngine()
     @State private var activeDocument: ReadingDocument?
@@ -30,6 +31,12 @@ struct ReaderView: View {
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
+    }
+
+    /// True when the device is rotated into landscape (compact vertical size class on iPhone).
+    /// In this orientation controls move to the left/right sides of the screen.
+    private var isLandscapeControlLayout: Bool {
+        verticalSizeClass == .compact
     }
 
     private var displayFontSize: CGFloat {
@@ -116,13 +123,12 @@ struct ReaderView: View {
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
-                VStack(spacing: 18) {
-                    headerView
-                    wordDisplayView(height: readerDisplayHeight(for: proxy.size.height))
-                    controlsView
-                    progressView
-                    actionsView
-                    Spacer(minLength: 0)
+                Group {
+                    if isLandscapeControlLayout {
+                        landscapeLayout(proxy: proxy)
+                    } else {
+                        portraitLayout(proxy: proxy)
+                    }
                 }
                 .padding()
                 .background(palette.background.ignoresSafeArea())
@@ -166,6 +172,130 @@ struct ReaderView: View {
             }
         }
         .preferredColorScheme(preferredColorScheme)
+    }
+
+    /// Default portrait layout: header, word display, inline WPM controls, progress, and
+    /// playback action buttons stacked vertically.
+    private func portraitLayout(proxy: GeometryProxy) -> some View {
+        VStack(spacing: 18) {
+            headerView
+            wordDisplayView(height: readerDisplayHeight(for: proxy.size.height))
+            controlsView
+            progressView
+            actionsView
+            Spacer(minLength: 0)
+        }
+    }
+
+    /// Landscape layout: WPM controls pinned to the left edge (stacked vertically), the word
+    /// viewer keeps its own width in the center, and playback actions (skip back, play/pause,
+    /// skip forward) are pinned to the right edge (also stacked vertically). All side controls
+    /// use the liquid-glass button styling.
+    private func landscapeLayout(proxy: GeometryProxy) -> some View {
+        HStack(alignment: .center, spacing: 16) {
+            landscapeWpmControls
+                .frame(width: 84)
+
+            VStack(spacing: 12) {
+                headerView
+                wordDisplayView(height: readerDisplayHeight(for: proxy.size.height))
+                progressView
+            }
+            .frame(maxWidth: .infinity)
+
+            landscapeActionControls
+                .frame(width: 84)
+        }
+    }
+
+    /// Vertically stacked words-per-minute controls shown on the left side of the screen
+    /// while in landscape. Styled with the liquid-glass button treatment.
+    private var landscapeWpmControls: some View {
+        VStack(spacing: 14) {
+            Button {
+                adjustWpm(by: 25)
+            } label: {
+                Image(systemName: "plus")
+                    .font(.system(size: 18, weight: .semibold))
+                    .frame(width: 44, height: 44)
+            }
+            .buttonStyle(.plain)
+            .glassCircle()
+            .accessibilityLabel("Increase words per minute")
+
+            VStack(spacing: 2) {
+                Text("\(engine.state.currentWpm)")
+                    .font(.headline.bold())
+                Text("WPM")
+                    .font(.caption2)
+            }
+            .foregroundStyle(palette.text)
+            .frame(width: 70, height: 54)
+            .glassCapsule()
+            .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
+
+            Button {
+                adjustWpm(by: -25)
+            } label: {
+                Image(systemName: "minus")
+                    .font(.system(size: 18, weight: .semibold))
+                    .frame(width: 44, height: 44)
+            }
+            .buttonStyle(.plain)
+            .glassCircle()
+            .accessibilityLabel("Decrease words per minute")
+        }
+        .foregroundStyle(settings.focusMode ? .white : palette.text)
+        .opacity(settings.focusMode ? 0.85 : 1)
+    }
+
+    /// Vertically stacked playback controls (skip back 5 words, play/pause, skip forward 5
+    /// words) shown on the right side of the screen while in landscape. Styled with the
+    /// liquid-glass button treatment.
+    private var landscapeActionControls: some View {
+        VStack(spacing: 14) {
+            Button {
+                engine.skipBackward()
+            } label: {
+                Image(systemName: "gobackward.5")
+                    .font(.system(size: 20, weight: .semibold))
+                    .frame(width: 54, height: 54)
+            }
+            .buttonStyle(.plain)
+            .glassCircle()
+            .accessibilityLabel("Skip backward 5 words")
+            .accessibilityHint("Moves the current reading position back by 5 words")
+
+            Button {
+                if engine.state.isPlaying {
+                    engine.pause()
+                } else {
+                    engine.play()
+                }
+            } label: {
+                Image(systemName: engine.state.isPlaying ? "pause.fill" : "play.fill")
+                    .font(.system(size: 24, weight: .bold))
+                    .frame(width: 68, height: 68)
+                    .foregroundStyle(.white)
+                    .contentTransition(.symbolEffect(.replace))
+            }
+            .buttonStyle(.plain)
+            .glassAccentCircle(palette.accent)
+            .accessibilityLabel(engine.state.isPlaying ? "Pause reading" : "Start reading")
+
+            Button {
+                engine.skipForward()
+            } label: {
+                Image(systemName: "goforward.5")
+                    .font(.system(size: 20, weight: .semibold))
+                    .frame(width: 54, height: 54)
+            }
+            .buttonStyle(.plain)
+            .glassCircle()
+            .accessibilityLabel("Skip forward 5 words")
+            .accessibilityHint("Moves the current reading position forward by 5 words")
+        }
+        .foregroundStyle(settings.focusMode ? .white : palette.text)
     }
 
     private var headerView: some View {
@@ -666,6 +796,60 @@ struct ReaderView: View {
         let proposedHeight = availableHeight * (settings.focusMode ? 0.48 : 0.54)
         let minimumHeight = max(availableHeight * 0.38, settings.focusMode ? 220 : 250)
         return max(minimumHeight, min(proposedHeight, 520))
+    }
+}
+
+// MARK: - Liquid Glass button styling
+
+/// Applies the system "liquid glass" material to a circular control when available
+/// (iOS 26+), falling back to an ultra-thin material circle on earlier OS versions.
+private struct GlassCircleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffect(.regular, in: Circle())
+        } else {
+            content.background(.ultraThinMaterial, in: Circle())
+        }
+    }
+}
+
+/// Applies a tinted "liquid glass" material to a circular control (used for the primary
+/// play/pause button), falling back to a solid accent gradient circle on earlier OS versions.
+private struct GlassAccentCircleModifier: ViewModifier {
+    let accent: Color
+
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffect(.regular.tint(accent), in: Circle())
+        } else {
+            content.background(accent.gradient, in: Circle())
+        }
+    }
+}
+
+/// Applies the system "liquid glass" material to a capsule-shaped control (used for the
+/// WPM readout), falling back to an ultra-thin material capsule on earlier OS versions.
+private struct GlassCapsuleModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 26.0, *) {
+            content.glassEffect(.regular, in: Capsule())
+        } else {
+            content.background(.ultraThinMaterial, in: Capsule())
+        }
+    }
+}
+
+extension View {
+    fileprivate func glassCircle() -> some View {
+        modifier(GlassCircleModifier())
+    }
+
+    fileprivate func glassAccentCircle(_ accent: Color) -> some View {
+        modifier(GlassAccentCircleModifier(accent: accent))
+    }
+
+    fileprivate func glassCapsule() -> some View {
+        modifier(GlassCapsuleModifier())
     }
 }
 
