@@ -633,9 +633,9 @@ export class ProfilePage extends LitElement {
 				<div class="flex items-center justify-between mb-1 px-1">
 					<div class="flex items-center gap-2">
 						${icon(BookOpen, "w-4 h-4 text-ui-muted-subtle")}
-						<span class="text-ui-body uppercase tracking-widest text-ui-muted font-semibold">Reading History</span>
+						<span class="text-ui-body font-semibold text-base-content">Reading History</span>
 					</div>
-					<span class="text-ui-body text-ui-muted-subtle">${this.savedDocs.length} total</span>
+					<span class="text-ui-body text-ui-muted">${this.savedDocs.length} total</span>
 				</div>
 
 				<div class="flex flex-col gap-2">
@@ -656,7 +656,7 @@ export class ProfilePage extends LitElement {
 						>
 							${icon(ArrowLeft, "w-3.5 h-3.5")} Prev
 						</button>
-						<span class="text-ui-body font-mono text-ui-muted">
+						<span class="text-ui-body font-mono text-ui-muted bg-base-200 px-3 py-1 rounded-full">
 							${this.libraryPage} / ${totalPages}
 						</span>
 						<button
@@ -688,7 +688,7 @@ export class ProfilePage extends LitElement {
 		});
 
 		return html`
-      <div class="flex items-center gap-3 p-4 rounded-xl border border-base-200 hover:border-primary/30 transition-colors group">
+      <div class="flex items-center gap-3 px-4 py-3 rounded-xl border border-base-200 bg-base-100 hover:border-primary/30 transition-colors group">
         <div class="flex-1 min-w-0">
           <div class="text-ui-body font-semibold text-base-content truncate pr-4">${doc.title}</div>
           <div class="flex items-center gap-2 mt-1">
