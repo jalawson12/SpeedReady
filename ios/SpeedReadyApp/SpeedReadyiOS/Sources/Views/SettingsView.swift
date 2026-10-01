@@ -1,6 +1,80 @@
 import SwiftUI
 import UIKit
 
+/// Help text mirrored from the web app's settings panel (`src/components/settings-panel.ts`
+/// `TOOLTIPS`), shown via an info-circle button next to the matching setting's label.
+private enum SettingsHelpText {
+    static let sentencePause =
+        "Extra duration after periods, question marks, and exclamation points."
+    static let paragraphPause = "Extra delay when a new paragraph begins."
+    static let letterSpacing = "Adjust the horizontal space between characters."
+    static let pivotOffset =
+        "Nudges the focus point left or right if you prefer eye-fixation off-center."
+    static let speedRamp =
+        "Slowly accelerates the speed at the start of a session so your brain can adjust."
+    static let smartSpeed =
+        "Varies the duration of each word based on its character length (longer words dwell longer)."
+    static let peripheralContext =
+        "Shows a ghost of the previous and next words to help stay oriented."
+    static let orpGuides =
+        "Small markers above and below the focus point to help lock your gaze."
+    static let colorizeQuotes =
+        "Apply a distinct color to words inside double quotes (dialogue)."
+    static let colorizeParens =
+        "Apply a distinct color to words inside parentheses or square brackets (asides)."
+    static let dyslexiaMode =
+        "Uses OpenDyslexic, a font designed to improve readability for neurodivergent readers."
+    static let contextPauseOnClose =
+        "Slight extra pause after closing ) or ] to help process the phrase."
+    static let commaAsPause =
+        "Treat commas with the same weighted pause as full sentence ends."
+    static let fontWeight =
+        "Heavier weight makes text easier to track. Many dyslexic readers prefer medium-to-bold weights."
+}
+
+/// An info-circle button that reveals a setting's help text in a popover, matching the
+/// inline tooltip affordance used alongside help-equipped settings in the web app.
+private struct InfoTip: View {
+    let text: String
+    @State private var isPresented = false
+
+    var body: some View {
+        Button {
+            isPresented = true
+        } label: {
+            Image(systemName: "info.circle")
+                .imageScale(.small)
+                .foregroundStyle(.secondary)
+        }
+        .buttonStyle(.borderless)
+        .accessibilityLabel("More information")
+        .accessibilityHint(text)
+        .popover(isPresented: $isPresented, arrowEdge: .bottom) {
+            Text(text)
+                .font(.footnote)
+                .padding()
+                .frame(minWidth: 220, maxWidth: 320, alignment: .leading)
+                .presentationCompactAdaptation(.popover)
+        }
+    }
+}
+
+/// A row label with an optional trailing info-circle, used for settings that have
+/// matching help text in the web app.
+private struct SettingLabel: View {
+    let title: String
+    var tip: String? = nil
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Text(title)
+            if let tip {
+                InfoTip(text: tip)
+            }
+        }
+    }
+}
+
 struct SettingsView: View {
     @Binding var settings: ReaderSettings
     @Environment(\.colorScheme) private var colorScheme
@@ -37,8 +111,12 @@ struct SettingsView: View {
                         }
                         Slider(value: $settings.wpm, in: 100...1600, step: 25)
 
-                        Toggle("Smart speed", isOn: $settings.smartSpeed)
-                        Toggle("Speed ramp", isOn: $settings.speedRampEnabled)
+                        Toggle(isOn: $settings.smartSpeed) {
+                            SettingLabel(title: "Smart speed", tip: SettingsHelpText.smartSpeed)
+                        }
+                        Toggle(isOn: $settings.speedRampEnabled) {
+                            SettingLabel(title: "Speed ramp", tip: SettingsHelpText.speedRamp)
+                        }
                         if settings.speedRampEnabled {
                             HStack {
                                 Text("Ramp target")
@@ -59,28 +137,32 @@ struct SettingsView: View {
                         Slider(value: $settings.fontSize, in: 16...256, step: 2)
 
                         HStack {
-                            Text("Letter spacing")
+                            SettingLabel(title: "Letter spacing", tip: SettingsHelpText.letterSpacing)
                             Spacer()
                             Text(String(format: "%.2f em", settings.letterSpacing))
                         }
                         Slider(value: $settings.letterSpacing, in: 0...0.5, step: 0.01)
 
-                        Picker("Font weight", selection: $settings.fontWeight) {
+                        Picker(selection: $settings.fontWeight) {
                             Text("Light").tag(300)
                             Text("Regular").tag(400)
                             Text("Medium").tag(500)
                             Text("Semi").tag(600)
                             Text("Bold").tag(700)
                             Text("Extra").tag(800)
+                        } label: {
+                            SettingLabel(title: "Font weight", tip: SettingsHelpText.fontWeight)
                         }
 
-                        Toggle("Dyslexia mode", isOn: $settings.dyslexiaMode)
+                        Toggle(isOn: $settings.dyslexiaMode) {
+                            SettingLabel(title: "Dyslexia mode", tip: SettingsHelpText.dyslexiaMode)
+                        }
                     }
                     .listRowBackground(palette.surface)
 
                     Section("ORP & anchor") {
                         HStack {
-                            Text("Pivot offset")
+                            SettingLabel(title: "Pivot offset", tip: SettingsHelpText.pivotOffset)
                             Spacer()
                             Text("\(Int(settings.pivotOffset))%")
                         }
@@ -93,39 +175,49 @@ struct SettingsView: View {
                         }
                         .pickerStyle(.segmented)
 
-                        Toggle("ORP guide marks", isOn: $settings.showOrpGuides)
+                        Toggle(isOn: $settings.showOrpGuides) {
+                            SettingLabel(title: "ORP guide marks", tip: SettingsHelpText.orpGuides)
+                        }
                         Toggle("Hide trailing punctuation", isOn: $settings.hidePunctuationInDisplay)
                     }
                     .listRowBackground(palette.surface)
 
                     Section("Timing") {
                         HStack {
-                            Text("Sentence pause")
+                            SettingLabel(title: "Sentence pause", tip: SettingsHelpText.sentencePause)
                             Spacer()
                             Text(String(format: "%.1fx", settings.sentencePauseMultiplier))
                         }
                         Slider(value: $settings.sentencePauseMultiplier, in: 1...10, step: 0.5)
 
                         HStack {
-                            Text("Paragraph pause")
+                            SettingLabel(title: "Paragraph pause", tip: SettingsHelpText.paragraphPause)
                             Spacer()
                             Text(String(format: "%.1fx", settings.paragraphPauseMultiplier))
                         }
                         Slider(value: $settings.paragraphPauseMultiplier, in: 1...3, step: 0.1)
 
                         Toggle("Punctuation pauses", isOn: $settings.punctuationPause)
-                        Toggle("Comma as sentence pause", isOn: $settings.commaAsPause)
-                        Toggle("Context pause on close", isOn: $settings.contextPauseOnClose)
+                        Toggle(isOn: $settings.commaAsPause) {
+                            SettingLabel(title: "Comma as sentence pause", tip: SettingsHelpText.commaAsPause)
+                        }
+                        Toggle(isOn: $settings.contextPauseOnClose) {
+                            SettingLabel(title: "Context pause on close", tip: SettingsHelpText.contextPauseOnClose)
+                        }
                     }
                     .listRowBackground(palette.surface)
 
                     Section("Visual highlights") {
                         ColorPicker("Pivot highlight", selection: highlightColorBinding)
-                        Toggle("Colorize quotes", isOn: $settings.colorizeQuotes)
+                        Toggle(isOn: $settings.colorizeQuotes) {
+                            SettingLabel(title: "Colorize quotes", tip: SettingsHelpText.colorizeQuotes)
+                        }
                         if settings.colorizeQuotes {
                             ColorPicker("Quote color", selection: quoteColorBinding)
                         }
-                        Toggle("Colorize parentheses", isOn: $settings.colorizeParens)
+                        Toggle(isOn: $settings.colorizeParens) {
+                            SettingLabel(title: "Colorize parentheses", tip: SettingsHelpText.colorizeParens)
+                        }
                         if settings.colorizeParens {
                             ColorPicker("Paren color", selection: parenColorBinding)
                         }
@@ -145,7 +237,9 @@ struct SettingsView: View {
                     Section("Reading features") {
                         Toggle("Focus mode", isOn: $settings.focusMode)
                         Toggle("Remove citations", isOn: $settings.removeCitations)
-                        Toggle("Peripheral context", isOn: $settings.peripheralContext)
+                        Toggle(isOn: $settings.peripheralContext) {
+                            SettingLabel(title: "Peripheral context", tip: SettingsHelpText.peripheralContext)
+                        }
                         if settings.peripheralContext {
                             Stepper("Peripheral density: \(settings.peripheralContextCount)", value: $settings.peripheralContextCount, in: 1...3)
                         }

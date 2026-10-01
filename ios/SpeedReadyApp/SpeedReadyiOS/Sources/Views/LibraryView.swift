@@ -10,7 +10,6 @@ struct LibraryView: View {
 
     @ObservedObject var appState: SpeedReadyAppState
     let settings: ReaderSettings
-    let onSelectDocument: () -> Void
     @Environment(\.colorScheme) private var colorScheme
     @State private var activeSheet: ActiveSheet?
     @State private var customText = ""
@@ -32,7 +31,6 @@ struct LibraryView: View {
                 List(appState.documents) { document in
                     Button {
                         appState.setCurrentDocument(document)
-                        onSelectDocument()
                     } label: {
                         HStack(spacing: 12) {
                             VStack(alignment: .leading, spacing: 4) {
@@ -58,7 +56,7 @@ struct LibraryView: View {
                         }
                     }
                     .buttonStyle(.plain)
-                    .accessibilityHint("Selects this document and opens it in the Reader tab")
+                    .accessibilityHint("Selects this document as the current reading item")
                     .padding(.vertical, 8)
                     .listRowBackground(appState.currentDocument?.id == document.id ? palette.selectedSurface : palette.surface)
                     .swipeActions(edge: .leading, allowsFullSwipe: false) {
@@ -177,7 +175,7 @@ struct LibraryView: View {
 }
 
 #Preview {
-    LibraryView(appState: SpeedReadyAppState(), settings: ReaderSettings()) { }
+    LibraryView(appState: SpeedReadyAppState(), settings: ReaderSettings())
 }
 
 private struct DocumentImportSheet: View {

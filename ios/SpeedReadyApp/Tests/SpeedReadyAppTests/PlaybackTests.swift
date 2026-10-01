@@ -138,6 +138,49 @@ final class PlaybackTests: XCTestCase {
         XCTAssertEqual(engine.state.wordIndex, 0)
         XCTAssertEqual(engine.state.currentWord, "One")
     }
+
+    func testSeekToWordIndexUpdatesPositionWhilePaused() {
+        let engine = RSVPEngine()
+
+        engine.load(text: "One two three four five six seven eight nine ten")
+        engine.seek(toWordIndex: 4)
+
+        XCTAssertFalse(engine.state.isPlaying)
+        XCTAssertEqual(engine.state.wordIndex, 4)
+        XCTAssertEqual(engine.state.currentWord, "five")
+    }
+
+    func testSeekToWordIndexClampsToValidRange() {
+        let engine = RSVPEngine()
+
+        engine.load(text: "One two three")
+        engine.seek(toWordIndex: 999)
+        XCTAssertEqual(engine.state.wordIndex, 2)
+        XCTAssertEqual(engine.state.currentWord, "three")
+
+        engine.seek(toWordIndex: -5)
+        XCTAssertEqual(engine.state.wordIndex, 0)
+        XCTAssertEqual(engine.state.currentWord, "One")
+    }
+
+    func testSeekWhilePlayingKeepsPlaybackActiveFromNewPosition() {
+        let scheduler = TestScheduler()
+        let clock = TestClock(start: Date())
+        let engine = RSVPEngine(now: { clock.now }, scheduler: scheduler)
+
+        engine.load(text: "One two three four five six seven")
+        engine.play()
+        engine.seek(toWordIndex: 5)
+
+        XCTAssertTrue(engine.state.isPlaying)
+        XCTAssertEqual(engine.state.wordIndex, 5)
+        XCTAssertEqual(engine.state.currentWord, "six")
+
+        scheduler.fireNext()
+
+        XCTAssertEqual(engine.state.wordIndex, 6)
+        XCTAssertEqual(engine.state.currentWord, "seven")
+    }
 }
 
 private final class TestClock {
