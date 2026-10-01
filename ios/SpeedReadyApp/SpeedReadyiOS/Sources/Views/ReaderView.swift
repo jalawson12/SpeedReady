@@ -67,12 +67,30 @@ struct ReaderView: View {
         if settings.dyslexiaMode {
             return .system(size: size, weight: weight, design: .rounded)
         }
-        let fontName = jetBrainsMonoName(for: weight)
-        guard UIFont(name: fontName, size: size) != nil else {
-            Self.logger.error("Missing bundled font: \(fontName, privacy: .public)")
-            return .system(size: size, weight: weight, design: .monospaced)
+        let preferredFontName = jetBrainsMonoName(for: weight)
+        if let fontName = registeredJetBrainsMonoName(matching: preferredFontName, size: size) {
+            return Font.custom(fontName, size: size)
         }
-        return Font.custom(fontName, size: size)
+        Self.logger.error("Missing bundled font: \(preferredFontName, privacy: .public)")
+        return .system(size: size, weight: weight, design: .monospaced)
+    }
+
+    private func registeredJetBrainsMonoName(matching preferredName: String, size: CGFloat) -> String? {
+        if UIFont(name: preferredName, size: size) != nil {
+            return preferredName
+        }
+
+        guard let weightSuffix = preferredName.split(separator: "-").last?.lowercased() else {
+            return nil
+        }
+        for family in UIFont.familyNames.sorted() where family.localizedCaseInsensitiveContains("JetBrains") {
+            if let fontName = UIFont.fontNames(forFamilyName: family).sorted().first(where: {
+                $0.lowercased().hasSuffix("-\(weightSuffix)") && UIFont(name: $0, size: size) != nil
+            }) {
+                return fontName
+            }
+        }
+        return nil
     }
 
     private func jetBrainsMonoName(for weight: Font.Weight) -> String {
