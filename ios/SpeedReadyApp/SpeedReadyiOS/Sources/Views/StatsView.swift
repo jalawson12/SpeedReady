@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct StatsView: View {
-    @ObservedObject var appState: SpeedReadyAppState
+    let appState: SpeedReadyAppState
     let settings: ReaderSettings
     @Environment(\.colorScheme) private var colorScheme
 

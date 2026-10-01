@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 
 struct ReaderSettings: Equatable, Codable {
     var wpm: Double = 300
@@ -33,20 +34,36 @@ struct ReaderSettings: Equatable, Codable {
     var commaAsPause: Bool = false
     var punctuationPause: Bool = true
 
-    private static let defaultsKey = "speedready.readerSettings.v1"
+    private static let defaultsKey = "speedready.readerSettings.v2"
+    private static let legacyDefaultsKey = "speedready.readerSettings.v1"
+    private static let currentStorageVersion = 2
 
-    static func loadPersisted() -> ReaderSettings {
-        guard let data = UserDefaults.standard.data(forKey: defaultsKey),
-              let decoded = try? JSONDecoder().decode(ReaderSettings.self, from: data)
-        else {
-            return ReaderSettings()
-        }
-        return decoded
+    private struct PersistedSettings: Codable {
+        let version: Int
+        let settings: ReaderSettings
     }
 
-    func persist() {
-        guard let data = try? JSONEncoder().encode(self) else { return }
-        UserDefaults.standard.set(data, forKey: Self.defaultsKey)
+    static func loadPersisted(from defaults: UserDefaults = .standard) -> ReaderSettings {
+        if let data = defaults.data(forKey: defaultsKey),
+           let stored = try? JSONDecoder().decode(PersistedSettings.self, from: data),
+           stored.version == currentStorageVersion {
+            return stored.settings
+        }
+
+        if let data = defaults.data(forKey: legacyDefaultsKey),
+           let migrated = try? JSONDecoder().decode(ReaderSettings.self, from: data) {
+            migrated.persist(to: defaults)
+            return migrated
+        }
+
+        return ReaderSettings()
+    }
+
+    func persist(to defaults: UserDefaults = .standard) {
+        let stored = Self.PersistedSettings(version: Self.currentStorageVersion, settings: self)
+        guard let data = try? JSONEncoder().encode(stored) else { return }
+        defaults.set(data, forKey: Self.defaultsKey)
+        defaults.removeObject(forKey: Self.legacyDefaultsKey)
     }
 
     func requiresEngineUpdate(comparedTo previous: ReaderSettings) -> Bool {
@@ -170,10 +187,12 @@ struct ReaderState: Equatable {
     var inBrackets: Bool = false
 }
 
-final class SpeedReadyAppState: ObservableObject {
-    @Published var documents: [ReadingDocument] = []
-    @Published var currentDocument: ReadingDocument?
-    @Published var sessions: [ReadingSession] = []
+@MainActor
+@Observable
+final class SpeedReadyAppState {
+    var documents: [ReadingDocument] = []
+    var currentDocument: ReadingDocument?
+    var sessions: [ReadingSession] = []
 
     private let documentsKey = "speedready.documents.v1"
     private let sessionsKey = "speedready.sessions.v1"

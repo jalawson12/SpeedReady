@@ -5,6 +5,7 @@ import XCTest
 @testable import SpeedReadyiOS
 #endif
 
+@MainActor
 final class RSVPEngineTests: XCTestCase {
     func testEngineLoadsTextAndComputesProgress() {
         let engine = RSVPEngine()
@@ -141,11 +142,12 @@ final class RSVPEngineTests: XCTestCase {
     }
 }
 
+@MainActor
 private final class RecordingScheduler: RSVPScheduler {
-    private var queue: [() -> Void] = []
+    private var queue: [@MainActor @Sendable () -> Void] = []
     private(set) var recordedDelays: [TimeInterval] = []
 
-    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask {
+    func schedule(after delay: TimeInterval, action: @escaping @MainActor @Sendable () -> Void) -> RSVPTask {
         recordedDelays.append(delay)
         queue.append(action)
         return RecordingTask { [weak self] in
@@ -160,10 +162,11 @@ private final class RecordingScheduler: RSVPScheduler {
     }
 }
 
+@MainActor
 private final class RecordingTask: RSVPTask {
-    private let onCancel: () -> Void
+    private let onCancel: @MainActor @Sendable () -> Void
 
-    init(onCancel: @escaping () -> Void) {
+    init(onCancel: @escaping @MainActor @Sendable () -> Void) {
         self.onCancel = onCancel
     }
 

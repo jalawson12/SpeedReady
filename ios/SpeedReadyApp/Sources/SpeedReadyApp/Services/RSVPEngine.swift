@@ -1,13 +1,16 @@
 import Foundation
 
+@MainActor
 protocol RSVPScheduler {
-    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask
+    func schedule(after delay: TimeInterval, action: @escaping @MainActor @Sendable () -> Void) -> RSVPTask
 }
 
+@MainActor
 protocol RSVPTask {
     func cancel()
 }
 
+@MainActor
 struct TimerRSVPTask: RSVPTask {
     private weak var timer: Timer?
 
@@ -20,13 +23,17 @@ struct TimerRSVPTask: RSVPTask {
     }
 }
 
+@MainActor
 struct TimerRSVPScheduler: RSVPScheduler {
-    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask {
-        let timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in action() }
+    func schedule(after delay: TimeInterval, action: @escaping @MainActor @Sendable () -> Void) -> RSVPTask {
+        let timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { _ in
+            Task { @MainActor in action() }
+        }
         return TimerRSVPTask(timer: timer)
     }
 }
 
+@MainActor
 final class RSVPEngine: ObservableObject {
     @Published private(set) var state = ReaderState()
 

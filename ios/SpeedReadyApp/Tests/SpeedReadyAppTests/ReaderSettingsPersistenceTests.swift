@@ -26,6 +26,24 @@ final class ReaderSettingsPersistenceTests: XCTestCase {
         XCTAssertEqual(loaded.highlightColor, "#605DF6")
     }
 
+    func testMigratesVersionOneSettingsToVersionTwoStorage() throws {
+        let suiteName = "ReaderSettingsPersistenceTests.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+
+        var legacySettings = ReaderSettings()
+        legacySettings.wpm = 475
+        legacySettings.dyslexiaMode = true
+        defaults.set(try JSONEncoder().encode(legacySettings), forKey: "speedready.readerSettings.v1")
+
+        let migrated = ReaderSettings.loadPersisted(from: defaults)
+
+        XCTAssertEqual(migrated.wpm, 475)
+        XCTAssertTrue(migrated.dyslexiaMode)
+        XCTAssertNotNil(defaults.data(forKey: "speedready.readerSettings.v2"))
+        XCTAssertNil(defaults.data(forKey: "speedready.readerSettings.v1"))
+    }
+
     func testVisualOnlySettingsDoNotRequireEngineUpdate() {
         let original = ReaderSettings()
         var updated = original

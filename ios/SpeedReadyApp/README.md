@@ -68,7 +68,7 @@ ios/SpeedReadyApp/
    open ios/SpeedReadyApp
    ```
 
-2. **Select target:** `SpeedReadyiOS` for iOS 17.0
+2. **Select target:** `SpeedReadyiOS` for iOS 18.0
 
 3. **Build:** ⌘B or Product → Build
 
@@ -134,7 +134,7 @@ UIViewControllerRepresentable for:
 
 ## Dependencies
 
-- **SwiftUI** (iOS 17+): Native UI framework
+- **SwiftUI** (iOS 18+): Native UI framework
 - **PDFKit**: Native PDF text extraction
 - **Vision**: OCR fallback for scanned PDF pages
 - **ZIPFoundation**: EPUB archive extraction
@@ -157,4 +157,4 @@ UIViewControllerRepresentable for:
 
 ---
 
-**Ready for Xcode:** This project is fully structured for iOS 17+ development and testing.
+**Ready for Xcode:** This project is configured for iOS 18+ and Swift 6 language mode.

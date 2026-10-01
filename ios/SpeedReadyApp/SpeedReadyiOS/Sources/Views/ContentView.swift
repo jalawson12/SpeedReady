@@ -13,7 +13,7 @@ enum AppTab: Hashable {
 private let brandAccentColor = Color(hex: "#605DF6") ?? Color.purple
 
 struct ContentView: View {
-    @ObservedObject var appState: SpeedReadyAppState
+    let appState: SpeedReadyAppState
     @State private var settings = ReaderSettings.loadPersisted()
     @State private var selectedTab: AppTab = .reader
 

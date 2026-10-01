@@ -5,6 +5,7 @@ import XCTest
 @testable import SpeedReadyiOS
 #endif
 
+@MainActor
 final class ORPCalculationTests: XCTestCase {
     let engine = RSVPEngine()
 

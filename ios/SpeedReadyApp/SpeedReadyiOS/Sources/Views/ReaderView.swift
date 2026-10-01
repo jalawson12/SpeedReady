@@ -14,9 +14,10 @@ struct ReaderView: View {
         static let extraBold = "JetBrainsMono-ExtraBold"
     }
 
-    @ObservedObject var appState: SpeedReadyAppState
+    let appState: SpeedReadyAppState
     @Binding var settings: ReaderSettings
     @Environment(\.colorScheme) private var colorScheme
+    @ScaledMetric(relativeTo: .largeTitle) private var dynamicTypeScale = 1.0
     @StateObject private var engine = RSVPEngine()
     @State private var activeDocument: ReadingDocument?
     @State private var lastRecordedSessionID: UUID?
@@ -32,7 +33,7 @@ struct ReaderView: View {
     }
 
     private var displayFontSize: CGFloat {
-        max(16, CGFloat(settings.fontSize) * CGFloat(settings.fontScale))
+        max(16, CGFloat(settings.fontSize) * CGFloat(settings.fontScale) * CGFloat(dynamicTypeScale))
     }
 
     private var displayPivotFontSize: CGFloat {

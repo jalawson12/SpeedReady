@@ -8,7 +8,7 @@ struct LibraryView: View {
         var id: String { rawValue }
     }
 
-    @ObservedObject var appState: SpeedReadyAppState
+    let appState: SpeedReadyAppState
     let settings: ReaderSettings
     @Environment(\.colorScheme) private var colorScheme
     @State private var activeSheet: ActiveSheet?
