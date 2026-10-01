@@ -967,6 +967,8 @@ export class RsvpReader extends LitElement {
 		const nextWords = hidePunct
 			? nextWordsRaw.map((w) => this.stripTrailingPunctuation(w))
 			: nextWordsRaw;
+		const prevText = prevWords.join(" ");
+		const nextText = nextWords.join(" ");
 
 		const offset = this.settings.pivotOffset ?? 0;
 		const translateStyle =
@@ -1002,10 +1004,10 @@ export class RsvpReader extends LitElement {
         dir="${dirAttr}"
       >
         ${
-					prevWords.length
+					this.settings.peripheralContext
 						? html`
-          <span class="peripheral-context text-base-content/15 font-mono select-none leading-none" style="${peripheralStyle}">
-            ${prevWords.join(" ")}
+          <span class="peripheral-context text-base-content/15 font-mono select-none leading-none ${prevText ? "" : "invisible"}" style="${peripheralStyle}">
+            ${prevText || "\u00a0"}
           </span>
         `
 						: ""
@@ -1016,10 +1018,10 @@ export class RsvpReader extends LitElement {
         </div>
 
         ${
-					nextWords.length
+					this.settings.peripheralContext
 						? html`
-          <span class="peripheral-context text-base-content/15 font-mono select-none leading-none" style="${peripheralStyle}">
-            ${nextWords.join(" ")}
+          <span class="peripheral-context text-base-content/15 font-mono select-none leading-none ${nextText ? "" : "invisible"}" style="${peripheralStyle}">
+            ${nextText || "\u00a0"}
           </span>
         `
 						: ""
