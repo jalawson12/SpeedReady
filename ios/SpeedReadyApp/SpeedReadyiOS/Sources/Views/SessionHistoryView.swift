@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SessionHistoryView: View {
-    @ObservedObject var appState: SpeedReadyAppState
+    let appState: SpeedReadyAppState
     let settings: ReaderSettings
     var embedInNavigationStack: Bool = true
     @Environment(\.colorScheme) private var colorScheme

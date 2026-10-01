@@ -2,8 +2,12 @@
 
 ## Deployment Target
 
-**Current:** iOS 17.0  
-**Rationale:** iOS 17 includes native SwiftUI features required for the app (PDFKit improvements, enhanced State management)
+**Current:** iOS 18.0
+**Rationale:** iOS 18 is a conservative modern baseline for the Swift 6.4 toolchain and current SwiftUI APIs while retaining compatibility with recent devices.
+
+**Swift toolchain:** Swift tools 6.4 with Swift 6 language mode. The Xcode project selects Swift 6.0 language mode for its app and test targets.
+
+**Release validation:** Run the app and tests with Xcode 27 and the iOS 27 SDK, including Dynamic Type and VoiceOver checks. The development environment used for this change does not include `xcodebuild`.
 
 ## Swift Package Structure
 

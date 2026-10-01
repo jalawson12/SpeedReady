@@ -5,6 +5,7 @@ import XCTest
 @testable import SpeedReadyiOS
 #endif
 
+@MainActor
 final class PlaybackTests: XCTestCase {
     func testPlayPauseToggle() {
         let scheduler = TestScheduler()
@@ -183,6 +184,7 @@ final class PlaybackTests: XCTestCase {
     }
 }
 
+@MainActor
 private final class TestClock {
     private(set) var now: Date
 
@@ -195,10 +197,11 @@ private final class TestClock {
     }
 }
 
+@MainActor
 private final class TestTask: RSVPTask {
-    private let onCancel: () -> Void
+    private let onCancel: @MainActor @Sendable () -> Void
 
-    init(onCancel: @escaping () -> Void) {
+    init(onCancel: @escaping @MainActor @Sendable () -> Void) {
         self.onCancel = onCancel
     }
 
@@ -207,10 +210,11 @@ private final class TestTask: RSVPTask {
     }
 }
 
+@MainActor
 private final class TestScheduler: RSVPScheduler {
-    private var queue: [() -> Void] = []
+    private var queue: [@MainActor @Sendable () -> Void] = []
 
-    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask {
+    func schedule(after delay: TimeInterval, action: @escaping @MainActor @Sendable () -> Void) -> RSVPTask {
         queue.append(action)
         return TestTask { [weak self] in
             self?.queue.removeAll()

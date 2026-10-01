@@ -1,10 +1,10 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.4
 import PackageDescription
 
 let package = Package(
     name: "SpeedReadyApp",
     platforms: [
-        .iOS(.v17)
+        .iOS(.v18)
     ],
     products: [
         .library(
@@ -28,5 +28,6 @@ let package = Package(
             dependencies: ["SpeedReadyApp"],
             path: "Tests/SpeedReadyAppTests"
         )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )

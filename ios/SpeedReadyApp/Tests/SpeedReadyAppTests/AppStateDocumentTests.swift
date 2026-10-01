@@ -1,14 +1,15 @@
 import XCTest
 @testable import SpeedReadyApp
 
+@MainActor
 final class AppStateDocumentTests: XCTestCase {
     override func setUp() {
         super.setUp()
-        clearPersistedState()
+        Self.clearPersistedState()
     }
 
     override func tearDown() {
-        clearPersistedState()
+        Self.clearPersistedState()
         super.tearDown()
     }
 
@@ -298,7 +299,7 @@ final class AppStateDocumentTests: XCTestCase {
         XCTAssertNil(reloaded.readingLocation(for: second))
     }
 
-    private func clearPersistedState() {
+    nonisolated private static func clearPersistedState() {
         UserDefaults.standard.removeObject(forKey: "speedready.documents.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.sessions.v1")
         UserDefaults.standard.removeObject(forKey: "speedready.readerSettings.v1")
@@ -307,10 +308,11 @@ final class AppStateDocumentTests: XCTestCase {
     }
 }
 
+@MainActor
 private final class AppStateTestTask: RSVPTask {
-    private let onCancel: () -> Void
+    private let onCancel: @MainActor @Sendable () -> Void
 
-    init(onCancel: @escaping () -> Void) {
+    init(onCancel: @escaping @MainActor @Sendable () -> Void) {
         self.onCancel = onCancel
     }
 
@@ -319,10 +321,11 @@ private final class AppStateTestTask: RSVPTask {
     }
 }
 
+@MainActor
 private final class AppStateTestScheduler: RSVPScheduler {
-    private var queue: [() -> Void] = []
+    private var queue: [@MainActor @Sendable () -> Void] = []
 
-    func schedule(after delay: TimeInterval, action: @escaping () -> Void) -> RSVPTask {
+    func schedule(after delay: TimeInterval, action: @escaping @MainActor @Sendable () -> Void) -> RSVPTask {
         queue.append(action)
         return AppStateTestTask { [weak self] in
             self?.queue.removeAll()

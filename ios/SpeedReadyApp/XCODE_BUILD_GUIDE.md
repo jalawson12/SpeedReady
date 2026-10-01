@@ -37,8 +37,8 @@ Before opening in Xcode, verify the following:
 
 ## Recommended Build Settings
 
-- **Minimum iOS Deployment Target:** 17.0
-- **Swift Language Version:** 5.9+
+- **Minimum iOS Deployment Target:** 18.0
+- **Swift Language Version:** 6.0 (Swift 6 language mode; package tools 6.4)
 - **Bundle Identifier:** `com.yourname.speedready`
 - **Signing:** Select your development team
 
@@ -65,7 +65,7 @@ If build fails:
 
 **Error: Type '...' has no member '...'**
 - Likely a state management issue
-- Verify `@Published` properties in `SpeedReadyAppState`
+- Verify `@Observable` state in `SpeedReadyAppState`
 - Verify `@Binding` in settings views
 
 **Error: Cannot convert value of type '...'**
@@ -90,3 +90,5 @@ If build fails:
 ---
 
 **Repository note:** This repository now ships both a Swift package for shared logic/tests and a checked-in Xcode iOS app target. Signing and simulator/device validation remain Xcode-only steps.
+
+The package and project are configured for the iOS 18 deployment baseline and Swift 6.0 language mode. Xcode 27 / iOS 27 SDK simulator builds and accessibility review should be confirmed in Xcode before release; this environment has no `xcodebuild`.
