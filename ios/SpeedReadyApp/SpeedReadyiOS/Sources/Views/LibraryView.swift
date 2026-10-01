@@ -51,7 +51,9 @@ struct LibraryView: View {
                         Image(systemName: "plus.circle.fill")
                             .font(.title3)
                             .foregroundStyle(palette.accent)
+                            .symbolRenderingMode(.hierarchical)
                     }
+                    .menuStyle(.borderlessButton)
                     .accessibilityLabel("Add reading material")
                 }
             }
@@ -170,15 +172,19 @@ struct LibraryView: View {
             .listRowSeparator(.hidden)
             .listRowBackground(Color.clear)
             .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                Button("Rename") {
+                Button {
                     editingDocument = document
                     editedTitle = document.title
+                } label: {
+                    Label("Rename", systemImage: "pencil")
                 }
                 .tint(palette.accent)
             }
             .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                Button("Delete", role: .destructive) {
+                Button(role: .destructive) {
                     documentPendingDeletion = document
+                } label: {
+                    Label("Delete", systemImage: "trash")
                 }
                 .tint(.red)
             }
