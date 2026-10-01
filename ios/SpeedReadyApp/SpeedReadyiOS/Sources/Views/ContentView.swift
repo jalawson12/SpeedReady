@@ -45,9 +45,7 @@ struct ContentView: View {
                     Label("Reader", systemImage: "book.fill")
                 }
 
-            LibraryView(appState: appState, settings: settings) {
-                selectedTab = .reader
-            }
+            LibraryView(appState: appState, settings: settings)
                 .tag(AppTab.library)
                 .tabItem {
                     Label("Library", systemImage: "folder.fill")

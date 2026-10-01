@@ -23,6 +23,9 @@ struct ReaderView: View {
     @State private var pendingEngineSettingsTask: Task<Void, Never>?
     @State private var pendingEngineSettingsGeneration: UInt = 0
     @State private var engineContentVersion: UInt = 0
+    @State private var isScrubbing: Bool = false
+    @State private var scrubProgress: Double = 0
+    @State private var wasPlayingBeforeScrub: Bool = false
 
     private var currentDocument: ReadingDocument {
         appState.currentDocument ?? ReadingDocument.sample()
@@ -281,21 +284,72 @@ struct ReaderView: View {
         .opacity(settings.focusMode ? 0.85 : 1)
     }
 
+    private var currentProgressFraction: Double {
+        Double(engine.state.wordIndex) / Double(max(engine.state.totalWords, 1))
+    }
+
+    private var displayedProgressFraction: Double {
+        isScrubbing ? scrubProgress : currentProgressFraction
+    }
+
+    private var displayedWordIndex: Int {
+        isScrubbing
+            ? scrubbedWordIndex(for: scrubProgress)
+            : min(engine.state.wordIndex, engine.state.totalWords)
+    }
+
+    private func scrubbedWordIndex(for fraction: Double) -> Int {
+        let total = engine.state.totalWords
+        guard total > 0 else { return 0 }
+        let rawIndex = Int((fraction * Double(total)).rounded())
+        return min(max(0, rawIndex), total)
+    }
+
     private var progressView: some View {
         VStack(alignment: .leading, spacing: 8) {
-            ProgressView(
-                value: Double(engine.state.wordIndex),
-                total: Double(max(engine.state.totalWords, 1))
+            ReaderScrubber(
+                progress: displayedProgressFraction,
+                isActive: isScrubbing,
+                trackColor: palette.mutedText.opacity(0.25),
+                fillColor: palette.accent,
+                onEditingChanged: { fraction in
+                    if !isScrubbing {
+                        isScrubbing = true
+                        wasPlayingBeforeScrub = engine.state.isPlaying
+                        engine.pause()
+                    }
+                    scrubProgress = fraction
+                    engine.seek(toWordIndex: scrubbedWordIndex(for: fraction))
+                },
+                onEditingEnded: { fraction in
+                    scrubProgress = fraction
+                    engine.seek(toWordIndex: scrubbedWordIndex(for: fraction))
+                    isScrubbing = false
+                    if wasPlayingBeforeScrub {
+                        engine.play()
+                    }
+                }
             )
-            .progressViewStyle(.linear)
-            .tint(palette.accent)
+            .frame(height: 22)
             .accessibilityLabel("Reading progress")
+            .accessibilityValue("\(displayedWordIndex) of \(engine.state.totalWords) words")
+            .accessibilityAdjustableAction { direction in
+                let step = max(1, engine.state.totalWords / 100)
+                switch direction {
+                case .increment:
+                    engine.seek(toWordIndex: engine.state.wordIndex + step)
+                case .decrement:
+                    engine.seek(toWordIndex: engine.state.wordIndex - step)
+                @unknown default:
+                    break
+                }
+            }
 
             HStack {
-                Text("\(engine.state.wordIndex)/\(engine.state.totalWords) words")
+                Text("\(displayedWordIndex)/\(engine.state.totalWords) words")
                     .font(.caption)
                     .foregroundStyle(palette.mutedText)
-                    .accessibilityLabel("Progress: \(engine.state.wordIndex) of \(engine.state.totalWords) words read")
+                    .accessibilityHidden(true)
                 Spacer()
                 Text(timeLeftText)
                     .font(.caption)
@@ -593,4 +647,66 @@ struct ReaderView: View {
 
 #Preview {
     ReaderView(appState: SpeedReadyAppState(), settings: .constant(ReaderSettings()))
+}
+
+/// A reusable drag-to-seek progress scrubber styled after the iOS Music app's playhead.
+/// Reports live progress updates while dragging and a final value when the drag ends,
+/// so callers can seek an underlying engine and preserve playback state.
+struct ReaderScrubber: View {
+    /// Current progress, in the range 0...1.
+    var progress: Double
+    /// Whether the user is actively dragging the playhead.
+    var isActive: Bool
+    var trackColor: Color
+    var fillColor: Color
+    /// Called continuously while the user drags, with the new progress value.
+    let onEditingChanged: (Double) -> Void
+    /// Called once when the drag gesture ends, with the final progress value.
+    let onEditingEnded: (Double) -> Void
+
+    @GestureState private var isPressing = false
+
+    private var trackHeight: CGFloat { isActive ? 10 : 6 }
+    private var thumbDiameter: CGFloat { isActive ? 22 : 14 }
+
+    var body: some View {
+        GeometryReader { geo in
+            let width = max(geo.size.width, 1)
+            let clampedProgress = min(max(progress, 0), 1)
+            let fillWidth = width * clampedProgress
+
+            let clampedOffset = min(max(fillWidth - thumbDiameter / 2, 0), max(width - thumbDiameter, 0))
+
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .fill(trackColor)
+                    .frame(height: trackHeight)
+
+                Capsule()
+                    .fill(fillColor)
+                    .frame(width: fillWidth, height: trackHeight)
+
+                Circle()
+                    .fill(fillColor)
+                    .frame(width: thumbDiameter, height: thumbDiameter)
+                    .shadow(color: .black.opacity(isActive ? 0.25 : 0), radius: 4, y: 2)
+                    .offset(x: clampedOffset)
+            }
+            .frame(maxHeight: .infinity, alignment: .center)
+            .contentShape(Rectangle())
+            .animation(.easeOut(duration: 0.15), value: isActive)
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .updating($isPressing) { _, state, _ in state = true }
+                    .onChanged { value in
+                        let fraction = min(max(value.location.x / width, 0), 1)
+                        onEditingChanged(fraction)
+                    }
+                    .onEnded { value in
+                        let fraction = min(max(value.location.x / width, 0), 1)
+                        onEditingEnded(fraction)
+                    }
+            )
+        }
+    }
 }

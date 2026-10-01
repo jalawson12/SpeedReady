@@ -154,6 +154,25 @@ final class RSVPEngine: ObservableObject {
         }
     }
 
+    /// Seeks directly to an arbitrary word index, preserving the current play/pause state.
+    /// Used by scrubber/drag-to-seek UI so the user can jump to any point in the book.
+    func seek(toWordIndex index: Int) {
+        guard !tokens.isEmpty else { return }
+        let maxIndex = max(0, tokens.count - 1)
+        let clampedIndex = min(max(0, index), maxIndex)
+
+        scheduledTask?.cancel()
+        scheduledTask = nil
+
+        state.wordIndex = clampedIndex
+        didCompleteSession = false
+        updateCurrentDisplay(index: clampedIndex)
+
+        if state.isPlaying {
+            scheduleNext()
+        }
+    }
+
     func skipForward(by count: Int = 5) {
         skip(by: max(1, count))
     }
