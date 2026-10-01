@@ -25,51 +25,17 @@ struct LibraryView: View {
 
     var body: some View {
         NavigationStack {
-            List(appState.documents) { document in
-                Button {
-                    appState.setCurrentDocument(document)
-                } label: {
-                    HStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(document.title)
-                                .font(.headline)
-                                .foregroundStyle(palette.text)
-                            Text("\(document.wordCount) words")
-                                .font(.subheadline)
-                                .foregroundStyle(palette.mutedText)
-                            Text(document.createdAt.formatted(date: .abbreviated, time: .shortened))
-                                .font(.caption)
-                                .foregroundStyle(palette.mutedText.opacity(0.8))
-                        }
+            ZStack {
+                palette.background.ignoresSafeArea()
 
-                        Spacer()
-
-                        if appState.currentDocument?.id == document.id {
-                            Image(systemName: "checkmark.circle.fill")
-                                .font(.title3)
-                                .foregroundStyle(palette.accent)
-                                .accessibilityLabel("Currently selected")
-                        }
+                Group {
+                    if appState.documents.isEmpty {
+                        emptyState
+                    } else {
+                        documentList
                     }
-                }
-                .buttonStyle(.plain)
-                .accessibilityHint("Selects this document as the current reading item")
-                .padding(.vertical, 8)
-                .swipeActions(edge: .leading, allowsFullSwipe: false) {
-                    Button("Rename") {
-                        editingDocument = document
-                        editedTitle = document.title
-                    }
-                    .tint(palette.accent)
-                }
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                    Button("Delete", role: .destructive) {
-                        documentPendingDeletion = document
-                    }
-                    .tint(.red)
                 }
             }
-            .listStyle(.insetGrouped)
             .navigationTitle("Library")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -165,6 +131,75 @@ struct LibraryView: View {
                 }
             }
         }
+        .tint(palette.accent)
+    }
+
+    private var documentList: some View {
+        List(appState.documents) { document in
+            Button {
+                appState.setCurrentDocument(document)
+            } label: {
+                HStack(spacing: 12) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(document.title)
+                            .font(.headline)
+                            .foregroundStyle(palette.text)
+                        Text("\(document.wordCount) words")
+                            .font(.subheadline)
+                            .foregroundStyle(palette.mutedText)
+                        Text(document.createdAt.formatted(date: .abbreviated, time: .shortened))
+                            .font(.caption)
+                            .foregroundStyle(palette.mutedText.opacity(0.8))
+                    }
+
+                    Spacer()
+
+                    if appState.currentDocument?.id == document.id {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.title3)
+                            .foregroundStyle(palette.accent)
+                            .accessibilityLabel("Currently selected")
+                    }
+                }
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint("Selects this document as the current reading item")
+            .padding(.vertical, 8)
+            .listRowBackground(palette.surface)
+            .swipeActions(edge: .leading, allowsFullSwipe: false) {
+                Button("Rename") {
+                    editingDocument = document
+                    editedTitle = document.title
+                }
+                .tint(palette.accent)
+            }
+            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                Button("Delete", role: .destructive) {
+                    documentPendingDeletion = document
+                }
+                .tint(.red)
+            }
+        }
+        .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(palette.background)
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "folder.badge.plus")
+                .font(.system(size: 40))
+                .foregroundStyle(palette.mutedText)
+            Text("Your library is empty")
+                .font(.headline)
+                .foregroundStyle(palette.text)
+            Text("Load a document or paste text to get started.")
+                .font(.subheadline)
+                .foregroundStyle(palette.mutedText)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
 }
