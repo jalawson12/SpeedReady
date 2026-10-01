@@ -61,7 +61,7 @@ struct LibraryView: View {
             .sheet(item: $activeSheet) { sheet in
                 switch sheet {
                 case .documentPicker:
-                    DocumentImportSheet { result in
+                    DocumentImportSheet(settings: settings) { result in
                         switch result {
                         case .success(let document):
                             appState.importDocument(document)
@@ -224,14 +224,21 @@ struct LibraryView: View {
 
 private struct DocumentImportSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
+    let settings: ReaderSettings
 
     let onPick: (Result<ReadingDocument, DocumentImportError>) -> Void
+
+    private var palette: AppPalette {
+        AppPalette(settings: settings, colorScheme: colorScheme)
+    }
 
     var body: some View {
         DocumentPickerView { result in
             onPick(result)
             dismiss()
         }
+        .tint(palette.accent)
     }
 }
 
