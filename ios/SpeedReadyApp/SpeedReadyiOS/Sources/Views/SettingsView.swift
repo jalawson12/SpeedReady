@@ -250,6 +250,8 @@ struct SettingsView: View {
                 .scrollContentBackground(.hidden)
                 .background(palette.background)
                 .tint(palette.accent)
+                .frame(maxWidth: 760)
+                .frame(maxWidth: .infinity)
             }
             .onChange(of: settings) { _, newSettings in
                 hasPendingChanges = true

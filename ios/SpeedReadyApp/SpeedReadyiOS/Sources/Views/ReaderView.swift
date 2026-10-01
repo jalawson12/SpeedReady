@@ -17,6 +17,7 @@ struct ReaderView: View {
     let appState: SpeedReadyAppState
     @Binding var settings: ReaderSettings
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @ScaledMetric(relativeTo: .largeTitle) private var dynamicTypeScale = 1.0
     @StateObject private var engine = RSVPEngine()
@@ -33,10 +34,10 @@ struct ReaderView: View {
         appState.currentDocument ?? ReadingDocument.sample()
     }
 
-    /// True when the device is rotated into landscape (compact vertical size class on iPhone).
-    /// In this orientation controls move to the left/right sides of the screen.
-    private var isLandscapeControlLayout: Bool {
+    /// In landscape, controls move to the left/right sides of the screen.
+    private func usesLandscapeControlLayout(in size: CGSize) -> Bool {
         verticalSizeClass == .compact
+            || (horizontalSizeClass == .regular && size.width > size.height)
     }
 
     private var displayFontSize: CGFloat {
@@ -123,15 +124,18 @@ struct ReaderView: View {
     var body: some View {
         NavigationStack {
             GeometryReader { proxy in
+                let useLandscapeLayout = usesLandscapeControlLayout(in: proxy.size)
                 Group {
-                    if isLandscapeControlLayout {
+                    if useLandscapeLayout {
                         landscapeLayout(proxy: proxy)
                     } else {
                         portraitLayout(proxy: proxy)
                     }
                 }
-                .padding(.horizontal, isLandscapeControlLayout ? 8 : 16)
-                .padding(.vertical, isLandscapeControlLayout ? 8 : 16)
+                .frame(maxWidth: 1_100)
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal, useLandscapeLayout ? 8 : 16)
+                .padding(.vertical, useLandscapeLayout ? 8 : 16)
                 .background(palette.background.ignoresSafeArea())
             }
             .onAppear {
@@ -204,6 +208,7 @@ struct ReaderView: View {
                 wordDisplayView(height: readerDisplayHeight(for: proxy.size.height))
                 progressView
             }
+            .frame(maxWidth: 1_000)
             .frame(maxWidth: .infinity)
 
             landscapeActionControls
