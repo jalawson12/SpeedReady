@@ -130,7 +130,8 @@ struct ReaderView: View {
                         portraitLayout(proxy: proxy)
                     }
                 }
-                .padding()
+                .padding(.horizontal, isLandscapeControlLayout ? 8 : 16)
+                .padding(.vertical, isLandscapeControlLayout ? 8 : 16)
                 .background(palette.background.ignoresSafeArea())
             }
             .onAppear {
@@ -189,14 +190,16 @@ struct ReaderView: View {
 
     /// Landscape layout: WPM controls pinned to the left edge (stacked vertically), the word
     /// viewer keeps its own width in the center, and playback actions (skip back, play/pause,
-    /// skip forward) are pinned to the right edge (also stacked vertically). All side controls
-    /// use the liquid-glass button styling.
+    /// skip forward) are pinned to the right edge (also stacked vertically). Side control
+    /// columns are kept as narrow as possible (just wide enough for their contents) and
+    /// horizontal spacing is minimized so the center reader window can claim the maximum
+    /// available width. All side controls use the liquid-glass button styling.
     private func landscapeLayout(proxy: GeometryProxy) -> some View {
-        HStack(alignment: .center, spacing: 16) {
+        HStack(alignment: .center, spacing: 8) {
             landscapeWpmControls
-                .frame(width: 84)
+                .frame(width: 60)
 
-            VStack(spacing: 12) {
+            VStack(spacing: 10) {
                 headerView
                 wordDisplayView(height: readerDisplayHeight(for: proxy.size.height))
                 progressView
@@ -204,49 +207,52 @@ struct ReaderView: View {
             .frame(maxWidth: .infinity)
 
             landscapeActionControls
-                .frame(width: 84)
+                .frame(width: 60)
         }
     }
 
     /// Vertically stacked words-per-minute controls shown on the left side of the screen
-    /// while in landscape.
+    /// while in landscape. Sized compactly so the center reader window can be as wide as
+    /// possible.
     private var landscapeWpmControls: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: 10) {
             Button {
                 adjustWpm(by: 25)
             } label: {
                 Image(systemName: "plus")
-                    .font(.system(size: 18, weight: .semibold))
-                    .frame(width: 44, height: 44)
+                    .font(.system(size: 16, weight: .semibold))
+                    .frame(width: 38, height: 38)
             }
             .buttonStyle(.plain)
             .glassCircle()
             .accessibilityLabel("Increase words per minute")
 
-            Text("\(engine.state.currentWpm) WPM")
-                .font(.headline.weight(.semibold))
+            Text("\(engine.state.currentWpm)")
+                .font(.caption.weight(.semibold))
                 .foregroundStyle(settings.focusMode ? .white : palette.text.opacity(0.88))
-                .tracking(0.8)
+                .tracking(0.4)
                 .monospacedDigit()
-                .frame(minWidth: 92, minHeight: 54)
-                .padding(.horizontal, 8)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+                .frame(minWidth: 52, minHeight: 36)
+                .padding(.horizontal, 4)
                 .background(
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .fill(palette.surface.opacity(settings.focusMode ? 0.14 : 0.22))
                 )
                 .overlay(
-                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
                         .strokeBorder(palette.text.opacity(settings.focusMode ? 0.10 : 0.08), lineWidth: 1)
                 )
-                .shadow(color: .black.opacity(settings.focusMode ? 0.04 : 0.06), radius: 8, y: 2)
+                .shadow(color: .black.opacity(settings.focusMode ? 0.04 : 0.06), radius: 6, y: 1)
                 .accessibilityLabel("Reading speed: \(engine.state.currentWpm) words per minute")
 
             Button {
                 adjustWpm(by: -25)
             } label: {
                 Image(systemName: "minus")
-                    .font(.system(size: 18, weight: .semibold))
-                    .frame(width: 44, height: 44)
+                    .font(.system(size: 16, weight: .semibold))
+                    .frame(width: 38, height: 38)
             }
             .buttonStyle(.plain)
             .glassCircle()
@@ -257,16 +263,17 @@ struct ReaderView: View {
     }
 
     /// Vertically stacked playback controls (skip back 5 words, play/pause, skip forward 5
-    /// words) shown on the right side of the screen while in landscape. Styled with the
-    /// liquid-glass button treatment.
+    /// words) shown on the right side of the screen while in landscape. Sized compactly so the
+    /// center reader window can be as wide as possible. Styled with the liquid-glass button
+    /// treatment.
     private var landscapeActionControls: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: 10) {
             Button {
                 engine.skipBackward()
             } label: {
                 Image(systemName: "gobackward.5")
-                    .font(.system(size: 20, weight: .semibold))
-                    .frame(width: 54, height: 54)
+                    .font(.system(size: 17, weight: .semibold))
+                    .frame(width: 44, height: 44)
             }
             .buttonStyle(.plain)
             .glassCircle()
@@ -281,8 +288,8 @@ struct ReaderView: View {
                 }
             } label: {
                 Image(systemName: engine.state.isPlaying ? "pause.fill" : "play.fill")
-                    .font(.system(size: 24, weight: .bold))
-                    .frame(width: 68, height: 68)
+                    .font(.system(size: 20, weight: .bold))
+                    .frame(width: 54, height: 54)
                     .foregroundStyle(.white)
                     .contentTransition(.symbolEffect(.replace))
             }
@@ -294,8 +301,8 @@ struct ReaderView: View {
                 engine.skipForward()
             } label: {
                 Image(systemName: "goforward.5")
-                    .font(.system(size: 20, weight: .semibold))
-                    .frame(width: 54, height: 54)
+                    .font(.system(size: 17, weight: .semibold))
+                    .frame(width: 44, height: 44)
             }
             .buttonStyle(.plain)
             .glassCircle()
