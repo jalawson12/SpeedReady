@@ -335,11 +335,12 @@ struct ReaderView: View {
             .accessibilityValue("\(displayedWordIndex) of \(engine.state.totalWords) words")
             .accessibilityAdjustableAction { direction in
                 let step = max(1, engine.state.totalWords / 100)
+                let baseIndex = displayedWordIndex
                 switch direction {
                 case .increment:
-                    engine.seek(toWordIndex: engine.state.wordIndex + step)
+                    engine.seek(toWordIndex: baseIndex + step)
                 case .decrement:
-                    engine.seek(toWordIndex: engine.state.wordIndex - step)
+                    engine.seek(toWordIndex: baseIndex - step)
                 @unknown default:
                     break
                 }
@@ -664,8 +665,6 @@ struct ReaderScrubber: View {
     /// Called once when the drag gesture ends, with the final progress value.
     let onEditingEnded: (Double) -> Void
 
-    @GestureState private var isPressing = false
-
     private var trackHeight: CGFloat { isActive ? 10 : 6 }
     private var thumbDiameter: CGFloat { isActive ? 22 : 14 }
 
@@ -697,7 +696,6 @@ struct ReaderScrubber: View {
             .animation(.easeOut(duration: 0.15), value: isActive)
             .gesture(
                 DragGesture(minimumDistance: 0)
-                    .updating($isPressing) { _, state, _ in state = true }
                     .onChanged { value in
                         let fraction = min(max(value.location.x / width, 0), 1)
                         onEditingChanged(fraction)
