@@ -70,7 +70,7 @@ struct LibraryView: View {
                         }
                     }
                 case .textInput:
-                    TextImportSheet(title: $customTitle, text: $customText) { title, trimmed in
+                    TextImportSheet(settings: settings, title: $customTitle, text: $customText) { title, trimmed in
                         appState.addDocument(title: title, text: trimmed)
                     }
                 }
@@ -237,22 +237,35 @@ private struct DocumentImportSheet: View {
 
 private struct TextImportSheet: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorScheme) private var colorScheme
+    let settings: ReaderSettings
     @Binding var title: String
     @Binding var text: String
 
     let onLoad: (String, String) -> Void
 
+    private var palette: AppPalette {
+        AppPalette(settings: settings, colorScheme: colorScheme)
+    }
+
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Title") {
-                    TextField("Enter title", text: $title)
-                }
+            ZStack {
+                palette.background.ignoresSafeArea()
 
-                Section("Paste or type text") {
-                    TextEditor(text: $text)
-                        .frame(minHeight: 220)
+                Form {
+                    Section("Title") {
+                        TextField("Enter title", text: $title)
+                    }
+                    .listRowBackground(palette.surface)
+
+                    Section("Paste or type text") {
+                        TextEditor(text: $text)
+                            .frame(minHeight: 220)
+                    }
+                    .listRowBackground(palette.surface)
                 }
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("New reading text")
             .toolbar {
@@ -274,6 +287,7 @@ private struct TextImportSheet: View {
                 }
             }
         }
+        .tint(palette.accent)
     }
 
     private var trimmedTitle: String {
