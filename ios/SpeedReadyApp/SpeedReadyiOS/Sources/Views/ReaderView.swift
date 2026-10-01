@@ -181,11 +181,13 @@ struct ReaderView: View {
     private func wordDisplayView(height: CGFloat) -> some View {
         GeometryReader { proxy in
             VStack(spacing: 8) {
-                if settings.peripheralContext, let previous = previousPeripheralWords(), !previous.isEmpty {
-                    Text(previous)
+                if settings.peripheralContext {
+                    let previous = previousPeripheralWords() ?? ""
+                    Text(previous.isEmpty ? " " : previous)
                         .font(readerFont(size: displayFontSize * 0.38, weight: .regular))
                         .foregroundStyle(palette.mutedText.opacity(0.35))
                         .lineLimit(1)
+                        .opacity(previous.isEmpty ? 0 : 1)
                 }
 
                 if !engine.state.isPlaying && settings.pauseView != .focus {
@@ -229,11 +231,13 @@ struct ReaderView: View {
                     .offset(x: pivotOffsetX(for: proxy.size.width))
                 }
 
-                if settings.peripheralContext, let next = nextPeripheralWords(), !next.isEmpty {
-                    Text(next)
+                if settings.peripheralContext {
+                    let next = nextPeripheralWords() ?? ""
+                    Text(next.isEmpty ? " " : next)
                         .font(readerFont(size: displayFontSize * 0.38, weight: .regular))
                         .foregroundStyle(palette.mutedText.opacity(0.35))
                         .lineLimit(1)
+                        .opacity(next.isEmpty ? 0 : 1)
                 }
             }
             .frame(maxWidth: .infinity, minHeight: max(height - 42, settings.focusMode ? 250 : 300), alignment: .center)
